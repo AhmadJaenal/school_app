@@ -79,3 +79,7 @@ class AppWeightFont {
   static FontWeight reguler = FontWeight.w400;
   static FontWeight light = FontWeight.w300;
 }
+
+class AppMargin {
+  static double defaultMargin = 20;
+}
