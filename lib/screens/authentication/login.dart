@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+TextEditingController _emailC = TextEditingController();
+TextEditingController _passwordC = TextEditingController();
+@override
+void dispose() {
+  _emailC.dispose();
+  _passwordC.dispose();
+}
+
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +51,16 @@ class Login extends StatelessWidget {
               "Halo, silakan masuk untuk melanjutkan",
               style: AppTextStyle.paragraphM.copyWith(color: AppColors.black80),
             ),
-            const Gap(20),
-            const CustomTextField(hintText: "Your Email"),
-            const Gap(16),
-            const CustomTextFieldPassword(),
+            const Gap(10),
+            CustomTextField(
+              hintText: "Masukan email",
+              titleTextField: 'Email',
+              textController: _emailC,
+            ),
+            CustomTextFieldPassword(
+                titleTextField: 'Password',
+                textController: _passwordC,
+                hintText: 'Masukan password'),
             const Gap(10),
             Align(
               alignment: Alignment.centerRight,
@@ -56,19 +75,24 @@ class Login extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: RichText(
-        text: TextSpan(
-          style: AppTextStyle.paragraphM.copyWith(color: AppColors.black),
-          children: <TextSpan>[
-            const TextSpan(
-              text: 'Belum punya akun? ',
-            ),
-            TextSpan(
-              text: 'Daftar',
-              style:
-                  AppTextStyle.paragraphM.copyWith(color: AppColors.secondary1),
-            ),
-          ],
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Get.toNamed('/register');
+        },
+        child: RichText(
+          text: TextSpan(
+            style: AppTextStyle.paragraphM.copyWith(color: AppColors.black),
+            children: <TextSpan>[
+              const TextSpan(
+                text: 'Belum punya akun? ',
+              ),
+              TextSpan(
+                text: 'Daftar',
+                style: AppTextStyle.paragraphM
+                    .copyWith(color: AppColors.secondary1),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

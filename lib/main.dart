@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_app/screens/authentication/login.dart';
+import 'package:school_app/screens/authentication/register.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
 void main() {
@@ -18,7 +19,11 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/login',
-          page: () => Login(),
+          page: () => const Login(),
+        ),
+        GetPage(
+          name: '/register',
+          page: () => Register(),
         ),
       ],
     );
