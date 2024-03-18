@@ -57,6 +57,7 @@ List<String> _optionStaff = [
 class _RegisterState extends State<Register> {
   @override
   int _selected = 0;
+  final formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -277,68 +278,79 @@ class _RegisterState extends State<Register> {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              const Gap(37),
-              Text(
-                "Daftar Akun Baru",
-                style: AppTextStyle.h1.copyWith(
-                  color: AppColors.black,
+          child: Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                const Gap(37),
+                Text(
+                  "Daftar Akun Baru",
+                  style: AppTextStyle.h1.copyWith(
+                    color: AppColors.black,
+                  ),
                 ),
-              ),
-              const Gap(5),
-              Text(
-                "Halo, silakan pilih jenis akun",
-                style: AppTextStyle.paragraphSecondaryS.copyWith(
-                  color: AppColors.black60,
+                const Gap(5),
+                Text(
+                  "Halo, silakan pilih jenis akun",
+                  style: AppTextStyle.paragraphSecondaryS.copyWith(
+                    color: AppColors.black60,
+                  ),
                 ),
-              ),
-              const Gap(10),
-              Container(
-                height: 56,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColors.black40,
+                const Gap(10),
+                Container(
+                  height: 56,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.black40,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      customRadio('Siswa', 0),
+                      customRadio('Guru', 1),
+                      customRadio('Wali', 2),
+                      customRadio('Staff', 3),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    customRadio('Siswa', 0),
-                    customRadio('Guru', 1),
-                    customRadio('Wali', 2),
-                    customRadio('Staff', 3),
-                  ],
-                ),
-              ),
-              _selectedPage[_selected],
-              const Gap(10),
-              PrimaryButton(titleButton: 'Daftar', ontap: () {}),
-              const Gap(18),
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed('/login');
-                },
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      style: AppTextStyle.paragraphM
-                          .copyWith(color: AppColors.black),
-                      children: <TextSpan>[
-                        const TextSpan(
-                          text: 'Sudah punya akun? ',
-                        ),
-                        TextSpan(
-                          text: ' Masuk',
-                          style: AppTextStyle.paragraphM
-                              .copyWith(color: const Color(0xff3085FE)),
-                        ),
-                      ],
+                _selectedPage[_selected],
+                const Gap(10),
+                PrimaryButton(
+                    titleButton: 'Daftar',
+                    ontap: () {
+                      if (formKey.currentState!.validate()) {
+                        print('validasi berhasil');
+                      } else {
+                        print('validasi gagal');
+                      }
+                    }),
+                const Gap(18),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/login');
+                  },
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: AppTextStyle.paragraphM
+                            .copyWith(color: AppColors.black),
+                        children: <TextSpan>[
+                          const TextSpan(
+                            text: 'Sudah punya akun? ',
+                          ),
+                          TextSpan(
+                            text: ' Masuk',
+                            style: AppTextStyle.paragraphM
+                                .copyWith(color: const Color(0xff3085FE)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const Gap(18),
-            ],
+                const Gap(18),
+              ],
+            ),
           ),
         ),
       ),
