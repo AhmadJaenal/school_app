@@ -39,6 +39,7 @@ class AppColors {
   static Color black10 = const Color(0xFFF7FAFC);
 
   static Color white = const Color(0xFFFFFFFF);
+  static Color blue = const Color(0xFF0B63E5);
 }
 
 class AppTextStyle {
@@ -69,6 +70,9 @@ class AppTextStyle {
       .copyWith(fontSize: 12, fontWeight: AppWeightFont.bold);
   static TextStyle paragraphXSBold = GoogleFonts.manrope()
       .copyWith(fontSize: 10, fontWeight: AppWeightFont.bold);
+
+  static TextStyle paragraphSecondaryS = GoogleFonts.lexend()
+      .copyWith(fontSize: 14, fontWeight: AppWeightFont.light);
 }
 
 class AppWeightFont {

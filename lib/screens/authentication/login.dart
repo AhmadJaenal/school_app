@@ -24,6 +24,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         child: Column(
@@ -64,38 +65,45 @@ class _LoginState extends State<Login> {
             const Gap(10),
             Align(
               alignment: Alignment.centerRight,
-              child: Text(
-                "Lupa Password ?",
-                style: AppTextStyle.paragraphM
-                    .copyWith(color: AppColors.secondary1),
+              child: GestureDetector(
+                onTap: () => Get.toNamed('/forgot-password'),
+                child: Text(
+                  "Lupa Password ?",
+                  style: AppTextStyle.paragraphM
+                      .copyWith(color: AppColors.secondary1),
+                ),
               ),
             ),
             const Gap(30),
             PrimaryButton(titleButton: "Masuk", ontap: () {}),
+            const Spacer(),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed('/register');
+                },
+                child: RichText(
+                  text: TextSpan(
+                    style: AppTextStyle.paragraphM
+                        .copyWith(color: AppColors.black),
+                    children: <TextSpan>[
+                      const TextSpan(
+                        text: 'Belum punya akun? ',
+                      ),
+                      TextSpan(
+                        text: 'Daftar',
+                        style: AppTextStyle.paragraphM
+                            .copyWith(color: AppColors.secondary1),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Gap(20),
           ],
         ),
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          Get.toNamed('/register');
-        },
-        child: RichText(
-          text: TextSpan(
-            style: AppTextStyle.paragraphM.copyWith(color: AppColors.black),
-            children: <TextSpan>[
-              const TextSpan(
-                text: 'Belum punya akun? ',
-              ),
-              TextSpan(
-                text: 'Daftar',
-                style: AppTextStyle.paragraphM
-                    .copyWith(color: AppColors.secondary1),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

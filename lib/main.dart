@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/register',
           page: () => Register(),
+        ),
+        GetPage(
+          name: '/forgot-password',
+          page: () => const ForgotPassword(),
         ),
       ],
     );

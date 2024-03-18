@@ -131,13 +131,9 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
                 color: AppColors.black, fontWeight: AppWeightFont.bold),
             decoration: InputDecoration(
               suffixIcon: IconButton(
-                icon: Icon(
-                    _showPassword
-                        ? Icons.remove_red_eye_outlined
-                        : Icons.remove_red_eye_outlined,
-                    color: _showPassword
-                        ? AppColors.black80
-                        : AppColors.secondary1),
+                icon: _showPassword
+                    ? Image.asset('assets/icon_hide_pass.png', width: 24)
+                    : Image.asset('assets/icon_eye.png', width: 24),
                 onPressed: () {
                   setState(() {
                     _showPassword = !_showPassword;
@@ -156,6 +152,69 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
                 color: AppColors.black80,
               ),
             ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomDropdown extends StatefulWidget {
+  final List<String> option;
+  final String titleTextField;
+  const CustomDropdown(
+      {super.key, required this.option, required this.titleTextField});
+
+  @override
+  State<CustomDropdown> createState() => _CustomDropdownState();
+}
+
+String _selectedItem = 'Pilih';
+
+class _CustomDropdownState extends State<CustomDropdown> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Gap(10),
+        Text(
+          widget.titleTextField,
+          style: AppTextStyle.paragraphM.copyWith(
+            color: AppColors.black,
+          ),
+        ),
+        const Gap(6),
+        Container(
+          width: double.infinity,
+          height: 52,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.black80),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: DropdownButton<String>(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+            underline: Container(),
+            isExpanded: true,
+            borderRadius: BorderRadius.circular(8),
+            style: AppTextStyle.paragraphL.copyWith(
+              color: AppColors.black80,
+            ),
+            elevation: 0,
+            value: _selectedItem,
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedItem = newValue!;
+              });
+            },
+            items: widget.option.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                alignment: Alignment.centerLeft,
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ),
       ],

@@ -13,6 +13,7 @@ class Register extends StatefulWidget {
 }
 
 final TextEditingController _nisnC = TextEditingController();
+final TextEditingController _nipnC = TextEditingController();
 final TextEditingController _namaC = TextEditingController();
 final TextEditingController _emailC = TextEditingController();
 final TextEditingController _noTelpC = TextEditingController();
@@ -22,12 +23,36 @@ final TextEditingController _alamatC = TextEditingController();
 @override
 void dispose() {
   _nisnC.dispose();
+  _nipnC.dispose();
   _namaC.dispose();
   _emailC.dispose();
   _noTelpC.dispose();
   _konfimasiPC.dispose();
   _alamatC.dispose();
 }
+
+List<String> _optionClass = [
+  'Pilih',
+  'RPL 1',
+  'RPL 2',
+  'RPL 3',
+  'RPL 4',
+  'RPL 5',
+];
+List<String> _optionReligion = [
+  'Pilih',
+  'Islam',
+  'Kristen',
+  'Hindu',
+  'Budha',
+  'Khonghucu',
+];
+
+List<String> _optionStaff = [
+  'Pilih',
+  'TU',
+  'Wakil Kepala Sekolah',
+];
 
 class _RegisterState extends State<Register> {
   @override
@@ -59,7 +84,135 @@ class _RegisterState extends State<Register> {
             hintText: 'Masukan No Telp',
             textController: _noTelpC,
           ),
+          CustomDropdown(
+            titleTextField: 'Kelas',
+            option: _optionClass,
+          ),
           CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
+          CustomDropdown(
+            titleTextField: 'Agama',
+            option: _optionReligion,
+          ),
+          CustomTextFieldPassword(
+            titleTextField: 'Password',
+            hintText: 'Masukan password',
+            textController: _passwordC,
+          ),
+          CustomTextFieldPassword(
+            titleTextField: 'Password',
+            hintText: 'Masukan konfirmasi password',
+            textController: _konfimasiPC,
+          ),
+        ],
+      );
+    }
+
+    Widget teacherPage() {
+      return Column(
+        children: [
+          CustomTextField(
+            titleTextField: 'NIP',
+            hintText: 'Masukan NIP',
+            textController: _nipnC,
+          ),
+          CustomTextField(
+            titleTextField: 'Nama',
+            hintText: 'Masukan nama',
+            textController: _namaC,
+          ),
+          CustomTextField(
+            titleTextField: 'Email',
+            hintText: 'Masukan email',
+            textController: _emailC,
+          ),
+          CustomTextField(
+            titleTextField: 'No Telp',
+            hintText: 'Masukan No Telp',
+            textController: _noTelpC,
+          ),
+          CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
+          CustomDropdown(
+            titleTextField: 'Agama',
+            option: _optionReligion,
+          ),
+          CustomTextFieldPassword(
+            titleTextField: 'Password',
+            hintText: 'Masukan password',
+            textController: _passwordC,
+          ),
+          CustomTextFieldPassword(
+            titleTextField: 'Password',
+            hintText: 'Masukan konfirmasi password',
+            textController: _konfimasiPC,
+          ),
+        ],
+      );
+    }
+
+    Widget parentPage() {
+      return Column(
+        children: [
+          CustomTextField(
+            titleTextField: 'Nama',
+            hintText: 'Masukan nama',
+            textController: _namaC,
+          ),
+          CustomTextField(
+            titleTextField: 'Email',
+            hintText: 'Masukan email',
+            textController: _emailC,
+          ),
+          CustomTextField(
+            titleTextField: 'No Telp',
+            hintText: 'Masukan No Telp',
+            textController: _noTelpC,
+          ),
+          CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
+          CustomDropdown(
+            titleTextField: 'Agama',
+            option: _optionReligion,
+          ),
+          CustomTextFieldPassword(
+            titleTextField: 'Password',
+            hintText: 'Masukan password',
+            textController: _passwordC,
+          ),
+          CustomTextFieldPassword(
+            titleTextField: 'Password',
+            hintText: 'Masukan konfirmasi password',
+            textController: _konfimasiPC,
+          ),
+        ],
+      );
+    }
+
+    Widget staffPage() {
+      return Column(
+        children: [
+          CustomTextField(
+            titleTextField: 'Nama',
+            hintText: 'Masukan nama',
+            textController: _namaC,
+          ),
+          CustomTextField(
+            titleTextField: 'Email',
+            hintText: 'Masukan email',
+            textController: _emailC,
+          ),
+          CustomTextField(
+            titleTextField: 'No Telp',
+            hintText: 'Masukan No Telp',
+            textController: _noTelpC,
+          ),
+          CustomDropdown(
+            titleTextField: 'Agama',
+            option: _optionReligion,
+          ),
+          CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
+          CustomDropdown(
+            titleTextField: 'Posisi',
+            option: _optionStaff,
+          ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
             hintText: 'Masukan password',
@@ -76,9 +229,9 @@ class _RegisterState extends State<Register> {
 
     List<Widget> _selectedPage = [
       studentPage(),
-      studentPage(),
-      studentPage(),
-      studentPage(),
+      teacherPage(),
+      parentPage(),
+      staffPage(),
     ];
 
     Widget customRadio(String titleValue, int index) {
@@ -136,8 +289,8 @@ class _RegisterState extends State<Register> {
               const Gap(5),
               Text(
                 "Halo, silakan pilih jenis akun",
-                style: AppTextStyle.paragraphM.copyWith(
-                  color: AppColors.black80,
+                style: AppTextStyle.paragraphSecondaryS.copyWith(
+                  color: AppColors.black60,
                 ),
               ),
               const Gap(10),
