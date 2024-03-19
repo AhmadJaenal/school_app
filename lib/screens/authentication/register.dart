@@ -31,6 +31,17 @@ void dispose() {
   _alamatC.dispose();
 }
 
+void _clearTextControllers() {
+  _nisnC.clear();
+  _nipnC.clear();
+  _namaC.clear();
+  _emailC.clear();
+  _noTelpC.clear();
+  _passwordC.clear();
+  _konfimasiPC.clear();
+  _alamatC.clear();
+}
+
 List<String> _optionClass = [
   'Pilih',
   'RPL 1',
@@ -39,6 +50,7 @@ List<String> _optionClass = [
   'RPL 4',
   'RPL 5',
 ];
+
 List<String> _optionReligion = [
   'Pilih',
   'Islam',
@@ -55,6 +67,14 @@ List<String> _optionStaff = [
 ];
 
 class _RegisterState extends State<Register> {
+  void _resetDropdownValue() {
+    setState(() {
+      _optionClass[0];
+      _optionReligion[0];
+      _optionStaff[0];
+    });
+  }
+
   @override
   int _selected = 0;
   final formKey = GlobalKey<FormState>();
@@ -228,7 +248,7 @@ class _RegisterState extends State<Register> {
       );
     }
 
-    List<Widget> _selectedPage = [
+    List<Widget> selectedPage = [
       studentPage(),
       teacherPage(),
       parentPage(),
@@ -249,6 +269,8 @@ class _RegisterState extends State<Register> {
               onPressed: () {
                 setState(() {
                   _selected = index;
+                  // _clearTextControllers();
+                  _resetDropdownValue();
                 });
               },
               style: ElevatedButton.styleFrom(
@@ -313,7 +335,7 @@ class _RegisterState extends State<Register> {
                     ],
                   ),
                 ),
-                _selectedPage[_selected],
+                selectedPage[_selected],
                 const Gap(10),
                 PrimaryButton(
                     titleButton: 'Daftar',
