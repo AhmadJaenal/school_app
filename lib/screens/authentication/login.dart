@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                   titleButton: "Masuk",
                   ontap: () {
                     if (formKey.currentState!.validate()) {
-                      print('validasi berhasil');
+                      Get.toNamed('/home-page');
                     } else {
                       print('validasi gagal');
                     }

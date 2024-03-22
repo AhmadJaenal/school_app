@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:school_app/shared/theme.dart';
 
@@ -69,7 +68,7 @@ class CustomTextArea extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Gap(10),
-        Container(
+        SizedBox(
           height: 150,
           child: TextFormField(
             validator: (value) {
@@ -200,7 +199,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           ),
         ),
         const Gap(6),
-        Container(
+        SizedBox(
           width: double.infinity,
           child: DropdownButtonFormField<String>(
             validator: (value) {
