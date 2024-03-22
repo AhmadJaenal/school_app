@@ -1,89 +1,133 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
 
-class Register extends StatefulWidget {
+class Register extends StatelessWidget {
   Register({super.key});
 
+  final TextEditingController _nisnC = TextEditingController();
+  final TextEditingController _nipnC = TextEditingController();
+  final TextEditingController _namaC = TextEditingController();
+  final TextEditingController _emailC = TextEditingController();
+  final TextEditingController _noTelpC = TextEditingController();
+  final TextEditingController _passwordC = TextEditingController();
+  final TextEditingController _konfimasiPC = TextEditingController();
+  final TextEditingController _alamatC = TextEditingController();
+
   @override
-  State<Register> createState() => _RegisterState();
-}
-
-final TextEditingController _nisnC = TextEditingController();
-final TextEditingController _nipnC = TextEditingController();
-final TextEditingController _namaC = TextEditingController();
-final TextEditingController _emailC = TextEditingController();
-final TextEditingController _noTelpC = TextEditingController();
-final TextEditingController _passwordC = TextEditingController();
-final TextEditingController _konfimasiPC = TextEditingController();
-final TextEditingController _alamatC = TextEditingController();
-@override
-void dispose() {
-  _nisnC.dispose();
-  _nipnC.dispose();
-  _namaC.dispose();
-  _emailC.dispose();
-  _noTelpC.dispose();
-  _konfimasiPC.dispose();
-  _alamatC.dispose();
-}
-
-void _clearTextControllers() {
-  _nisnC.clear();
-  _nipnC.clear();
-  _namaC.clear();
-  _emailC.clear();
-  _noTelpC.clear();
-  _passwordC.clear();
-  _konfimasiPC.clear();
-  _alamatC.clear();
-}
-
-List<String> _optionClass = [
-  'Pilih',
-  'RPL 1',
-  'RPL 2',
-  'RPL 3',
-  'RPL 4',
-  'RPL 5',
-];
-
-List<String> _optionReligion = [
-  'Pilih',
-  'Islam',
-  'Kristen',
-  'Hindu',
-  'Budha',
-  'Khonghucu',
-];
-
-List<String> _optionStaff = [
-  'Pilih',
-  'TU',
-  'Wakil Kepala Sekolah',
-];
-
-class _RegisterState extends State<Register> {
-  void _resetDropdownValue() {
-    setState(() {
-      _optionClass[0];
-      _optionReligion[0];
-      _optionStaff[0];
-    });
+  void dispose() {
+    _nisnC.dispose();
+    _nipnC.dispose();
+    _namaC.dispose();
+    _emailC.dispose();
+    _noTelpC.dispose();
+    _konfimasiPC.dispose();
+    _alamatC.dispose();
   }
 
-  @override
-  int _selected = 0;
-  final formKey = GlobalKey<FormState>();
+  void _clearTextControllers() {
+    _nisnC.clear();
+    _nipnC.clear();
+    _namaC.clear();
+    _emailC.clear();
+    _noTelpC.clear();
+    _passwordC.clear();
+    _konfimasiPC.clear();
+    _alamatC.clear();
+  }
 
+  final List<String> _optionClass = [
+    'Pilih',
+    'RPL 1',
+    'RPL 2',
+    'RPL 3',
+    'RPL 4',
+    'RPL 5',
+  ];
+
+  final List<String> _optionReligion = [
+    'Pilih',
+    'Islam',
+    'Kristen',
+    'Hindu',
+    'Budha',
+    'Khonghucu',
+  ];
+
+  final List<String> _optionStaff = [
+    'Pilih',
+    'TU',
+    'Wakil Kepala Sekolah',
+  ];
+  final formKey = GlobalKey<FormState>();
+  @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    TabBar tabBar = TabBar(
+      labelStyle: AppTextStyle.paragraphLBold.copyWith(color: AppColors.white),
+      indicator: BoxDecoration(
+          color: AppColors.primary1, borderRadius: BorderRadius.circular(8)),
+      indicatorSize: TabBarIndicatorSize.tab,
+      unselectedLabelStyle:
+          AppTextStyle.paragraphLBold.copyWith(color: AppColors.primary1),
+      tabs: const [
+        Tab(text: 'Siswa'),
+        Tab(text: 'Guru'),
+        Tab(text: 'Staff'),
+        Tab(text: 'Wali'),
+      ],
+    );
+
+    Widget buttonSubmit() {
+      return Column(
+        children: [
+          const Gap(10),
+          PrimaryButton(
+              titleButton: 'Daftar',
+              ontap: () {
+                if (formKey.currentState!.validate()) {
+                  print('validasi berhasil');
+                } else {
+                  print('validasi gagal');
+                }
+              }),
+          const Gap(18),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed('/login');
+            },
+            child: Center(
+              child: RichText(
+                text: TextSpan(
+                  style:
+                      AppTextStyle.paragraphM.copyWith(color: AppColors.black),
+                  children: <TextSpan>[
+                    const TextSpan(
+                      text: 'Sudah punya akun? ',
+                    ),
+                    TextSpan(
+                      text: ' Masuk',
+                      style: AppTextStyle.paragraphM
+                          .copyWith(color: const Color(0xff3085FE)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const Gap(18),
+        ],
+      );
+    }
 
     Widget studentPage() {
-      return Column(
+      return ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         children: [
           CustomTextField(
             titleTextField: 'NISN',
@@ -124,12 +168,15 @@ class _RegisterState extends State<Register> {
             hintText: 'Masukan konfirmasi password',
             textController: _konfimasiPC,
           ),
+          buttonSubmit(),
         ],
       );
     }
 
     Widget teacherPage() {
-      return Column(
+      return ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         children: [
           CustomTextField(
             titleTextField: 'NIP',
@@ -166,12 +213,15 @@ class _RegisterState extends State<Register> {
             hintText: 'Masukan konfirmasi password',
             textController: _konfimasiPC,
           ),
+          buttonSubmit(),
         ],
       );
     }
 
     Widget parentPage() {
-      return Column(
+      return ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         children: [
           CustomTextField(
             titleTextField: 'Nama',
@@ -203,12 +253,15 @@ class _RegisterState extends State<Register> {
             hintText: 'Masukan konfirmasi password',
             textController: _konfimasiPC,
           ),
+          buttonSubmit(),
         ],
       );
     }
 
     Widget staffPage() {
-      return Column(
+      return ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         children: [
           CustomTextField(
             titleTextField: 'Nama',
@@ -244,135 +297,63 @@ class _RegisterState extends State<Register> {
             hintText: 'Masukan konfirmasi password',
             textController: _konfimasiPC,
           ),
+          buttonSubmit(),
         ],
       );
     }
 
-    List<Widget> selectedPage = [
-      studentPage(),
-      teacherPage(),
-      parentPage(),
-      staffPage(),
-    ];
-
-    Widget customRadio(String titleValue, int index) {
-      return Column(
-        children: [
-          Container(
-            width: width * .21,
-            height: 56,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: AppColors.black40,
-            ),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _selected = index;
-                  // _clearTextControllers();
-                  _resetDropdownValue();
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    _selected == index ? AppColors.primary1 : AppColors.black40,
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                minimumSize: const Size(double.infinity, 56),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(140),
+          child: AppBar(
+            toolbarHeight: 80,
+            leadingWidth: double.infinity,
+            leading: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppMargin.defaultMargin, vertical: 10),
+              child: RichText(
+                text: TextSpan(
+                  style: AppTextStyle.h1.copyWith(color: AppColors.black),
+                  children: <TextSpan>[
+                    const TextSpan(
+                      text: 'Daftar Akun Baru\n',
+                    ),
+                    TextSpan(
+                      text: 'Halo, silakan pilih jenis akun',
+                      style: AppTextStyle.paragraphSecondaryS.copyWith(
+                        color: AppColors.black60,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Text(
-                titleValue,
-                style: AppTextStyle.paragraphLBold.copyWith(
-                  color:
-                      _selected == index ? AppColors.white : AppColors.primary1,
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(56),
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: AppMargin.defaultMargin,
                 ),
+                decoration: BoxDecoration(
+                  color: AppColors.black40,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: tabBar,
               ),
             ),
           ),
-        ],
-      );
-    }
-
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                const Gap(37),
-                Text(
-                  "Daftar Akun Baru",
-                  style: AppTextStyle.h1.copyWith(
-                    color: AppColors.black,
-                  ),
-                ),
-                const Gap(5),
-                Text(
-                  "Halo, silakan pilih jenis akun",
-                  style: AppTextStyle.paragraphSecondaryS.copyWith(
-                    color: AppColors.black60,
-                  ),
-                ),
-                const Gap(10),
-                Container(
-                  height: 56,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColors.black40,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      customRadio('Siswa', 0),
-                      customRadio('Guru', 1),
-                      customRadio('Wali', 2),
-                      customRadio('Staff', 3),
-                    ],
-                  ),
-                ),
-                selectedPage[_selected],
-                const Gap(10),
-                PrimaryButton(
-                    titleButton: 'Daftar',
-                    ontap: () {
-                      if (formKey.currentState!.validate()) {
-                        print('validasi berhasil');
-                      } else {
-                        print('validasi gagal');
-                      }
-                    }),
-                const Gap(18),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/login');
-                  },
-                  child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        style: AppTextStyle.paragraphM
-                            .copyWith(color: AppColors.black),
-                        children: <TextSpan>[
-                          const TextSpan(
-                            text: 'Sudah punya akun? ',
-                          ),
-                          TextSpan(
-                            text: ' Masuk',
-                            style: AppTextStyle.paragraphM
-                                .copyWith(color: const Color(0xff3085FE)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const Gap(18),
-              ],
-            ),
+        ),
+        body: Form(
+          key: formKey,
+          child: TabBarView(
+            children: [
+              studentPage(),
+              teacherPage(),
+              parentPage(),
+              staffPage(),
+            ],
           ),
         ),
       ),
