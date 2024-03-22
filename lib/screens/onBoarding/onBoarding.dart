@@ -79,7 +79,8 @@ class _OnBoardingState extends State<OnBoarding> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
                   width: _current == 0 ? 50 : 10,
                   height: 4,
                   margin: const EdgeInsets.symmetric(horizontal: 2),
@@ -89,7 +90,8 @@ class _OnBoardingState extends State<OnBoarding> {
                         _current == 0 ? AppColors.primary3 : AppColors.black40,
                   ),
                 ),
-                Container(
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
                   width: _current == 1 ? 50 : 10,
                   height: 4,
                   margin: const EdgeInsets.symmetric(horizontal: 2),
@@ -99,7 +101,8 @@ class _OnBoardingState extends State<OnBoarding> {
                         _current == 1 ? AppColors.primary3 : AppColors.black40,
                   ),
                 ),
-                Container(
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
                   width: _current == 2 ? 50 : 10,
                   height: 4,
                   margin: const EdgeInsets.symmetric(horizontal: 2),
