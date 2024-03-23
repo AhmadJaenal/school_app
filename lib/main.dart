@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
-import 'package:school_app/screens/homePage/home_page.dart';
+import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
 void main() {
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/home-page',
-          page: () => const HomePage(),
+          page: () => HomePage(),
         ),
       ],
     );
