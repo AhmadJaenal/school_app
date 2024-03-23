@@ -25,7 +25,7 @@ class AppColors {
   static Color danger1 = const Color(0xFFFF0022);
   static Color danger2 = const Color(0xFFFF455E);
 
-  static Color info1 = const Color(0xFF1BE7FF);
+  static Color info1 = const Color(0xFF3498DB);
   static Color info2 = const Color(0xFF5BFFCE);
   static Color info3 = const Color(0xFF97F4FF);
   static Color info4 = const Color(0xFFEAFCFF);
@@ -40,6 +40,7 @@ class AppColors {
 
   static Color white = const Color(0xFFFFFFFF);
   static Color blue = const Color(0xFF0B63E5);
+  static Color green = const Color(0xFFA3D139);
   static Color darkBlue = const Color(0xFF273B4A);
 }
 

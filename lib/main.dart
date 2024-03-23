@@ -5,6 +5,7 @@ import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
 import 'package:school_app/screens/homePage/event/list_event.dart';
 import 'package:school_app/screens/homePage/nav/navBar.dart';
+import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
@@ -44,6 +45,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/list-event',
           page: () => ListEvent(),
+        ),
+        GetPage(
+          name: '/absence-history',
+          page: () => const AbsenceHistory(),
         ),
       ],
     );

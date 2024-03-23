@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
@@ -59,10 +60,13 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text('Kehadiran Hari Ini',
                       style: AppTextStyle.paragraphLBold),
-                  Text(
-                    'Rekap Absen',
-                    style: AppTextStyle.paragraphM
-                        .copyWith(color: AppColors.primary1),
+                  GestureDetector(
+                    onTap: () => Get.toNamed('/absence-history'),
+                    child: Text(
+                      'Rekap Absen',
+                      style: AppTextStyle.paragraphM
+                          .copyWith(color: AppColors.primary1),
+                    ),
                   )
                 ],
               ),
