@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -336,7 +337,118 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: PrimaryButtonWithIcon(
                 titleButton: 'Tekan untuk Presensi Masuk',
-                ontap: () {},
+                ontap: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        width: double.infinity,
+                        height: height * .73,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 38,
+                          horizontal: AppMargin.defaultMargin,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Presensi Masuk',
+                              style: AppTextStyle.h2.copyWith(
+                                color: AppColors.black,
+                              ),
+                            ),
+                            const Gap(10),
+                            Row(
+                              children: [
+                                Icon(Icons.calendar_month_rounded,
+                                    color: AppColors.primary1),
+                                const Gap(18),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Tanggal Masuk\n',
+                                        style: AppTextStyle.paragraphLBold
+                                            .copyWith(color: AppColors.black),
+                                      ),
+                                      TextSpan(
+                                        text: 'Selasa, 23 Agustus 2023',
+                                        style: AppTextStyle.paragraphM
+                                            .copyWith(color: AppColors.black80),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(8),
+                            Row(
+                              children: [
+                                Icon(Icons.access_time,
+                                    color: AppColors.primary1),
+                                const Gap(18),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Jam Masuk\n',
+                                        style: AppTextStyle.paragraphLBold
+                                            .copyWith(color: AppColors.black),
+                                      ),
+                                      TextSpan(
+                                        text: '07:03:23',
+                                        style: AppTextStyle.paragraphM
+                                            .copyWith(color: AppColors.black80),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(24),
+                            Text(
+                              'Foto selfie di area sekolah',
+                              style: AppTextStyle.paragraphL.copyWith(
+                                color: AppColors.black80,
+                              ),
+                            ),
+                            const Gap(11),
+                            Container(
+                              width: double.infinity,
+                              height: 280,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColors.black60,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 45,
+                                    color: AppColors.black80,
+                                  ),
+                                  Text(
+                                    'Ambil Gambar',
+                                    style: AppTextStyle.h3.copyWith(
+                                      color: AppColors.black80,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Gap(16),
+                            PrimaryButton(titleButton: 'Hadir', ontap: () {})
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
                 icon: Icon(Icons.circle_outlined, color: AppColors.white),
               ),
             ),
