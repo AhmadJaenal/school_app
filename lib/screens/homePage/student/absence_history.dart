@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class AbsenceHistory extends StatelessWidget {
   const AbsenceHistory({super.key});
@@ -65,6 +64,29 @@ class AbsenceHistory extends StatelessWidget {
                 ),
               ],
             ),
+            const Gap(16),
+            TableCalendar(
+              firstDay: DateTime.utc(2010, 10, 16),
+              lastDay: DateTime.utc(2030, 3, 14),
+              focusedDay: DateTime.now(),
+              calendarStyle: CalendarStyle(
+                weekendTextStyle:
+                    AppTextStyle.paragraphM.copyWith(color: AppColors.primary1),
+              ),
+              daysOfWeekStyle: DaysOfWeekStyle(
+                weekdayStyle:
+                    AppTextStyle.paragraphM.copyWith(color: AppColors.black),
+                weekendStyle:
+                    AppTextStyle.paragraphM.copyWith(color: AppColors.primary1),
+              ),
+              headerStyle: HeaderStyle(
+                titleCentered: true,
+                formatButtonVisible: false,
+                titleTextStyle: AppTextStyle.paragraphMBold.copyWith(
+                  color: AppColors.black,
+                ),
+              ),
+            )
           ],
         ),
       ),
