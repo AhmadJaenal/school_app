@@ -28,3 +28,36 @@ class PrimaryButton extends StatelessWidget {
     );
   }
 }
+
+class PrimaryButtonWithIcon extends StatelessWidget {
+  final String titleButton;
+  final Icon icon;
+  final Function() ontap;
+  const PrimaryButtonWithIcon(
+      {super.key,
+      required this.titleButton,
+      required this.ontap,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: ontap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary1,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        minimumSize: const Size(double.infinity, 56),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      icon: icon,
+      label: Text(
+        titleButton,
+        style: AppTextStyle.paragraphLBold.copyWith(
+          color: AppColors.white,
+        ),
+      ),
+    );
+  }
+}

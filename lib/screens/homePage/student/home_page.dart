@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:school_app/shared/theme.dart';
+import 'package:school_app/widgets/custom_button.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -327,6 +328,16 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            const Gap(17),
+            const Gap(20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: PrimaryButtonWithIcon(
+                titleButton: 'Tekan untuk Presensi Masuk',
+                ontap: () {},
+                icon: Icon(Icons.circle_outlined, color: AppColors.white),
               ),
             ),
           ],
