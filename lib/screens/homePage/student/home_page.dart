@@ -331,7 +331,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const Gap(17),
-            const Gap(20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: PrimaryButtonWithIcon(
