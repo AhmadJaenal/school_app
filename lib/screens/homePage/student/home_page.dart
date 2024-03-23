@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
@@ -83,20 +84,19 @@ class HomePage extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            style: const ButtonStyle(),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                  AppColors.info1.withOpacity(.1),
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(9),
+                                  ),
+                                )),
                             onPressed: () {},
-                            icon: Container(
-                              width: 35,
-                              height: 35,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9),
-                                color: AppColors.info1.withOpacity(.1),
-                              ),
-                              child: Image.asset(
-                                'assets/icon_login.png',
-                                width: 24,
-                              ),
+                            icon: Image.asset(
+                              'assets/icon_login.png',
+                              width: 24,
                             ),
                           ),
                           Text('Masuk', style: AppTextStyle.paragraphM),
@@ -123,20 +123,19 @@ class HomePage extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            style: const ButtonStyle(),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                  AppColors.info1.withOpacity(.1),
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(9),
+                                  ),
+                                )),
                             onPressed: () {},
-                            icon: Container(
-                              width: 35,
-                              height: 35,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9),
-                                color: AppColors.info1.withOpacity(.1),
-                              ),
-                              child: Image.asset(
-                                'assets/icon_logout.png',
-                                width: 24,
-                              ),
+                            icon: Image.asset(
+                              'assets/icon_logout.png',
+                              width: 24,
                             ),
                           ),
                           Text('Keluar', style: AppTextStyle.paragraphM),
@@ -159,10 +158,13 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Event', style: AppTextStyle.paragraphLBold),
-                  Text(
-                    'Lihat Semua',
-                    style: AppTextStyle.paragraphM
-                        .copyWith(color: AppColors.primary1),
+                  GestureDetector(
+                    onTap: () => Get.toNamed('/list-event'),
+                    child: Text(
+                      'Lihat Semua',
+                      style: AppTextStyle.paragraphM
+                          .copyWith(color: AppColors.primary1),
+                    ),
                   ),
                 ],
               ),
@@ -178,7 +180,6 @@ class HomePage extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
                       padding: const EdgeInsets.all(9.0),
                       decoration: BoxDecoration(
-                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
                           fit: BoxFit.cover,

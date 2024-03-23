@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
+import 'package:school_app/screens/homePage/event/list_event.dart';
 import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const NavBarBottom(),
+      home: const OnBoarding(),
       getPages: [
         GetPage(
           name: '/login',
@@ -38,7 +39,11 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/nav',
-          page: () => NavBarBottom(),
+          page: () => const NavBarBottom(),
+        ),
+        GetPage(
+          name: '/list-event',
+          page: () => ListEvent(),
         ),
       ],
     );
