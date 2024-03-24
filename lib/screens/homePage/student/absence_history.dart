@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/shared/theme.dart';
+import 'package:school_app/widgets/card_activity.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -136,7 +138,7 @@ class AbsenceHistory extends StatelessWidget {
               children: [
                 Text('Aktivitas', style: AppTextStyle.paragraphLBold),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () => Get.toNamed('/activity-student'),
                   child: Text(
                     'Lihat Semua',
                     style: AppTextStyle.paragraphM
@@ -153,62 +155,6 @@ class AbsenceHistory extends StatelessWidget {
             const Gap(20),
           ],
         ),
-      ),
-    );
-  }
-
-  Padding CardActivity() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Container(
-            width: 35,
-            height: 35,
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: AppColors.info1.withOpacity(.1),
-            ),
-            child: Image.asset(
-              'assets/icon_login.png',
-            ),
-          ),
-          const Gap(16),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Masuk\n',
-                  style: AppTextStyle.paragraphLBold
-                      .copyWith(color: AppColors.black),
-                ),
-                TextSpan(
-                  text: '23 Agustus 2023',
-                  style: AppTextStyle.paragraphM
-                      .copyWith(color: AppColors.black80),
-                ),
-              ],
-            ),
-          ),
-          const Spacer(),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '07:01\n',
-                  style: AppTextStyle.paragraphLBold
-                      .copyWith(color: AppColors.black),
-                ),
-                TextSpan(
-                  text: 'Tepat Waktu',
-                  style: AppTextStyle.paragraphM
-                      .copyWith(color: AppColors.black80),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

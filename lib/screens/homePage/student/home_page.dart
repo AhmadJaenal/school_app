@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
@@ -45,7 +46,10 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Image.asset('assets/icon_notification.png', width: 28),
+                GestureDetector(
+                    onTap: () => Get.toNamed('/notification'),
+                    child:
+                        Image.asset('assets/icon_notification.png', width: 28)),
               ],
             ),
           ),
