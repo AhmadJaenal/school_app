@@ -6,6 +6,8 @@ import 'package:school_app/screens/authentication/register.dart';
 import 'package:school_app/screens/homePage/event/list_event.dart';
 import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/screens/homePage/notification/notification.dart';
+import 'package:school_app/screens/homePage/parent/add_children.dart';
+import 'package:school_app/screens/homePage/parent/list_children.dart';
 import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const OnBoarding(),
+      home: ListChildren(),
       getPages: [
         GetPage(
           name: '/login',
@@ -59,6 +61,14 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/activity-student',
           page: () => ActivityStudent(),
+        ),
+        GetPage(
+          name: '/add-children',
+          page: () => AddChildren(),
+        ),
+        GetPage(
+          name: '/list-children',
+          page: () => ListChildren(),
         ),
       ],
     );
