@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/absence-history',
-          page: () => const AbsenceHistory(),
+          page: () => AbsenceHistory(),
         ),
       ],
     );
