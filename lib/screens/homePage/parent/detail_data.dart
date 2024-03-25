@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_absence.dart';
+import 'package:school_app/widgets/card_activity.dart';
 
 class DetailData extends StatelessWidget {
   const DetailData({super.key});
@@ -88,6 +92,50 @@ class DetailData extends StatelessWidget {
             const Gap(11),
             Text('Lokasi Terakhir', style: AppTextStyle.paragraphLBold),
             const Gap(10),
+            SizedBox(
+              width: double.infinity,
+              height: 172,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: FlutterMap(
+                  options: const MapOptions(
+                    initialCenter: LatLng(-6.8865473, 107.6120931),
+                    minZoom: 9,
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      userAgentPackageName: 'com.example.app',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Gap(11),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Aktivitas', style: AppTextStyle.paragraphLBold),
+                GestureDetector(
+                  onTap: () => Get.toNamed('/activity-student'),
+                  child: Text(
+                    'Lihat Semua',
+                    style: AppTextStyle.paragraphM
+                        .copyWith(color: AppColors.primary1),
+                  ),
+                ),
+              ],
+            ),
+            const Gap(11),
+            Container(
+              height: 200,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (context, index) => const CardActivity(),
+              ),
+            ),
           ],
         ),
       ),
