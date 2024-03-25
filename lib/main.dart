@@ -13,6 +13,8 @@ import 'package:school_app/screens/homePage/student/activity.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
+import 'screens/homePage/parent/detail_data.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -69,6 +71,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/list-children',
           page: () => ListChildren(),
+        ),
+        GetPage(
+          name: '/detail-data-children',
+          page: () => DetailData(),
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
@@ -24,6 +25,7 @@ class ListChildren extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          CardDataChildren(),
           CardDataChildren(),
           CardDataChildren(),
         ],
@@ -51,45 +53,48 @@ class ListChildren extends StatelessWidget {
     );
   }
 
-  Padding CardDataChildren() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
-      child: Row(
-        children: [
-          Container(
-            width: 61,
-            height: 61,
-            padding: const EdgeInsets.all(17),
-            margin: const EdgeInsets.only(bottom: 8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primary1,
+  GestureDetector CardDataChildren() {
+    return GestureDetector(
+      onTap: () => Get.toNamed('/detail-data-children'),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+        child: Row(
+          children: [
+            Container(
+              width: 61,
+              height: 61,
+              padding: const EdgeInsets.all(17),
+              margin: const EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary1,
+              ),
+              child: Image.asset('assets/icon_student.png'),
             ),
-            child: Image.asset('assets/icon_student.png'),
-          ),
-          const Gap(16),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Nama siswa\n',
-                  style:
-                      AppTextStyle.paragraphL.copyWith(color: AppColors.black),
-                ),
-                TextSpan(
-                  text: '32732192031',
-                  style:
-                      AppTextStyle.paragraphL.copyWith(color: AppColors.black),
-                ),
-              ],
+            const Gap(16),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Nama siswa\n',
+                    style: AppTextStyle.paragraphL
+                        .copyWith(color: AppColors.black),
+                  ),
+                  TextSpan(
+                    text: '32732192031',
+                    style: AppTextStyle.paragraphL
+                        .copyWith(color: AppColors.black),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Spacer(),
-          Text(
-            'Kelas 8A',
-            style: AppTextStyle.paragraphM.copyWith(color: AppColors.black),
-          )
-        ],
+            const Spacer(),
+            Text(
+              'Kelas 8A',
+              style: AppTextStyle.paragraphM.copyWith(color: AppColors.black),
+            )
+          ],
+        ),
       ),
     );
   }
