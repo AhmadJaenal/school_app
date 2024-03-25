@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/shared/theme.dart';
 
@@ -28,7 +29,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
       case 1:
         return HomePage();
       case 2:
-        return HomePage();
+        return Edupay();
       case 3:
         return HomePage();
       default:
