@@ -1,20 +1,51 @@
+import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   List<List<String>> event = [
     ['img_event_1.png', 'Acara Idul Adha', '12 Juni 2023'],
     ['img_event_2.png', 'Acara Idul Adha', '12 Juni 2023'],
     ['img_event_3.png', 'Acara Idul Adha', '12 Juni 2023'],
   ];
+
+  late PermissionStatus _cameraPermissionStatus;
+
+  Future<void> _checkPermission() async {
+    PermissionStatus status = await Permission.camera.status;
+    setState(() {
+      _cameraPermissionStatus = status;
+    });
+  }
+
+  Future<void> _requestPermission() async {
+    PermissionStatus status = await Permission.camera.request();
+    setState(() {
+      _cameraPermissionStatus = status;
+    });
+  }
+
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -422,31 +453,34 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             const Gap(11),
-                            Container(
-                              width: double.infinity,
-                              height: 280,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: AppColors.black60,
-                                  width: 1,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt,
-                                    size: 45,
-                                    color: AppColors.black80,
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                width: double.infinity,
+                                height: 280,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: AppColors.black60,
+                                    width: 1,
                                   ),
-                                  Text(
-                                    'Ambil Gambar',
-                                    style: AppTextStyle.h3.copyWith(
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.camera_alt,
+                                      size: 45,
                                       color: AppColors.black80,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'Ambil Gambar',
+                                      style: AppTextStyle.h3.copyWith(
+                                        color: AppColors.black80,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             const Gap(16),
