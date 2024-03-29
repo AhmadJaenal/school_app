@@ -11,6 +11,7 @@ import 'package:school_app/screens/homePage/parent/add_children.dart';
 import 'package:school_app/screens/homePage/parent/list_children.dart';
 import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
+import 'package:school_app/screens/homePage/student/camera.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
@@ -80,6 +81,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/edupay',
           page: () => Edupay(),
+        ),
+        GetPage(
+          name: '/camera',
+          page: () => CameraPage(),
         ),
       ],
     );

@@ -454,7 +454,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const Gap(11),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed('/camera');
+                              },
                               child: Container(
                                 width: double.infinity,
                                 height: 280,
