@@ -17,7 +17,8 @@ import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
 import 'screens/homePage/parent/detail_data.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
