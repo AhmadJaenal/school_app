@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:school_app/shared/theme.dart';
 
 late List<CameraDescription> _cameras;
 
@@ -25,7 +26,8 @@ class _CameraPageState extends State<CameraPage> {
     final cameras = await availableCameras();
     setState(() {
       _cameras = cameras;
-      controller = CameraController(_cameras[0], ResolutionPreset.ultraHigh);
+      controller = CameraController(_cameras[1], ResolutionPreset.max,
+          enableAudio: false);
       controller.initialize().then((_) {
         if (!mounted) {
           return;
@@ -43,6 +45,29 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraPreview(controller);
+    return Scaffold(
+      backgroundColor: AppColors.black,
+      body: CameraPreview(controller),
+      floatingActionButton: SizedBox(
+        width: 60,
+        height: 60,
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.black40.withOpacity(.3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              padding: const EdgeInsets.all(4)),
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: AppColors.white),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 }

@@ -35,7 +35,7 @@ class AppColors {
   static Color black80 = const Color(0xFF636E72);
   static Color black60 = const Color(0xFFB2BEC3);
   static Color black40 = const Color(0xFFDFE6E9);
-  static Color black20 = const Color(0xFFFFA033);
+  static Color black20 = const Color(0xFFDFE6E9);
   static Color black10 = const Color(0xFFF7FAFC);
 
   static Color white = const Color(0xFFFFFFFF);
