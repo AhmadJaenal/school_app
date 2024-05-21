@@ -8,7 +8,7 @@ import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

@@ -13,7 +13,6 @@ import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
 import 'package:school_app/screens/homePage/student/camera.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
-import 'package:school_app/screens/onBoarding/onBoarding.dart';
 
 import 'screens/homePage/parent/detail_data.dart';
 
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NavBarBottom(),
+      home: const NavBarBottom(),
       getPages: [
         GetPage(
           name: '/login',
@@ -45,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/home-page',
-          page: () => HomePage(),
+          page: () => const HomePage(),
         ),
         GetPage(
           name: '/nav',
@@ -73,19 +72,19 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/list-children',
-          page: () => ListChildren(),
+          page: () => const ListChildren(),
         ),
         GetPage(
           name: '/detail-data-children',
-          page: () => DetailData(),
+          page: () => const DetailData(),
         ),
         GetPage(
           name: '/edupay',
-          page: () => Edupay(),
+          page: () => const Edupay(),
         ),
         GetPage(
           name: '/camera',
-          page: () => CameraPage(),
+          page: () => const CameraPage(),
         ),
       ],
     );

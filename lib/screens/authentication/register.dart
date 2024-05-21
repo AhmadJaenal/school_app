@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
+import 'dart:developer' as developer;
 
 class Register extends StatelessWidget {
   Register({super.key});
@@ -88,9 +89,9 @@ class Register extends StatelessWidget {
               titleButton: 'Daftar',
               ontap: () {
                 if (formKey.currentState!.validate()) {
-                  print('validasi berhasil');
+                  developer.log('validari berhasil');
                 } else {
-                  print('validasi gagal');
+                  developer.log('validari gagal');
                 }
               }),
           const Gap(18),

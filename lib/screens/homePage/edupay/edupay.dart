@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
 
 class Edupay extends StatelessWidget {
   const Edupay({super.key});

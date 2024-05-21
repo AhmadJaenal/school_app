@@ -1,14 +1,10 @@
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_absence.dart';
 import 'package:school_app/widgets/card_activity.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AbsenceHistory extends StatelessWidget {
   AbsenceHistory({super.key});
@@ -149,10 +145,10 @@ class AbsenceHistory extends StatelessWidget {
               ],
             ),
             const Gap(15),
-            CardActivity(),
-            CardActivity(),
-            CardActivity(),
-            CardActivity(),
+            const CardActivity(),
+            const CardActivity(),
+            const CardActivity(),
+            const CardActivity(),
             const Gap(20),
           ],
         ),
