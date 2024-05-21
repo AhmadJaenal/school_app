@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
@@ -13,6 +14,7 @@ import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
 import 'package:school_app/screens/homePage/student/camera.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
+import 'package:school_app/screens/homePage/student/permit_application.dart';
 
 import 'screens/homePage/parent/detail_data.dart';
 
@@ -57,6 +59,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/absence-history',
           page: () => AbsenceHistory(),
+        ),
+        GetPage(
+          name: '/permit-application',
+          page: () => const PermitApplication(),
         ),
         GetPage(
           name: '/notification',

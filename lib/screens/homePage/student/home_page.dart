@@ -349,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const Spacer(),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => Get.toNamed('/permit-application'),
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
                               minimumSize: const Size(160, 34),
