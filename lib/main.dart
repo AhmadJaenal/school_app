@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
@@ -15,6 +14,7 @@ import 'package:school_app/screens/homePage/student/activity.dart';
 import 'package:school_app/screens/homePage/student/camera.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/homePage/student/permit_application.dart';
+import 'package:school_app/screens/onBoarding/on_boarding.dart';
 
 import 'screens/homePage/parent/detail_data.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const NavBarBottom(),
+      home: const OnBoarding(),
       getPages: [
         GetPage(
           name: '/login',
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/permit-application',
-          page: () => const PermitApplication(),
+          page: () => PermitApplication(),
         ),
         GetPage(
           name: '/notification',

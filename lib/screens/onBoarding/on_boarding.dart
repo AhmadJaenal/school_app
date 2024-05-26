@@ -13,10 +13,11 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
-  @override
   final CarouselController _controller = CarouselController();
+  get controllerCarousel => _controller;
   int _current = 0;
 
+  @override
   Widget build(BuildContext context) {
     List<List<String>> onBoarding = [
       [
@@ -51,7 +52,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 });
               },
             ),
-            carouselController: _controller,
+            carouselController: controllerCarousel,
             items: onBoarding.map((hero) {
               return Padding(
                 padding: const EdgeInsets.only(top: 70),

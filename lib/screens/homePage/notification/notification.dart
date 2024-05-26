@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 
+// ignore: must_be_immutable
 class NotificationPage extends StatelessWidget {
   NotificationPage({super.key});
 

@@ -16,24 +16,24 @@ class _NavBarBottomState extends State<NavBarBottom> {
   @override
   bool _clicked = false;
 
-  void _toggleRotation() {
-    setState(() {
-      _clicked = !_clicked;
-    });
-  }
+  // void _toggleRotation() {
+  //   setState(() {
+  //     _clicked = !_clicked;
+  //   });
+  // }
 
   Widget body() {
     switch (currentIndex) {
       case 0:
-        return HomePage();
+        return const HomePage();
       case 1:
-        return HomePage();
+        return const HomePage();
       case 2:
-        return Edupay();
+        return const Edupay();
       case 3:
-        return HomePage();
+        return const HomePage();
       default:
-        return HomePage();
+        return const HomePage();
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_activity.dart';
 
+// ignore: must_be_immutable
 class ActivityStudent extends StatelessWidget {
   ActivityStudent({super.key});
 

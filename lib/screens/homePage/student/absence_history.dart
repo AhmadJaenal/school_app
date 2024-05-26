@@ -6,6 +6,7 @@ import 'package:school_app/widgets/card_absence.dart';
 import 'package:school_app/widgets/card_activity.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+// ignore: must_be_immutable
 class AbsenceHistory extends StatelessWidget {
   AbsenceHistory({super.key});
 
@@ -18,7 +19,7 @@ class AbsenceHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(

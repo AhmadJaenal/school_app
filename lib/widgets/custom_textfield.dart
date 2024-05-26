@@ -81,6 +81,8 @@ class CustomTextArea extends StatelessWidget {
             textAlignVertical: TextAlignVertical.top,
             style: AppTextStyle.paragraphLBold.copyWith(color: AppColors.black),
             decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
