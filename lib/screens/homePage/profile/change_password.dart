@@ -68,6 +68,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                 context: context,
                 pageBuilder: (BuildContext context, Animation animation,
                     Animation secondaryAnimation) {
+                  Future.delayed(const Duration(seconds: 2), () {
+                    Get.back();
+                  });
                   return Align(
                     alignment: Alignment.topCenter,
                     child: Container(
