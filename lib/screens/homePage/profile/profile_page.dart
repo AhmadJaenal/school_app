@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: PrimaryButton(
                   titleButton: "Edit Profile",
-                  ontap: () {},
+                  ontap: () => Get.toNamed('/edit-profile'),
                 ),
               ),
               const Gap(49),
@@ -70,7 +70,7 @@ class ProfilePage extends StatelessWidget {
               TileMenuProfile(
                 icon: 'icon_history.png',
                 title: 'Riwayat Pembayaran',
-                ontap: () {},
+                ontap: () => Get.toNamed('/history-payment'),
               ),
               TileMenuProfile(
                 icon: 'icon_password.png',
