@@ -9,6 +9,7 @@ import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/screens/homePage/notification/notification.dart';
 import 'package:school_app/screens/homePage/parent/add_children.dart';
 import 'package:school_app/screens/homePage/parent/list_children.dart';
+import 'package:school_app/screens/homePage/profile/profile_page.dart';
 import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
 import 'package:school_app/screens/homePage/student/camera.dart';
@@ -91,6 +92,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/camera',
           page: () => const CameraPage(),
+        ),
+        GetPage(
+          name: '/profile-page',
+          page: () => const ProfilePage(),
         ),
       ],
     );
