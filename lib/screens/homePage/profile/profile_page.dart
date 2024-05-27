@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
@@ -61,21 +62,25 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ],
               ),
-              const TileMenuProfile(
+              TileMenuProfile(
                 icon: 'icon_card_profile.png',
                 title: 'Profil Lengkap',
+                ontap: () => Get.toNamed('/detail-profile'),
               ),
-              const TileMenuProfile(
+              TileMenuProfile(
                 icon: 'icon_history.png',
                 title: 'Riwayat Pembayaran',
+                ontap: () {},
               ),
-              const TileMenuProfile(
+              TileMenuProfile(
                 icon: 'icon_password.png',
                 title: 'Ganti Password',
+                ontap: () {},
               ),
-              const TileMenuProfile(
+              TileMenuProfile(
                 icon: 'icon_box_logout.png',
                 title: 'Log out',
+                ontap: () {},
               ),
             ],
           ),
