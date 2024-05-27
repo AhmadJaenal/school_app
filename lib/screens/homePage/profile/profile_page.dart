@@ -80,7 +80,62 @@ class ProfilePage extends StatelessWidget {
               TileMenuProfile(
                 icon: 'icon_box_logout.png',
                 title: 'Log out',
-                ontap: () {},
+                ontap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    builder: (context) => Container(
+                      width: double.infinity,
+                      height: 165,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 22),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: AppMargin.defaultMargin,
+                        vertical: 28,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Logout',
+                            style: AppTextStyle.h3.copyWith(
+                              color: AppColors.darkBlue,
+                            ),
+                          ),
+                          const Gap(8),
+                          Text(
+                            'Apakah Anda yakin ingin keluar?',
+                            style: AppTextStyle.paragraphL.copyWith(
+                              color: AppColors.darkBlue,
+                            ),
+                          ),
+                          const Gap(8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 130,
+                                child: SecondaryButton(
+                                    titleButton: 'Batal',
+                                    ontap: () => Get.back()),
+                              ),
+                              SizedBox(
+                                width: 130,
+                                child: PrimaryButton(
+                                    titleButton: 'Logout', ontap: () {}),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
