@@ -63,7 +63,35 @@ class _ChangePasswordState extends State<ChangePassword> {
           padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
           child: PrimaryButton(
             titleButton: 'Perbarui',
-            ontap: () {},
+            ontap: () {
+              showGeneralDialog(
+                context: context,
+                pageBuilder: (BuildContext context, Animation animation,
+                    Animation secondaryAnimation) {
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 50),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: AppColors.success4,
+                      ),
+                      child: Text(
+                        'Password berhasil diubah!',
+                        style: AppTextStyle.paragraphL.copyWith(
+                          color: AppColors.green,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
