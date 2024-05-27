@@ -9,7 +9,10 @@ import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/screens/homePage/notification/notification.dart';
 import 'package:school_app/screens/homePage/parent/add_children.dart';
 import 'package:school_app/screens/homePage/parent/list_children.dart';
+import 'package:school_app/screens/homePage/profile/change_password.dart';
 import 'package:school_app/screens/homePage/profile/detail_profile.dart';
+import 'package:school_app/screens/homePage/profile/edit_profile.dart';
+import 'package:school_app/screens/homePage/profile/history_payment.dart';
 import 'package:school_app/screens/homePage/profile/profile_page.dart';
 import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
@@ -101,6 +104,18 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/detail-profile',
           page: () => const DetailProfile(),
+        ),
+        GetPage(
+          name: '/change-password',
+          page: () => const ChangePassword(),
+        ),
+        GetPage(
+          name: '/edit-profile',
+          page: () => const EditProfile(),
+        ),
+        GetPage(
+          name: '/history-payment',
+          page: () => const HistoryPayment(),
         ),
       ],
     );
