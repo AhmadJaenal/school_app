@@ -9,6 +9,7 @@ import 'package:school_app/screens/homePage/nav/navBar.dart';
 import 'package:school_app/screens/homePage/notification/notification.dart';
 import 'package:school_app/screens/homePage/parent/add_children.dart';
 import 'package:school_app/screens/homePage/parent/list_children.dart';
+import 'package:school_app/screens/homePage/profile/detail_profile.dart';
 import 'package:school_app/screens/homePage/profile/profile_page.dart';
 import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
@@ -96,6 +97,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/profile-page',
           page: () => const ProfilePage(),
+        ),
+        GetPage(
+          name: '/detail-profile',
+          page: () => const DetailProfile(),
         ),
       ],
     );
