@@ -75,7 +75,7 @@ class ProfilePage extends StatelessWidget {
               TileMenuProfile(
                 icon: 'icon_password.png',
                 title: 'Ganti Password',
-                ontap: () {},
+                ontap: () => Get.toNamed('/change-password'),
               ),
               TileMenuProfile(
                 icon: 'icon_box_logout.png',
