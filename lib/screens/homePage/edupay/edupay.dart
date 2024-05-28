@@ -190,7 +190,89 @@ class Edupay extends StatelessWidget {
                         width: 100,
                         height: 32,
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 32, vertical: 25),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                  color: AppColors.white,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        'Top-Up Saldo EduPay',
+                                        style: AppTextStyle.h3.copyWith(
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    const Gap(12),
+                                    Text(
+                                      'Jumlah Simpan (Rp)',
+                                      style: AppTextStyle.paragraphL.copyWith(
+                                        color: AppColors.black80,
+                                      ),
+                                    ),
+                                    const Gap(16),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CardNominal(
+                                          amount: '10.000',
+                                          onPressed: () {},
+                                        ),
+                                        CardNominal(
+                                          amount: '20.000',
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                    const Gap(12),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CardNominal(
+                                          amount: '50.000',
+                                          onPressed: () {},
+                                        ),
+                                        CardNominal(
+                                          amount: '100.000',
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                    const Gap(12),
+                                    CustomTextField(
+                                      hintText: 'Masukan Nominal',
+                                      titleTextField: 'Masukkan Jumlah (Rp)',
+                                      textController: amountController,
+                                    ),
+                                    const Gap(16),
+                                    Text(
+                                      'Masukkan nominal Top-Up yang ingin anda isi.',
+                                      style: AppTextStyle.paragraphL.copyWith(
+                                        color: AppColors.black80,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const Gap(16),
+                                    PrimaryButton(
+                                        titleButton: 'Simpan', ontap: () {}),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.white,
                             minimumSize: const Size(double.infinity, 56),
@@ -256,7 +338,48 @@ class Edupay extends StatelessWidget {
                         width: 130,
                         height: 32,
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 32),
+                                height: 300,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Gap(16),
+                                    Center(
+                                      child: Text(
+                                        'Ambil Uang',
+                                        style: AppTextStyle.h3.copyWith(
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    const Gap(12),
+                                    CustomTextField(
+                                      hintText: 'Masukkan Jumlah (Rp)',
+                                      titleTextField: 'Masukkan Nominal',
+                                      textController: amountController,
+                                    ),
+                                    const Gap(16),
+                                    Text(
+                                      'Masukkan nominal uang yang akan Anda Ambil.',
+                                      style: AppTextStyle.paragraphL.copyWith(
+                                        color: AppColors.black80,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const Gap(16),
+                                    PrimaryButton(
+                                        titleButton: 'Simpan', ontap: () {}),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: AppColors.primary1,
@@ -355,87 +478,3 @@ class Edupay extends StatelessWidget {
     );
   }
 }
-
-
-
-// showModalBottomSheet(
-//                               context: context,
-//                               builder: (context) => Container(
-//                                 width: double.infinity,
-//                                 padding: const EdgeInsets.symmetric(
-//                                     horizontal: 32, vertical: 25),
-//                                 decoration: BoxDecoration(
-//                                   borderRadius: const BorderRadius.vertical(
-//                                     top: Radius.circular(20),
-//                                   ),
-//                                   color: AppColors.white,
-//                                 ),
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Center(
-//                                       child: Text(
-//                                         'Tabungkan',
-//                                         style: AppTextStyle.h3.copyWith(
-//                                           color: AppColors.black,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     const Gap(12),
-//                                     Text(
-//                                       'Jumlah Simpan (Rp)',
-//                                       style: AppTextStyle.paragraphL.copyWith(
-//                                         color: AppColors.black80,
-//                                       ),
-//                                     ),
-//                                     const Gap(16),
-//                                     Row(
-//                                       mainAxisAlignment:
-//                                           MainAxisAlignment.spaceBetween,
-//                                       children: [
-//                                         CardNominal(
-//                                           amount: '10.000',
-//                                           onPressed: () {},
-//                                         ),
-//                                         CardNominal(
-//                                           amount: '20.000',
-//                                           onPressed: () {},
-//                                         ),
-//                                       ],
-//                                     ),
-//                                     const Gap(12),
-//                                     Row(
-//                                       mainAxisAlignment:
-//                                           MainAxisAlignment.spaceBetween,
-//                                       children: [
-//                                         CardNominal(
-//                                           amount: '50.000',
-//                                           onPressed: () {},
-//                                         ),
-//                                         CardNominal(
-//                                           amount: '100.000',
-//                                           onPressed: () {},
-//                                         ),
-//                                       ],
-//                                     ),
-//                                     const Gap(12),
-//                                     CustomTextField(
-//                                       hintText: 'Masukan Nominal',
-//                                       titleTextField: 'Masukkan Jumlah (Rp)',
-//                                       textController: amountController,
-//                                     ),
-//                                     const Gap(16),
-//                                     Text(
-//                                       'Masukkan nominal uang yang akan Anda/n Tabungkan.',
-//                                       style: AppTextStyle.paragraphL.copyWith(
-//                                         color: AppColors.black80,
-//                                       ),
-//                                       textAlign: TextAlign.center,
-//                                     ),
-//                                     const Gap(16),
-//                                     PrimaryButton(
-//                                         titleButton: 'Simpan', ontap: () {}),
-//                                   ],
-//                                 ),
-//                               ),
-//                             );
