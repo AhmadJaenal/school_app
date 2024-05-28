@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
+import 'package:school_app/screens/homePage/edupay/bill_page.dart';
 import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/event/list_event.dart';
 import 'package:school_app/screens/homePage/nav/navBar.dart';
@@ -116,6 +117,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/history-payment',
           page: () => const HistoryPayment(),
+        ),
+        GetPage(
+          name: '/bill-page',
+          page: () => const BillPage(),
         ),
       ],
     );

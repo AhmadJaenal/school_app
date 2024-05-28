@@ -95,3 +95,65 @@ class CardNominal extends StatelessWidget {
     );
   }
 }
+
+class TransactionSPPWidget extends StatelessWidget {
+  final String codeTransaction;
+  final String date;
+  final String nameBank;
+  final String amount;
+  const TransactionSPPWidget({
+    super.key,
+    required this.codeTransaction,
+    required this.date,
+    required this.nameBank,
+    required this.amount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 65,
+      margin: const EdgeInsets.only(bottom: 6),
+      child: Column(
+        children: [
+          const Gap(6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                codeTransaction,
+                style: AppTextStyle.paragraphL.copyWith(
+                  color: AppColors.black100,
+                ),
+              ),
+              Text(
+                codeTransaction,
+                style: AppTextStyle.paragraphS.copyWith(
+                  color: AppColors.black100,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'RP$amount',
+                style: AppTextStyle.h3.copyWith(
+                  color: AppColors.black100,
+                ),
+              ),
+              Text(
+                nameBank,
+                style: AppTextStyle.paragraphS.copyWith(
+                  color: AppColors.black100,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

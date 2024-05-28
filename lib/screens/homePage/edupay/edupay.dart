@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
@@ -412,32 +414,35 @@ class Edupay extends StatelessWidget {
               ),
             ),
             const Gap(12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: AppColors.info1.withOpacity(.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Image.asset('assets/icon_student_black.png'),
-                ),
-                const Gap(4),
-                SizedBox(
-                  width: 48,
-                  child: Text(
-                    'Tagihan SPP',
-                    style: AppTextStyle.paragraphXSBold.copyWith(
-                      color: AppColors.black,
+            GestureDetector(
+              onTap: () => Get.toNamed('/bill-page'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.info1.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
+                    child: Image.asset('assets/icon_student_black.png'),
                   ),
-                ),
-              ],
+                  const Gap(4),
+                  SizedBox(
+                    width: 48,
+                    child: Text(
+                      'Tagihan SPP',
+                      style: AppTextStyle.paragraphXSBold.copyWith(
+                        color: AppColors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const Gap(16),
             Row(
