@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/edupay',
-          page: () => const Edupay(),
+          page: () => Edupay(),
         ),
         GetPage(
           name: '/camera',

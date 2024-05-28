@@ -30,7 +30,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
       case 1:
         return const HomePage();
       case 2:
-        return const Edupay();
+        return Edupay();
       case 3:
         return const ProfilePage();
       default:
