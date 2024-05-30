@@ -14,15 +14,6 @@ class NavBarBottom extends StatefulWidget {
 class _NavBarBottomState extends State<NavBarBottom> {
   int currentIndex = 0;
 
-  @override
-  bool _clicked = false;
-
-  // void _toggleRotation() {
-  //   setState(() {
-  //     _clicked = !_clicked;
-  //   });
-  // }
-
   Widget body() {
     switch (currentIndex) {
       case 0:

@@ -6,7 +6,7 @@ import 'package:school_app/screens/authentication/register.dart';
 import 'package:school_app/screens/homePage/edupay/bill_page.dart';
 import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/event/list_event.dart';
-import 'package:school_app/screens/homePage/nav/navBar.dart';
+import 'package:school_app/screens/homePage/nav/nav_bar.dart';
 import 'package:school_app/screens/homePage/notification/notification.dart';
 import 'package:school_app/screens/homePage/parent/add_children.dart';
 import 'package:school_app/screens/homePage/parent/list_children.dart';
