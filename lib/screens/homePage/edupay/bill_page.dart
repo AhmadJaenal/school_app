@@ -137,8 +137,11 @@ class BillPage extends StatelessWidget {
                       SizedBox(
                         width: 80,
                         height: 50,
-                        child:
-                            PrimaryButton(titleButton: 'Bayar', ontap: () {}),
+                        child: PrimaryButton(
+                            titleButton: 'Bayar',
+                            ontap: () {
+                              Get.toNamed('/payment-spp');
+                            }),
                       )
                     ],
                   ),
