@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:school_app/screens/authentication/forgot_password.dart';
 import 'package:school_app/screens/authentication/login.dart';
 import 'package:school_app/screens/authentication/register.dart';
+import 'package:school_app/screens/homePage/edumart/cart_product.dart';
+import 'package:school_app/screens/homePage/edumart/detail_product.dart';
+import 'package:school_app/screens/homePage/edumart/edumart.dart';
 import 'package:school_app/screens/homePage/edupay/bill_page.dart';
 import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/edupay/invoice_spp.dart';
@@ -131,6 +134,18 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/invoice-spp',
           page: () => const InvoiceSPP(),
+        ),
+        GetPage(
+          name: '/edumart',
+          page: () => const EdumartPage(),
+        ),
+        GetPage(
+          name: '/detail-product',
+          page: () => const DetailProduct(),
+        ),
+        GetPage(
+          name: '/cart-product',
+          page: () => const CartProduct(),
         ),
       ],
     );
