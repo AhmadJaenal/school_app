@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/screens/homePage/edumart/edumart.dart';
 import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/profile/profile_page.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
@@ -19,7 +20,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
       case 0:
         return const HomePage();
       case 1:
-        return const HomePage();
+        return const EdumartPage();
       case 2:
         return Edupay();
       case 3:
