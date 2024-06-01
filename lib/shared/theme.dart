@@ -42,6 +42,8 @@ class AppColors {
   static Color blue = const Color(0xFF0B63E5);
   static Color green = const Color(0xFF2ECC71);
   static Color darkBlue = const Color(0xFF273B4A);
+
+  static Color backgroundColor = const Color(0xffF3F5F9);
 }
 
 class AppTextStyle {
