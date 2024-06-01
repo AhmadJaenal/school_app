@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
+import 'package:school_app/widgets/custom_button.dart';
 
 class InvoiceSPP extends StatelessWidget {
   const InvoiceSPP({super.key});
@@ -297,6 +298,15 @@ class InvoiceSPP extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+        child: PrimaryButton(
+            titleButton: 'Menu',
+            ontap: () {
+              Get.offNamed('/nav');
+            }),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
