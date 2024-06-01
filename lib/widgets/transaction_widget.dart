@@ -7,12 +7,14 @@ class TransactionWidget extends StatelessWidget {
   final String titleTransaction;
   final String date;
   final String amount;
+  final bool isTopUp;
   const TransactionWidget({
     super.key,
     this.isCashIn = true,
     required this.titleTransaction,
     required this.amount,
     required this.date,
+    this.isTopUp = false,
   });
 
   @override
@@ -23,12 +25,25 @@ class TransactionWidget extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.blue.withOpacity(.2),
-            child: Icon(
-              Icons.keyboard_arrow_up_rounded,
-              color: AppColors.blue,
-            ),
-          ),
+              backgroundColor: isTopUp
+                  ? AppColors.secondary1.withOpacity(.2)
+                  : isCashIn
+                      ? AppColors.green.withOpacity(.2)
+                      : AppColors.blue.withOpacity(.2),
+              child: isTopUp
+                  ? Icon(
+                      Icons.add_circle_outline_outlined,
+                      color: AppColors.secondary1,
+                    )
+                  : isCashIn
+                      ? Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: AppColors.green,
+                        )
+                      : Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          color: AppColors.blue,
+                        )),
           const Gap(6),
           RichText(
             text: TextSpan(
@@ -49,7 +64,7 @@ class TransactionWidget extends StatelessWidget {
           const Spacer(),
           isCashIn
               ? Text(
-                  '+Rp$amount',
+                  'Rp$amount',
                   style: AppTextStyle.h3.copyWith(
                     color: AppColors.green,
                   ),
