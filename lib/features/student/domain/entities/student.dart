@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 
 class StudentEntity extends Equatable {
   final int id;
-  final String fullName;
   final String nisn;
+  final String fullName;
   final String email;
   final String type;
   final int year;
@@ -13,8 +13,8 @@ class StudentEntity extends Equatable {
 
   const StudentEntity({
     required this.id,
-    required this.fullName,
     required this.nisn,
+    required this.fullName,
     required this.email,
     required this.type,
     required this.year,
@@ -27,8 +27,8 @@ class StudentEntity extends Equatable {
   List<Object?> get props {
     return [
       id,
-      fullName,
       nisn,
+      fullName,
       email,
       type,
       year,
