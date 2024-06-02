@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
+import 'package:school_app/widgets/card_cart_product.dart';
 
 class CartProduct extends StatelessWidget {
   const CartProduct({super.key});
@@ -25,13 +28,14 @@ class CartProduct extends StatelessWidget {
           ),
         ],
         title: Text(
-          'Detail Produk',
+          'Keranjang',
           style: AppTextStyle.h2.copyWith(color: AppColors.black100),
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [],
+      body: ListView.builder(
+        itemCount: 7,
+        itemBuilder: (context, index) => cartProduct(),
       ),
     );
   }
