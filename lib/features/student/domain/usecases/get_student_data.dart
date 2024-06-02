@@ -1,3 +1,6 @@
+import 'package:dartz/dartz.dart';
+
+import '../../../../core/error/failure.dart';
 import '../entities/student.dart';
 import '../repositories/student_repository.dart';
 
@@ -6,7 +9,7 @@ class GetStudentData {
 
   const GetStudentData(this.studentRepository);
 
-  Future<StudentEntity> execute(int id) async {
+  Future<Either<Failure, StudentEntity>> execute(int id) async {
     return await studentRepository.getStudentData(id);
   }
 }
