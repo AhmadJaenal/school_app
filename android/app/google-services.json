@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "260012364833",
+    "project_id": "ceksekolah-25fde",
+    "storage_bucket": "ceksekolah-25fde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260012364833:android:c03ddfb1efdb7883e23f60",
+        "android_client_info": {
+          "package_name": "com.cek_sekolah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgeJ_xF9vbEF2y7W9x2UPElbR00pwyX5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260012364833:android:94efb85f8d99a7cee23f60",
+        "android_client_info": {
+          "package_name": "com.example.school_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgeJ_xF9vbEF2y7W9x2UPElbR00pwyX5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
