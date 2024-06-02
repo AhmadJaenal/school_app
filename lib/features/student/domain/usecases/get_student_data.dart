@@ -1,0 +1,12 @@
+import '../entities/student.dart';
+import '../repositories/student_repository.dart';
+
+class GetStudentData {
+  final StudentRepository studentRepository;
+
+  const GetStudentData(this.studentRepository);
+
+  Future<StudentEntity> execute(int id) async {
+    return await studentRepository.getStudentData(id);
+  }
+}
