@@ -24,5 +24,17 @@ class StudentEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props {
+    return [
+      id,
+      fullName,
+      nisn,
+      email,
+      type,
+      year,
+      address,
+      religion,
+      classroom,
+    ];
+  }
 }
