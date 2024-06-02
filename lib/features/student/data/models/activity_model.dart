@@ -31,4 +31,11 @@ class ActivityModel extends ActivityStudentEntity {
       "attendance_status": attendanceStatus,
     };
   }
+
+  static List<ActivityModel> fromJsonList(List data) {
+    if (data.isEmpty) return [];
+    return data
+        .map((singleDataActivity) => ActivityModel.fromJson(singleDataActivity))
+        .toList();
+  }
 }

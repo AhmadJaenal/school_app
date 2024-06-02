@@ -37,4 +37,12 @@ class TransactionModel extends TransactionEntity {
       "total_price": totalPrice,
     };
   }
+
+  static List<TransactionModel> fromJsonList(List data) {
+    if (data.isEmpty) return [];
+    return data
+        .map((singleDataTransaction) =>
+            TransactionModel.fromjson(singleDataTransaction))
+        .toList();
+  }
 }

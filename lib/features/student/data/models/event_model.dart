@@ -28,4 +28,12 @@ class EventModel extends EventEntity {
       "content": content,
     };
   }
+
+  static List<EventModel> fromJsonLlist(List data) {
+    if (data.isEmpty) return [];
+
+    return data
+        .map((singleDataEvent) => EventModel.fromjson(singleDataEvent))
+        .toList();
+  }
 }
