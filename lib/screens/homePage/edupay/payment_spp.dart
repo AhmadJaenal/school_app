@@ -202,7 +202,7 @@ class PaymentSPP extends StatelessWidget {
         child: PrimaryButton(
             titleButton: 'Bayar',
             ontap: () {
-              Get.toNamed('/invoice-spp');
+              Get.toNamed('/invoice');
             }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

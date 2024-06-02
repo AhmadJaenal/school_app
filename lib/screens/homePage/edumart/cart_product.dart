@@ -28,7 +28,7 @@ class _CartProductState extends State<CartProduct> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: () => Get.toNamed('/history-edumart'),
             child: Padding(
               padding: EdgeInsets.only(right: AppMargin.defaultMargin),
               child: Icon(Icons.history, color: AppColors.black100),
@@ -107,7 +107,12 @@ class _CartProductState extends State<CartProduct> {
                 ),
                 SizedBox(
                   width: 130,
-                  child: PrimaryButton(titleButton: 'Checkout', ontap: () {}),
+                  child: PrimaryButton(
+                    titleButton: 'Checkout',
+                    ontap: () {
+                      Get.offAllNamed('/invoice');
+                    },
+                  ),
                 ),
               ],
             ),
