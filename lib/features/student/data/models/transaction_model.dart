@@ -4,8 +4,7 @@ class TransactionModel extends TransactionEntity {
   const TransactionModel({
     required super.id,
     required super.idUser,
-    required super.productName,
-    required super.category,
+    required super.idProduct,
     required super.codeTransaction,
     required super.date,
     required super.quantity,
@@ -17,8 +16,7 @@ class TransactionModel extends TransactionEntity {
     return TransactionModel(
       id: json['id'],
       idUser: json['id_user'],
-      productName: json['product_name'],
-      category: json['category'],
+      idProduct: json['id_product'],
       codeTransaction: json['code_transaction'],
       date: json['date'],
       quantity: json['quantity'],
@@ -31,8 +29,7 @@ class TransactionModel extends TransactionEntity {
     return {
       "id": id,
       "id_user": idUser,
-      "product_name": productName,
-      "category": category,
+      "id_product": idProduct,
       "code_transaction": codeTransaction,
       "date": date,
       "quantity": quantity,

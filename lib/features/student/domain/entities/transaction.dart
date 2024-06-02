@@ -3,8 +3,7 @@ import 'package:equatable/equatable.dart';
 class TransactionEntity extends Equatable {
   final int id;
   final int idUser;
-  final String productName;
-  final String category;
+  final int idProduct;
   final String codeTransaction;
   final String date;
   final String quantity;
@@ -14,8 +13,7 @@ class TransactionEntity extends Equatable {
   const TransactionEntity({
     required this.id,
     required this.idUser,
-    required this.productName,
-    required this.category,
+    required this.idProduct,
     required this.codeTransaction,
     required this.date,
     required this.quantity,
@@ -28,8 +26,7 @@ class TransactionEntity extends Equatable {
     return [
       id,
       idUser,
-      productName,
-      category,
+      idProduct,
       codeTransaction,
       date,
       quantity,
