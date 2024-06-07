@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../../core/style/style.dart';
+import '../widgets/card_activity.dart';
+
+// ignore: must_be_immutable
+class ActivityStudent extends StatelessWidget {
+  ActivityStudent({super.key});
+
+  List<List<String>> notification = [
+    ['Izin diterima', 'Permohonan izin diterima oleh sekolah.', '15:29'],
+    [
+      'Pembayaran SPP',
+      'Segera lakukan pembayaran SPP sebelum tanggal 19 September 2023',
+      '18:29'
+    ],
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        leading: GestureDetector(
+          onTap: () => Get.back(),
+          child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
+        ),
+        title: Text(
+          'Aktivitas',
+          style: AppTextStyle.h2.copyWith(color: AppColors.black),
+        ),
+        centerTitle: true,
+      ),
+      body: Expanded(
+        child: ListView.builder(
+          itemCount: notification.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+              child: const CardActivity(),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
