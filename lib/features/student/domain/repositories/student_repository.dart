@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../event/domain/entities/event_entity.dart';
+import '../../../transaction/domain/entities/transaction_entity.dart';
 import '../entities/activity.dart';
-import '../entities/event.dart';
 import '../entities/student.dart';
-import '../entities/transaction.dart';
 
 abstract class StudentRepository {
   Future<Either<Failure, StudentEntity>> getStudentData(int id);
