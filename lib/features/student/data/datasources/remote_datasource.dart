@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../event/domain/entities/event_entity.dart';
+import '../../../transaction/domain/entities/transaction_entity.dart';
 import '../../domain/entities/activity.dart';
-import '../../domain/entities/event.dart';
 import '../../domain/entities/student.dart';
-import '../../domain/entities/transaction.dart';
 
 abstract class StudentRemoteDatasource {
   Future<StudentEntity> getStudentData(String id);
