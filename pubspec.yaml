@@ -38,7 +38,7 @@ dependencies:
   google_fonts: ^6.2.1
   get: ^4.6.6
   gap: ^3.0.1
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   table_calendar: ^3.1.0
   syncfusion_flutter_datepicker: ^25.1.35
   flutter_map: ^6.1.0
