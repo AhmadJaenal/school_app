@@ -9,7 +9,6 @@ class AddChildren extends StatelessWidget {
   AddChildren({super.key});
   final TextEditingController _nisnC = TextEditingController();
 
-  @override
   void dispose() {
     _nisnC.dispose();
   }
@@ -21,7 +20,7 @@ class AddChildren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

@@ -1,9 +1,7 @@
-import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
@@ -20,25 +18,6 @@ class _HomePageState extends State<HomePage> {
     ['img_event_2.png', 'Acara Idul Adha', '12 Juni 2023'],
     ['img_event_3.png', 'Acara Idul Adha', '12 Juni 2023'],
   ];
-
-  late PermissionStatus _cameraPermissionStatus;
-
-  Future<void> _checkPermission() async {
-    PermissionStatus status = await Permission.camera.status;
-    setState(() {
-      _cameraPermissionStatus = status;
-    });
-  }
-
-  Future<void> _requestPermission() async {
-    PermissionStatus status = await Permission.camera.request();
-    setState(() {
-      _cameraPermissionStatus = status;
-    });
-  }
-
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
@@ -123,10 +102,10 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           IconButton(
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
+                                backgroundColor: WidgetStateProperty.all(
                                   AppColors.info1.withOpacity(.1),
                                 ),
-                                shape: MaterialStateProperty.all(
+                                shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(9),
                                   ),
@@ -162,10 +141,10 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           IconButton(
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
+                                backgroundColor: WidgetStateProperty.all(
                                   AppColors.info1.withOpacity(.1),
                                 ),
-                                shape: MaterialStateProperty.all(
+                                shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(9),
                                   ),

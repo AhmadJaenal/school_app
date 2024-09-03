@@ -75,6 +75,7 @@ class CustomTextArea extends StatelessWidget {
               if (value!.isEmpty) {
                 return 'DATA TIDAK BOLEH KOSONG';
               }
+              return null;
             },
             maxLines: 5,
             controller: textController,

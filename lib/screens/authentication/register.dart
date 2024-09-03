@@ -18,7 +18,6 @@ class Register extends StatelessWidget {
   final TextEditingController _konfimasiPC = TextEditingController();
   final TextEditingController _alamatC = TextEditingController();
 
-  @override
   void dispose() {
     _nisnC.dispose();
     _nipnC.dispose();
@@ -89,6 +88,7 @@ class Register extends StatelessWidget {
               titleButton: 'Daftar',
               ontap: () {
                 if (formKey.currentState!.validate()) {
+                  _clearTextControllers();
                   developer.log('validari berhasil');
                 } else {
                   developer.log('validari gagal');
