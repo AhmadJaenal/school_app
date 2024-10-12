@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:school_app/models/student.dart';
+import 'package:school_app/models/user.dart';
+import 'package:school_app/provider/student/index.dart';
+import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
+import 'dart:developer' as developer;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,17 +19,54 @@ class Login extends StatefulWidget {
 }
 
 final formKey = GlobalKey<FormState>();
-TextEditingController _emailC = TextEditingController();
-TextEditingController _passwordC = TextEditingController();
+TextEditingController _nisn = TextEditingController(text: 'intern@gmail.com');
+TextEditingController _passwordC = TextEditingController(text: 'password');
 @override
 void dispose() {
-  _emailC.dispose();
+  _nisn.dispose();
   _passwordC.dispose();
 }
 
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
+    StudentAuthProvider studentAuth = Provider.of<StudentAuthProvider>(context);
+
+    var loading = const CircularProgressIndicator();
+    doLogin() {
+      final form = formKey.currentState;
+
+      if (form!.validate()) {
+        form.save();
+
+        final Future<Map<String, dynamic>> successfulMessage =
+            studentAuth.login(
+                email: _nisn.text.toString(),
+                password: _passwordC.text.toString());
+
+        successfulMessage.then((response) {
+          if (response['status']) {
+            User user = response['data'];
+            Provider.of<StudentProvider>(context, listen: false)
+                .setStudent(user);
+            Navigator.of(context).pushReplacementNamed('/nav');
+
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const Center(child: Text('Successfuly to login'));
+                });
+          } else {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const Center(child: Text('Failed to login'));
+                });
+          }
+        });
+      }
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -59,9 +102,9 @@ class _LoginState extends State<Login> {
               ),
               const Gap(10),
               CustomTextField(
-                hintText: "Masukan email",
-                titleTextField: 'Email',
-                textController: _emailC,
+                hintText: "Masukan NISN",
+                titleTextField: 'NISN',
+                textController: _nisn,
               ),
               CustomTextFieldPassword(
                   titleTextField: 'Password',
@@ -80,15 +123,9 @@ class _LoginState extends State<Login> {
                 ),
               ),
               const Gap(30),
-              PrimaryButton(
-                  titleButton: "Masuk",
-                  ontap: () {
-                    if (formKey.currentState!.validate()) {
-                      Get.toNamed('/nav');
-                    } else {
-                      print('validasi gagal');
-                    }
-                  }),
+              studentAuth.loggedInStatus == Status.authenticating
+                  ? loading
+                  : PrimaryButton(titleButton: "Masuk", ontap: () => doLogin()),
               const Spacer(),
               Center(
                 child: GestureDetector(
