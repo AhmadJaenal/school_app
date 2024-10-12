@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:school_app/datasource/local_datasource.dart';
+import 'package:school_app/models/user.dart';
+import 'package:school_app/provider/student/index.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
+import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
+import 'dart:developer' as developer;
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    StudentAuthProvider usertAuth = Provider.of<StudentAuthProvider>(context);
+    UserPreferences userPrefs = UserPreferences();
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -22,17 +41,36 @@ class ProfilePage extends StatelessWidget {
                 width: 103,
               ),
               const Gap(6),
-              Text(
-                'Budi Septian',
-                style: AppTextStyle.h2.copyWith(
-                  color: AppColors.black100,
-                ),
-              ),
-              Text(
-                'Siswa',
-                style: AppTextStyle.h3.copyWith(
-                  color: AppColors.black80,
-                ),
+              FutureBuilder(
+                future: userPrefs.getUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    User userData = snapshot.data!;
+                    return Column(
+                      children: [
+                        Text(
+                          userData.fullName!,
+                          style: AppTextStyle.h2.copyWith(
+                            color: AppColors.black100,
+                          ),
+                        ),
+                        Text(
+                          'Siswa',
+                          style: AppTextStyle.h3.copyWith(
+                            color: AppColors.black80,
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Text(
+                      'Gagal',
+                      style: AppTextStyle.h2.copyWith(
+                        color: AppColors.black100,
+                      ),
+                    );
+                  }
+                },
               ),
               const Gap(14),
               Padding(
@@ -127,7 +165,11 @@ class ProfilePage extends StatelessWidget {
                               SizedBox(
                                 width: 130,
                                 child: PrimaryButton(
-                                    titleButton: 'Logout', ontap: () {}),
+                                  titleButton: 'Logout',
+                                  ontap: () {
+                                    usertAuth.logOut(context);
+                                  },
+                                ),
                               ),
                             ],
                           ),
