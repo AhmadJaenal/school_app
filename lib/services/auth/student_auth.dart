@@ -20,7 +20,7 @@ enum Status {
 
 class StudentAuthProvider with ChangeNotifier {
   Status _loggedInStatus = Status.loggedIn;
-  Status _registeredInStatus = Status.notRegistered;
+  final Status _registeredInStatus = Status.notRegistered;
 
   Status get loggedInStatus => _loggedInStatus;
   Status get registeredInStatus => _registeredInStatus;
@@ -45,10 +45,6 @@ class StudentAuthProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       var userData = responseData['data'];
-
-      developer.log(userData.toString(), name: 'response login api');
-      developer.log(response.statusCode.toString(),
-          name: 'response status code');
 
       User authUser = User.fromJson(userData);
       UserPreferences().saveUser(authUser);
