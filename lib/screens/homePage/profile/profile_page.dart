@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/datasource/local_datasource.dart';
 import 'package:school_app/models/user.dart';
-import 'package:school_app/provider/student/index.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
 import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
-import 'dart:developer' as developer;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
