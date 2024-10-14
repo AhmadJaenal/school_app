@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/models/student.dart';
 import 'package:school_app/models/user.dart';
 import 'package:school_app/provider/student/index.dart';
 import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/widgets/custom_popup_message.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
-import 'dart:developer' as developer;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -32,7 +31,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     StudentAuthProvider studentAuth = Provider.of<StudentAuthProvider>(context);
 
-    var loading = const CircularProgressIndicator();
+    var loading = const Center(child: CircularProgressIndicator());
     doLogin() {
       final form = formKey.currentState;
 
@@ -51,17 +50,9 @@ class _LoginState extends State<Login> {
                 .setStudent(user);
             Navigator.of(context).pushReplacementNamed('/nav');
 
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const Center(child: Text('Successfuly to login'));
-                });
+            popUpLogin(context, true);
           } else {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const Center(child: Text('Failed to login'));
-                });
+            popUpLogin(context, false);
           }
         });
       }
@@ -155,6 +146,18 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> popUpLogin(BuildContext context, bool isSuccess) {
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (context) => PopUpMessage(
+          isSuccess: isSuccess,
+          successMessage: 'Login berhasil!',
+          failedMessage: 'Email atau password salah!'),
     );
   }
 }
