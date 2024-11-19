@@ -34,4 +34,5 @@ class URLs {
       "$baseURL/api/admin/all/user/submission/today";
 
   static const String getAssignmentProject = "$baseURL/api/admin/assignment";
+  static const String addAssignment = "$baseURL/api/admin/assignment-user";
 }
