@@ -20,14 +20,22 @@ class _NavBarBottomState extends State<NavBarBottom> {
       case 0:
         return const HomePage();
       case 1:
-        return const EdumartPage();
-      case 2:
-        return Edupay();
-      case 3:
         return const ProfilePage();
       default:
         return const HomePage();
     }
+    // switch (currentIndex) {
+    //   case 0:
+    //     return const HomePage();
+    //   case 1:
+    //     return const EdumartPage();
+    //   case 2:
+    //     return Edupay();
+    //   case 3:
+    //     return const ProfilePage();
+    //   default:
+    //     return const HomePage();
+    // }
   }
 
   @override
@@ -64,35 +72,36 @@ class _NavBarBottomState extends State<NavBarBottom> {
                 activeIcon: Image.asset(
                   'assets/icon_presensi.png',
                   width: 24,
+                  color: AppColors.primary1,
                 ),
                 label: 'Presensi',
               ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/icon_edumart.png',
-                  width: 24,
-                  color: AppColors.darkBlue,
-                ),
-                activeIcon: Image.asset(
-                  'assets/icon_edumart.png',
-                  width: 24,
-                  color: AppColors.primary1,
-                ),
-                label: 'EduMart',
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/icon_edupay.png',
-                  width: 24,
-                  color: AppColors.darkBlue,
-                ),
-                activeIcon: Image.asset(
-                  'assets/icon_edupay.png',
-                  width: 24,
-                  color: AppColors.primary1,
-                ),
-                label: 'EduPay',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Image.asset(
+              //     'assets/icon_edumart.png',
+              //     width: 24,
+              //     color: AppColors.darkBlue,
+              //   ),
+              //   activeIcon: Image.asset(
+              //     'assets/icon_edumart.png',
+              //     width: 24,
+              //     color: AppColors.primary1,
+              //   ),
+              //   label: 'EduMart',
+              // ),
+              // BottomNavigationBarItem(
+              //   icon: Image.asset(
+              //     'assets/icon_edupay.png',
+              //     width: 24,
+              //     color: AppColors.darkBlue,
+              //   ),
+              //   activeIcon: Image.asset(
+              //     'assets/icon_edupay.png',
+              //     width: 24,
+              //     color: AppColors.primary1,
+              //   ),
+              //   label: 'EduPay',
+              // ),
               BottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/icon_user.png',
