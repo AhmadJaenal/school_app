@@ -32,8 +32,8 @@ class _OnBoardingState extends State<OnBoarding> {
       ],
       [
         "onboard3.png",
-        "Pembayaran SPP Aman",
-        "Lakukan pembayaran SPP melalui metode pembayaran yang aman dan terpercaya."
+        "Pembayaran dengan Aman",
+        "Lakukan pembayaran melalui metode pembayaran yang aman dan terpercaya."
       ],
     ];
     double height = MediaQuery.of(context).size.height;
