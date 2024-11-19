@@ -11,7 +11,7 @@ class UserPreferences {
         .toList();
 
     prefs.setInt('userId', student.id!);
-    prefs.setInt('schoolId', student.schoolId!);
+    prefs.setInt('schoolId', student.schoolId ?? 0);
     prefs.setString('fullName', student.fullName!);
     prefs.setString('email', student.email!);
     prefs.setString('token', student.token!);
@@ -56,6 +56,7 @@ class UserPreferences {
     prefs.remove('accessToken');
     prefs.remove('roles');
     prefs.remove('permissions');
+    prefs.remove('internshipId');
   }
 
   Future<bool> savePresence(List<Presence> listPresence) async {
@@ -89,5 +90,14 @@ class UserPreferences {
       sick: countSick,
       absent: countAbsent,
     );
+  }
+
+  void removeCountPresence() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.remove('countPresent');
+    prefs.remove('countSick');
+    prefs.remove('countPermission');
+    prefs.remove('absentCount');
   }
 }
