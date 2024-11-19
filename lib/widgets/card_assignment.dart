@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_app/datasource/local_datasource.dart';
-import 'package:school_app/models/project.dart';
+import 'package:school_app/models/project_assignment.dart';
 import 'package:school_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../shared/theme.dart';
 
-class CardProject extends StatefulWidget {
-  final Project project;
+class CardAssignment extends StatefulWidget {
+  final ProjectAssignment assignment;
   final Function()? onLongPress;
-  const CardProject({super.key, required this.project, this.onLongPress});
+  const CardAssignment({super.key, required this.assignment, this.onLongPress});
 
   @override
-  State<CardProject> createState() => _CardProjectState();
+  State<CardAssignment> createState() => _CardAssignmentState();
 }
 
-class _CardProjectState extends State<CardProject> {
+class _CardAssignmentState extends State<CardAssignment> {
   saveProjectId(projectId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('projectId', projectId);
@@ -23,7 +23,7 @@ class _CardProjectState extends State<CardProject> {
 
   @override
   void initState() {
-    saveProjectId(widget.project.id);
+    saveProjectId(widget.assignment.id);
     super.initState();
   }
 
@@ -41,13 +41,12 @@ class _CardProjectState extends State<CardProject> {
           User userData = snapshot.data!;
           return GestureDetector(
             onTap: () {
-              saveProjectId(widget.project.id);
-              Get.toNamed('/detail-project');
+              saveProjectId(widget.assignment.id);
             },
             onLongPress: widget.onLongPress,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 150,
+              height: 70,
               padding: const EdgeInsets.all(9.0),
               margin: const EdgeInsets.only(bottom: 12),
               decoration: BoxDecoration(
@@ -64,9 +63,13 @@ class _CardProjectState extends State<CardProject> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        widget.assignment.user!.fullName!,
+                        style: AppTextStyle.h3.copyWith(color: AppColors.white),
+                      ),
                       const Spacer(),
                       Text(
-                        widget.project.name!,
+                        widget.assignment.project!.name!,
                         style: AppTextStyle.h3.copyWith(color: AppColors.white),
                       ),
                     ],
