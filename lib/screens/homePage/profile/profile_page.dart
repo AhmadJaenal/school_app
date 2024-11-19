@@ -81,7 +81,8 @@ class _ProfilePageState extends State<ProfilePage> {
               const Gap(49),
               Row(
                 children: [
-                  Image.asset('assets/icon_coin.png', width: 24),
+                  Image.asset('assets/icon_coin.png',
+                      width: 24, color: AppColors.primary1),
                   const Gap(16),
                   Text(
                     'Poinku',
