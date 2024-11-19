@@ -22,10 +22,10 @@ class User {
   factory User.fromJson(Map<dynamic, dynamic> json) {
     return User(
       id: json['id'],
-      schoolId: json['school_id'],
+      schoolId: json['school_id'] ?? 0,
       fullName: json['name'],
       email: json['email'],
-      accessToken: json['access_token'],
+      accessToken: json['access_token'].toString(),
       token: json['type_token'],
       permissions: json['permissions'],
       roles: json['roles'],
