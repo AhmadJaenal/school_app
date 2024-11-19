@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/user.dart';
-import 'package:school_app/provider/student/index.dart';
 import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
@@ -18,8 +18,8 @@ class Login extends StatefulWidget {
 }
 
 final formKey = GlobalKey<FormState>();
-TextEditingController _nisn = TextEditingController(text: 'intern@gmail.com');
-TextEditingController _passwordC = TextEditingController(text: 'password');
+TextEditingController _nisn = TextEditingController();
+TextEditingController _passwordC = TextEditingController();
 @override
 void dispose() {
   _nisn.dispose();
@@ -34,7 +34,6 @@ class _LoginState extends State<Login> {
     var loading = const Center(child: CircularProgressIndicator());
     doLogin() {
       final form = formKey.currentState;
-
       if (form!.validate()) {
         form.save();
 
@@ -46,8 +45,6 @@ class _LoginState extends State<Login> {
         successfulMessage.then((response) {
           if (response['status']) {
             User user = response['data'];
-            Provider.of<StudentProvider>(context, listen: false)
-                .setStudent(user);
             Navigator.of(context).pushReplacementNamed('/nav');
 
             popUpLogin(context, true);
@@ -68,19 +65,18 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Gap(99),
-              Image.asset('assets/logo.png', width: 80),
-              const Gap(20),
               RichText(
                 text: TextSpan(
                   style: AppTextStyle.h1.copyWith(color: AppColors.black),
-                  children: <TextSpan>[
+                  children: [
                     const TextSpan(
                       text: 'Selamat Datang👋\ndi ',
                     ),
-                    TextSpan(
-                      text: 'Labschool App.',
-                      style:
-                          AppTextStyle.h1.copyWith(color: AppColors.primary1),
+                    WidgetSpan(
+                      child: Image.asset(
+                        'assets/logo_cyberlabs.png', // Path gambar di folder assets
+                        width: 180,
+                      ),
                     ),
                   ],
                 ),
@@ -109,12 +105,12 @@ class _LoginState extends State<Login> {
                   child: Text(
                     "Lupa Password ?",
                     style: AppTextStyle.paragraphM
-                        .copyWith(color: AppColors.secondary1),
+                        .copyWith(color: AppColors.primary1),
                   ),
                 ),
               ),
               const Gap(30),
-              studentAuth.loggedInStatus == Status.authenticating
+              studentAuth.loggedInStatus == AuthStatus.authenticating
                   ? loading
                   : PrimaryButton(titleButton: "Masuk", ontap: () => doLogin()),
               const Spacer(),
@@ -134,7 +130,7 @@ class _LoginState extends State<Login> {
                         TextSpan(
                           text: 'Daftar',
                           style: AppTextStyle.paragraphM
-                              .copyWith(color: AppColors.secondary1),
+                              .copyWith(color: AppColors.primary1),
                         ),
                       ],
                     ),
