@@ -3,27 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:school_app/api/urls.dart';
+import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/datasource/local_datasource.dart';
-import 'dart:developer' as developer;
+import 'dart:developer' as dev;
 
 import 'package:school_app/models/user.dart';
 
-enum Status {
-  notLoggedIn,
-  notRegistered,
-  loggedIn,
-  registered,
-  authenticating,
-  registering,
-  loggedOut,
-}
-
 class StudentAuthProvider with ChangeNotifier {
-  Status _loggedInStatus = Status.loggedIn;
-  final Status _registeredInStatus = Status.notRegistered;
+  AuthStatus _loggedInStatus = AuthStatus.loggedIn;
+  AuthStatus _registerInStatus = AuthStatus.notRegistered;
 
-  Status get loggedInStatus => _loggedInStatus;
-  Status get registeredInStatus => _registeredInStatus;
+  AuthStatus get loggedInStatus => _loggedInStatus;
+  AuthStatus get registeredInStatus => _registerInStatus;
 
   Future<Map<String, dynamic>> login({required String email, password}) async {
     Map<String, dynamic> result;
@@ -33,7 +24,7 @@ class StudentAuthProvider with ChangeNotifier {
       'password': password
     };
 
-    _loggedInStatus = Status.authenticating;
+    _loggedInStatus = AuthStatus.authenticating;
     notifyListeners();
 
     Response response = await post(
@@ -48,6 +39,21 @@ class StudentAuthProvider with ChangeNotifier {
 
       User authUser = User.fromJson(userData);
       UserPreferences().saveUser(authUser);
+
+      _loggedInStatus = AuthStatus.loggedIn;
+      notifyListeners();
+
+      result = {'status': true, 'message': 'Successful', 'data': authUser};
+    } else {
+      _loggedInStatus = AuthStatus.notLoggedIn;
+      notifyListeners();
+      result = {
+        'status': false,
+        'message': json.decode(response.body)['error']
+      };
+    }
+    return result;
+  }
 
   Future<Map<String, dynamic>> register(
       {required String name, email, password, required int schoolId}) async {
@@ -92,7 +98,7 @@ class StudentAuthProvider with ChangeNotifier {
 
   logOut(BuildContext context) async {
     UserPreferences().removeUser();
-    _loggedInStatus = Status.loggedOut;
+    _loggedInStatus = AuthStatus.loggedOut;
     notifyListeners();
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
