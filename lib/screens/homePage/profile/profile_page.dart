@@ -3,11 +3,22 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:school_app/controllers/user_controller.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
+import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +71,8 @@ class ProfilePage extends StatelessWidget {
               const Gap(49),
               Row(
                 children: [
-                  Image.asset('assets/icon_coin.png', width: 24),
+                  Image.asset('assets/icon_coin.png',
+                      width: 24, color: AppColors.primary1),
                   const Gap(16),
                   Text(
                     'Poinku',
@@ -142,7 +154,11 @@ class ProfilePage extends StatelessWidget {
                               SizedBox(
                                 width: 130,
                                 child: PrimaryButton(
-                                    titleButton: 'Logout', ontap: () {}),
+                                  titleButton: 'Logout',
+                                  ontap: () {
+                                    usertAuth.logOut(context);
+                                  },
+                                ),
                               ),
                             ],
                           ),

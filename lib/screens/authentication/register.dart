@@ -151,11 +151,13 @@ class Register extends StatelessWidget {
           CustomDropdown(
             titleTextField: 'Kelas',
             option: _optionClass,
+            onChanged: (value) {},
           ),
           CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
           CustomDropdown(
             titleTextField: 'Agama',
             option: _optionReligion,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
@@ -201,6 +203,7 @@ class Register extends StatelessWidget {
           CustomDropdown(
             titleTextField: 'Agama',
             option: _optionReligion,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
@@ -241,6 +244,7 @@ class Register extends StatelessWidget {
           CustomDropdown(
             titleTextField: 'Agama',
             option: _optionReligion,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
@@ -279,12 +283,14 @@ class Register extends StatelessWidget {
           ),
           CustomDropdown(
             titleTextField: 'Agama',
+            onChanged: (value) {},
             option: _optionReligion,
           ),
           CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
           CustomDropdown(
             titleTextField: 'Posisi',
             option: _optionStaff,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',

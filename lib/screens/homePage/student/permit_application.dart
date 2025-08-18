@@ -1,23 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
+import 'package:school_app/core/platform/status.dart';
+import '../../../models/presence.dart';
+import '../../../services/presence_service.dart';
+import '../../../shared/theme.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_popup_message.dart';
+import '../../../widgets/custom_textfield.dart';
 
-class PermitApplication extends StatelessWidget {
-  PermitApplication({super.key});
+class PermitApplication extends StatefulWidget {
+  const PermitApplication({super.key});
 
+  @override
+  State<PermitApplication> createState() => _PermitApplicationState();
+}
+
+class _PermitApplicationState extends State<PermitApplication> {
   final List<String> _optionAbsence = [
     'Pilih',
     'Izin',
     'Sakit',
   ];
 
+  final formKey = GlobalKey<FormState>();
   final TextEditingController _descController = TextEditingController();
+  String? selectedAbsenceType;
+
+  late Future<bool> _presenceFuture;
+  PresenceProvider presence = PresenceProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    _presenceFuture = presence.checkPresenceToday();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var loading = const Center(child: CircularProgressIndicator());
+    doPresence({required String absenType}) {
+      final form = formKey.currentState;
+      if (form!.validate()) {
+        form.save();
+
+        final Future<Map<String, dynamic>> successfulMessage =
+            presence.addPresencePermission(status: absenType, type: '-');
+
+        successfulMessage.then((response) {
+          if (response['status']) {
+            Presence presence = response['data'];
+            Navigator.of(context).pushReplacementNamed('/absence-history');
+            popUpPresence(context, true);
+          } else {
+            popUpPresence(context, false);
+          }
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.white,
       resizeToAvoidBottomInset: false,
@@ -36,69 +77,107 @@ class PermitApplication extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomDropdown(
-              titleTextField: 'Jenis Izin',
-              option: _optionAbsence,
-            ),
-            const Gap(15),
-            Text(
-              'Deskripsi',
-              style: AppTextStyle.paragraphM.copyWith(
-                color: AppColors.black100,
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomDropdown(
+                titleTextField: 'Jenis Izin',
+                option: _optionAbsence,
+                onChanged: (value) {
+                  setState(() {
+                    selectedAbsenceType = value;
+                  });
+                },
               ),
-            ),
-            const Gap(6),
-            CustomTextArea(
-              hintText: 'Contoh: Ada urusan keluarga',
-              textController: _descController,
-            ),
-            Text(
-              'Foto Bukti',
-              style: AppTextStyle.paragraphM.copyWith(
-                color: AppColors.black100,
+              // const Gap(15),
+              // Text(
+              //   'Deskripsi',
+              //   style: AppTextStyle.paragraphM.copyWith(
+              //     color: AppColors.black100,
+              //   ),
+              // ),
+              // const Gap(6),
+              // CustomTextArea(
+              //   hintText: 'Contoh: Ada urusan keluarga',
+              //   textController: _descController,
+              // ),
+              // Text(
+              //   'Foto Bukti',
+              //   style: AppTextStyle.paragraphM.copyWith(
+              //     color: AppColors.black100,
+              //   ),
+              // ),
+              // const Gap(6),
+              // GestureDetector(
+              //   onTap: () {
+              //     Get.toNamed('/camera');
+              //   },
+              //   child: Container(
+              //     width: double.infinity,
+              //     height: 280,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(8),
+              //       border: Border.all(
+              //         color: AppColors.black60,
+              //         width: 1,
+              //       ),
+              //     ),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Icon(
+              //           Icons.camera_alt,
+              //           size: 45,
+              //           color: AppColors.black80,
+              //         ),
+              //         Text(
+              //           'Ambil Gambar',
+              //           style: AppTextStyle.h3.copyWith(
+              //             color: AppColors.black80,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              const Gap(15),
+              FutureBuilder<bool>(
+                future: _presenceFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError ||
+                      presence.presenceStatus == ProcessState.uploading) {
+                    return loading;
+                  }
+
+                  return PrimaryButton(
+                    titleButton: 'Simpan',
+                    ontap: () => doPresence(absenType: selectedAbsenceType!),
+                    disable: snapshot.data ?? false,
+                  );
+                },
               ),
-            ),
-            const Gap(6),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed('/camera');
-              },
-              child: Container(
-                width: double.infinity,
-                height: 280,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: AppColors.black60,
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.camera_alt,
-                      size: 45,
-                      color: AppColors.black80,
-                    ),
-                    Text(
-                      'Ambil Gambar',
-                      style: AppTextStyle.h3.copyWith(
-                        color: AppColors.black80,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Gap(15),
-            PrimaryButton(titleButton: 'Kirim', ontap: () {}),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> popUpPresence(BuildContext context, bool isSuccess) {
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (context) => PopUpMessage(
+          isSuccess: isSuccess,
+          successMessage: 'Absensi berhasil!',
+          failedMessage: 'Absensi gagal!'),
     );
   }
 }
