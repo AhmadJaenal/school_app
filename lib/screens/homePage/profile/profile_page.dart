@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:school_app/controllers/user_controller.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
@@ -10,6 +11,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserController userController = UserController();
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -22,11 +25,23 @@ class ProfilePage extends StatelessWidget {
                 width: 103,
               ),
               const Gap(6),
-              Text(
-                'Budi Septian',
-                style: AppTextStyle.h2.copyWith(
-                  color: AppColors.black100,
-                ),
+              FutureBuilder(
+                future: userController.fetchCurrentUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    return Text(
+                      'Budi Septian',
+                      style: AppTextStyle.h2.copyWith(
+                        color: AppColors.black100,
+                      ),
+                    );
+                  } else {
+                    return const Center(child: Text("Tidak ada data"));
+                  }
+                },
               ),
               Text(
                 'Siswa',

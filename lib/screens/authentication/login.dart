@@ -13,8 +13,8 @@ class Login extends StatefulWidget {
 }
 
 final formKey = GlobalKey<FormState>();
-TextEditingController _emailC = TextEditingController();
-TextEditingController _passwordC = TextEditingController();
+TextEditingController _emailC = TextEditingController(text: 'ahmad@gmail.com');
+TextEditingController _passwordC = TextEditingController(text: 'password');
 @override
 void dispose() {
   _emailC.dispose();
