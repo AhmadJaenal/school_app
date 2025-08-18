@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:school_app/datasource/local_datasource.dart';
-import 'package:school_app/models/user.dart';
+import 'package:school_app/controllers/user_controller.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
 import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
@@ -24,8 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    StudentAuthProvider usertAuth = Provider.of<StudentAuthProvider>(context);
-    UserPreferences userPrefs = UserPreferences();
+    UserController userController = UserController();
 
     return SafeArea(
       child: Scaffold(
@@ -40,35 +37,28 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const Gap(6),
               FutureBuilder(
-                future: userPrefs.getUser(),
+                future: userController.fetchCurrentUser(),
                 builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   if (snapshot.hasData) {
-                    User userData = snapshot.data!;
-                    return Column(
-                      children: [
-                        Text(
-                          userData.fullName!,
-                          style: AppTextStyle.h2.copyWith(
-                            color: AppColors.black100,
-                          ),
-                        ),
-                        Text(
-                          'Siswa',
-                          style: AppTextStyle.h3.copyWith(
-                            color: AppColors.black80,
-                          ),
-                        ),
-                      ],
-                    );
-                  } else {
                     return Text(
-                      'Gagal',
+                      'Budi Septian',
                       style: AppTextStyle.h2.copyWith(
                         color: AppColors.black100,
                       ),
                     );
+                  } else {
+                    return const Center(child: Text("Tidak ada data"));
                   }
                 },
+              ),
+              Text(
+                'Siswa',
+                style: AppTextStyle.h3.copyWith(
+                  color: AppColors.black80,
+                ),
               ),
               const Gap(14),
               Padding(
