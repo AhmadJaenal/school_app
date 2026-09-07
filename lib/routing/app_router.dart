@@ -25,7 +25,6 @@ import 'package:school_app/screens/homePage/profile/history_payment.dart';
 import 'package:school_app/screens/homePage/profile/profile_page.dart';
 import 'package:school_app/screens/homePage/student/absence_history.dart';
 import 'package:school_app/screens/homePage/student/activity.dart';
-import 'package:school_app/screens/homePage/student/camera.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
 import 'package:school_app/screens/homePage/student/permit_application.dart';
 import 'package:school_app/screens/onBoarding/on_boarding.dart';
