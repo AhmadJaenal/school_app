@@ -2,14 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
+import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    UserController userController = UserController();
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -22,11 +35,23 @@ class ProfilePage extends StatelessWidget {
                 width: 103,
               ),
               const Gap(6),
-              Text(
-                'Budi Septian',
-                style: AppTextStyle.h2.copyWith(
-                  color: AppColors.black100,
-                ),
+              FutureBuilder(
+                future: userController.fetchCurrentUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    return Text(
+                      'Budi Septian',
+                      style: AppTextStyle.h2.copyWith(
+                        color: AppColors.black100,
+                      ),
+                    );
+                  } else {
+                    return const Center(child: Text("Tidak ada data"));
+                  }
+                },
               ),
               Text(
                 'Siswa',
@@ -45,7 +70,8 @@ class ProfilePage extends StatelessWidget {
               const Gap(49),
               Row(
                 children: [
-                  Image.asset('assets/icon_coin.png', width: 24),
+                  Image.asset('assets/icon_coin.png',
+                      width: 24, color: AppColors.primary1),
                   const Gap(16),
                   Text(
                     'Poinku',
@@ -127,7 +153,11 @@ class ProfilePage extends StatelessWidget {
                               SizedBox(
                                 width: 130,
                                 child: PrimaryButton(
-                                    titleButton: 'Logout', ontap: () {}),
+                                  titleButton: 'Logout',
+                                  ontap: () {
+                                    usertAuth.logOut(context);
+                                  },
+                                ),
                               ),
                             ],
                           ),

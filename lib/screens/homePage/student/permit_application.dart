@@ -5,19 +5,56 @@ import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
 
-class PermitApplication extends StatelessWidget {
-  PermitApplication({super.key});
+class PermitApplication extends StatefulWidget {
+  const PermitApplication({super.key});
 
+  @override
+  State<PermitApplication> createState() => _PermitApplicationState();
+}
+
+class _PermitApplicationState extends State<PermitApplication> {
   final List<String> _optionAbsence = [
     'Pilih',
     'Izin',
     'Sakit',
   ];
 
+  final formKey = GlobalKey<FormState>();
   final TextEditingController _descController = TextEditingController();
+  String? selectedAbsenceType;
+
+  late Future<bool> _presenceFuture;
+  PresenceProvider presence = PresenceProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    _presenceFuture = presence.checkPresenceToday();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var loading = const Center(child: CircularProgressIndicator());
+    doPresence({required String absenType}) {
+      final form = formKey.currentState;
+      if (form!.validate()) {
+        form.save();
+
+        final Future<Map<String, dynamic>> successfulMessage =
+            presence.addPresencePermission(status: absenType, type: '-');
+
+        successfulMessage.then((response) {
+          if (response['status']) {
+            Presence presence = response['data'];
+            Navigator.of(context).pushReplacementNamed('/absence-history');
+            popUpPresence(context, true);
+          } else {
+            popUpPresence(context, false);
+          }
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.white,
       resizeToAvoidBottomInset: false,
@@ -99,6 +136,18 @@ class PermitApplication extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<dynamic> popUpPresence(BuildContext context, bool isSuccess) {
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (context) => PopUpMessage(
+          isSuccess: isSuccess,
+          successMessage: 'Absensi berhasil!',
+          failedMessage: 'Absensi gagal!'),
     );
   }
 }

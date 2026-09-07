@@ -21,7 +21,7 @@ class TileMenuProfile extends StatelessWidget {
         onTap: ontap,
         child: Row(
           children: [
-            Image.asset('assets/$icon', width: 24),
+            Image.asset('assets/$icon', width: 24, color: AppColors.primary1),
             const Gap(16),
             Text(
               title,
@@ -32,7 +32,7 @@ class TileMenuProfile extends StatelessWidget {
             const Spacer(),
             Icon(
               Icons.arrow_forward_ios_rounded,
-              color: AppColors.black80,
+              color: AppColors.primary1,
             ),
           ],
         ),

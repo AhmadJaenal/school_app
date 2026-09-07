@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
@@ -8,18 +9,15 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 // ignore: must_be_immutable
 class AbsenceHistory extends StatelessWidget {
-  AbsenceHistory({super.key});
-
-  List<DateTime> selectedDays = [
-    DateTime(2024, 3, 12),
-    DateTime(2024, 3, 15),
-    DateTime(2024, 3, 17),
-  ];
+  const AbsenceHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
+
+    PresenceProvider presenceProvider = Provider.of<PresenceProvider>(context);
+    UserPreferences userPrefs = UserPreferences();
+
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
@@ -40,97 +38,127 @@ class AbsenceHistory extends StatelessWidget {
         child: ListView(
           children: [
             const Gap(8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CardAbsence(
-                  width: width,
-                  title: 'Jumlah Izin',
-                  color: AppColors.info1,
-                  amount: 0,
-                ),
-                CardAbsence(
-                  width: width,
-                  title: 'Jumlah Hadir',
-                  color: AppColors.green,
-                  amount: 3,
-                ),
-              ],
-            ),
-            const Gap(14),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CardAbsence(
-                  width: width,
-                  title: 'Jumlah Sakit',
-                  color: AppColors.secondary1,
-                  amount: 1,
-                ),
-                CardAbsence(
-                  width: width,
-                  title: 'Jumlah Alpa',
-                  color: AppColors.danger2,
-                  amount: 1,
-                ),
-              ],
+            FutureBuilder(
+              future: UserPreferences().getPresence(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (snapshot.hasData) {
+                  CountPresence countPresence = snapshot.data!;
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CardAbsence(
+                            width: width,
+                            title: 'Jumlah Hadir',
+                            color: AppColors.green,
+                            amount: countPresence.present ?? 0,
+                          ),
+                          CardAbsence(
+                            width: width,
+                            title: 'Jumlah Izin',
+                            color: AppColors.info1,
+                            amount: countPresence.permission ?? 0,
+                          ),
+                        ],
+                      ),
+                      const Gap(14),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CardAbsence(
+                            width: width,
+                            title: 'Jumlah Sakit',
+                            color: AppColors.warning1,
+                            amount: countPresence.sick ?? 0,
+                          ),
+                          CardAbsence(
+                            width: width,
+                            title: 'Jumlah Alpa',
+                            color: AppColors.danger1,
+                            amount: countPresence.absent ?? 0,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return const Text('Loading');
+                }
+              },
             ),
             const Gap(16),
-            SfDateRangePicker(
-              headerStyle: DateRangePickerHeaderStyle(
-                backgroundColor: AppColors.white,
-                textAlign: TextAlign.center,
-                textStyle: AppTextStyle.paragraphMBold.copyWith(
-                  color: AppColors.black,
-                ),
-              ),
-              selectionShape: DateRangePickerSelectionShape.circle,
-              selectionColor: AppColors.blue,
-              backgroundColor: AppColors.white,
-              selectionMode: DateRangePickerSelectionMode.multiRange,
-              initialSelectedDates: selectedDays,
-              showNavigationArrow: true,
-              monthCellStyle: DateRangePickerMonthCellStyle(
-                textStyle: AppTextStyle.paragraphMBold.copyWith(
-                  color: AppColors.black,
-                ),
-                weekendTextStyle: AppTextStyle.paragraphMBold.copyWith(
-                  color: AppColors.primary1,
-                ),
+            Text(
+              'Tracking Pengerjaan Tugas',
+              style:
+                  AppTextStyle.paragraphLBold.copyWith(color: AppColors.black),
+            ),
+            const Gap(8),
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: FutureBuilder(
+                future: presenceProvider.getPresenceByUserId(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.data!['status']) {
+                    List<Presence> listPresence = snapshot.data!['data'];
+                    return UserAbsenceGrid(listPresence: listPresence);
+                  }
+                  return Center(
+                      child: Text('Siswa belum pernah melakukan absensi',
+                          style: AppTextStyle.paragraphM
+                              .copyWith(color: AppColors.black80)));
+                },
               ),
             ),
-
-            // TableCalendar(
-            //   firstDay: DateTime.utc(2010, 10, 16),
-            //   lastDay: DateTime.utc(2030, 3, 14),
-            //   focusedDay: DateTime.now(),
-            //   selectedDayPredicate: (day) {
-            //     return DateFormat.yMd().format(day) ==
-            //         DateFormat.yMd().format(_selectedDay);
-            //   },
-            //   calendarStyle: CalendarStyle(
-            //     weekendTextStyle:
-            //         AppTextStyle.paragraphM.copyWith(color: AppColors.primary1),
-            //     selectedDecoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(8),
-            //       color: Colors.blue,
-            //     ),
-            //   ),
-            //   daysOfWeekStyle: DaysOfWeekStyle(
-            //     weekdayStyle:
-            //         AppTextStyle.paragraphM.copyWith(color: AppColors.black),
-            //     weekendStyle:
-            //         AppTextStyle.paragraphM.copyWith(color: AppColors.primary1),
-            //   ),
-            //   headerStyle: HeaderStyle(
-            //     titleCentered: true,
-            //     formatButtonVisible: false,
-            //     titleTextStyle: AppTextStyle.paragraphMBold.copyWith(
-            //       color: AppColors.black,
-            //     ),
-            //   ),
-            // )
-            const Gap(19),
+            const Gap(16),
+            FutureBuilder(
+              future: userPrefs.getUser(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.data!.roles!.contains('staff')) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Lokasi Terakhir',
+                          style: AppTextStyle.paragraphLBold),
+                      const Gap(8),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 172,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: FlutterMap(
+                            options: const MapOptions(
+                              initialCenter: LatLng(-6.8865473, 107.6120931),
+                              minZoom: 9,
+                            ),
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                userAgentPackageName: 'com.example.app',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+            const Gap(16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

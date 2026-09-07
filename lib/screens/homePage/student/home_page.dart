@@ -1,4 +1,5 @@
-import 'package:camera/camera.dart';
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -14,6 +15,45 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+Future<Position> _determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      return Future.error('Location permissions are denied');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
+
+  return await Geolocator.getCurrentPosition();
+}
+
+Future<String> getAddressFromLatLng() async {
+  Position position = await _determinePosition();
+  try {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark place = placemarks[0];
+
+    String address = "${place.street}, ${place.locality}";
+    return address;
+  } catch (e) {
+    return 'Failed to get address';
+  }
+}
+
 class _HomePageState extends State<HomePage> {
   List<List<String>> event = [
     ['img_event_1.png', 'Acara Idul Adha', '12 Juni 2023'],
@@ -21,34 +61,30 @@ class _HomePageState extends State<HomePage> {
     ['img_event_3.png', 'Acara Idul Adha', '12 Juni 2023'],
   ];
 
-  late PermissionStatus _cameraPermissionStatus;
-
-  Future<void> _checkPermission() async {
-    PermissionStatus status = await Permission.camera.status;
-    setState(() {
-      _cameraPermissionStatus = status;
-    });
-  }
-
-  Future<void> _requestPermission() async {
-    PermissionStatus status = await Permission.camera.request();
-    setState(() {
-      _cameraPermissionStatus = status;
-    });
-  }
-
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
-
   @override
   void initState() {
     super.initState();
+  }
+
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _getImageFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    UserPreferences userPrefs = UserPreferences();
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -59,21 +95,34 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Image.asset('assets/icon_profile.png', width: 64),
                 const Gap(28),
-                RichText(
-                  text: TextSpan(
-                    style: AppTextStyle.h3.copyWith(color: AppColors.black),
-                    children: <TextSpan>[
-                      const TextSpan(
-                        text: 'Budi Septian\n',
-                      ),
-                      TextSpan(
-                        text: 'Kelas 8A',
-                        style: AppTextStyle.paragraphL
-                            .copyWith(color: AppColors.black),
-                      ),
-                    ],
-                  ),
-                ),
+                FutureBuilder(
+                    future: userPrefs.getUser(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        User userData = snapshot.data!;
+                        return RichText(
+                          text: TextSpan(
+                            style: AppTextStyle.h3
+                                .copyWith(color: AppColors.black),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "${userData.fullName!} \n",
+                              ),
+                              TextSpan(
+                                text: userData.roles![0]
+                                        .substring(0, 1)
+                                        .toUpperCase() +
+                                    userData.roles![0].substring(1),
+                                style: AppTextStyle.paragraphL
+                                    .copyWith(color: AppColors.black),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    }),
                 const Spacer(),
                 GestureDetector(
                     onTap: () => context.push('/notification'),
@@ -105,88 +154,109 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const Gap(14),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: width * .44,
-                  margin: const EdgeInsets.only(left: 18),
-                  padding: const EdgeInsets.all(17),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(width: 1, color: AppColors.black40),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  AppColors.info1.withOpacity(.1),
-                                ),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9),
-                                  ),
-                                )),
-                            onPressed: () {},
-                            icon: Image.asset(
-                              'assets/icon_login.png',
-                              width: 24,
-                            ),
+            FutureBuilder(
+              future: userPrefs.getUser(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.data!.roles!.contains('staff')) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: width * .44,
+                          padding: const EdgeInsets.all(17),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border:
+                                Border.all(width: 1, color: AppColors.black40),
                           ),
-                          Text('Masuk', style: AppTextStyle.paragraphM),
-                        ],
-                      ),
-                      const Gap(8),
-                      Text('07:00', style: AppTextStyle.h3),
-                      const Gap(8),
-                      Text('Tepat Waktu', style: AppTextStyle.paragraphM),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: width * .44,
-                  margin: const EdgeInsets.only(right: 18),
-                  padding: const EdgeInsets.all(17),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(width: 1, color: AppColors.black40),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  AppColors.info1.withOpacity(.1),
-                                ),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                          AppColors.info1.withOpacity(.1),
+                                        ),
+                                        shape: WidgetStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                          ),
+                                        )),
+                                    onPressed: () {},
+                                    icon: Image.asset(
+                                      'assets/icon_login.png',
+                                      width: 24,
+                                    ),
                                   ),
-                                )),
-                            onPressed: () {},
-                            icon: Image.asset(
-                              'assets/icon_logout.png',
-                              width: 24,
-                            ),
+                                  Text('Hari ini',
+                                      style: AppTextStyle.paragraphM),
+                                ],
+                              ),
+                              const Gap(8),
+                              Text('07:00', style: AppTextStyle.h3),
+                              const Gap(8),
+                              Text('Riwayat Pengerjaan',
+                                  style: AppTextStyle.paragraphM),
+                            ],
                           ),
-                          Text('Keluar', style: AppTextStyle.paragraphM),
-                        ],
-                      ),
-                      const Gap(8),
-                      Text('15:20', style: AppTextStyle.h3),
-                      const Gap(8),
-                      Text('Pulang', style: AppTextStyle.paragraphM),
-                    ],
-                  ),
-                ),
-              ],
+                        ),
+                        Container(
+                          width: width * .44,
+                          padding: const EdgeInsets.all(17),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border:
+                                Border.all(width: 1, color: AppColors.black40),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                          AppColors.info1.withOpacity(.1),
+                                        ),
+                                        shape: WidgetStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                          ),
+                                        )),
+                                    onPressed: () {},
+                                    icon: Image.asset(
+                                      'assets/icon_logout.png',
+                                      width: 24,
+                                    ),
+                                  ),
+                                  Text('Kemajuan',
+                                      style: AppTextStyle.paragraphM),
+                                ],
+                              ),
+                              const Gap(8),
+                              Text('15:20', style: AppTextStyle.h3),
+                              const Gap(8),
+                              Text('Tanpa Progres',
+                                  style: AppTextStyle.paragraphM),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
             const Gap(12),
             Padding(
@@ -207,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const Gap(10),
+            const Gap(16),
             CarouselSlider(
               options: CarouselOptions(height: 124.0),
               items: event.map((data) {
@@ -272,80 +342,67 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
-            const Gap(18),
+            const Gap(16),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: width * .44,
-                    height: 174,
-                    padding: const EdgeInsets.fromLTRB(12, 16, 12, 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/spp_pattern.png'),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.only(left: AppMargin.defaultMargin),
+              child: Text('Menu', style: AppTextStyle.paragraphLBold),
+            ),
+            const Gap(12),
+            FutureBuilder(
+              future: userPrefs.getUser(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.data!.roles!.contains('intern')) {
+                  User userData = snapshot.data!;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Bayar SPP',
-                          style:
-                              AppTextStyle.h3.copyWith(color: AppColors.white),
+                        CardMenu(
+                          title: 'Tugas',
+                          titleButton: 'Lihat',
+                          desc: 'Daftar tugas yang harus dikerjakan',
+                          onTap: () => Get.toNamed('/list-project'),
                         ),
-                        const Gap(2),
-                        Text(
-                          'Bayar SPP dengan mudah dan aman dengan berbagai metode pembayaran',
-                          style: AppTextStyle.paragraphS
-                              .copyWith(color: AppColors.white),
+                        CardMenu(
+                          title: 'Izin Absen',
+                          titleButton: 'Ajukan Izin',
+                          desc: 'Isi form untuk meminta izin absen',
+                          onTap: () => Get.toNamed('/permit-application'),
                         ),
-                        const Spacer(),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              minimumSize: const Size(160, 34),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              )),
-                          child: Text(
-                            'Bayar',
-                            style: AppTextStyle.paragraphLBold.copyWith(
-                              color: AppColors.secondary1,
-                            ),
-                          ),
-                        )
                       ],
                     ),
-                  ),
-                  Container(
-                    width: width * .44,
-                    height: 174,
-                    padding: const EdgeInsets.fromLTRB(12, 16, 12, 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/absen_pattern.png'),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+            FutureBuilder(
+              future: userPrefs.getUser(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.data!.roles!.contains('staff')) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Wrap(
+                      spacing: 10.0,
+                      runSpacing: 10.0,
+                      alignment: WrapAlignment.start,
                       children: [
-                        Text(
-                          'Izin Absen',
-                          style:
-                              AppTextStyle.h3.copyWith(color: AppColors.white),
+                        CardMenu(
+                          title: 'Sekolah',
+                          titleButton: 'Lihat',
+                          desc: 'Daftar sekolah yang sedang melakukan magang',
+                          onTap: () => Get.toNamed('/list-school'),
                         ),
-                        const Gap(2),
-                        Text(
-                          'Isi form untuk meminta izin absen',
-                          style: AppTextStyle.paragraphS
-                              .copyWith(color: AppColors.white),
+                        CardMenu(
+                          title: 'Siswa',
+                          titleButton: 'Lihat',
+                          desc:
+                              'Daftar siswa yang sedang melakukan kerja praktek',
+                          onTap: () => Get.toNamed('/list-student'),
                         ),
                         const Spacer(),
                         ElevatedButton(

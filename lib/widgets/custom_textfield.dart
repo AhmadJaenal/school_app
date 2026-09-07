@@ -75,6 +75,7 @@ class CustomTextArea extends StatelessWidget {
               if (value!.isEmpty) {
                 return 'DATA TIDAK BOLEH KOSONG';
               }
+              return null;
             },
             maxLines: 5,
             controller: textController,
@@ -179,8 +180,13 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
 class CustomDropdown extends StatefulWidget {
   final List<String> option;
   final String titleTextField;
-  const CustomDropdown(
-      {super.key, required this.option, required this.titleTextField});
+  final ValueChanged<String> onChanged;
+  const CustomDropdown({
+    super.key,
+    required this.option,
+    required this.titleTextField,
+    required this.onChanged,
+  });
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
@@ -231,6 +237,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
             onChanged: (String? newValue) {
               setState(() {
                 _selectedItem = newValue!;
+                widget.onChanged(newValue);
               });
             },
             items: widget.option.map<DropdownMenuItem<String>>((String value) {

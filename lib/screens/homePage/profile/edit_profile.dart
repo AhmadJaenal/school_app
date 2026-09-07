@@ -87,6 +87,7 @@ class _EditProfileState extends State<EditProfile> {
             CustomDropdown(
               titleTextField: 'Agama',
               option: _optionReligion,
+              onChanged: (value) {},
             ),
           ],
         ),

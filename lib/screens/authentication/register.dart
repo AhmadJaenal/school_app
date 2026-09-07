@@ -17,7 +17,6 @@ class Register extends StatelessWidget {
   final TextEditingController _konfimasiPC = TextEditingController();
   final TextEditingController _alamatC = TextEditingController();
 
-  @override
   void dispose() {
     _nisnC.dispose();
     _nipnC.dispose();
@@ -88,6 +87,7 @@ class Register extends StatelessWidget {
               titleButton: 'Daftar',
               ontap: () {
                 if (formKey.currentState!.validate()) {
+                  _clearTextControllers();
                   developer.log('validari berhasil');
                 } else {
                   developer.log('validari gagal');
@@ -148,11 +148,13 @@ class Register extends StatelessWidget {
           CustomDropdown(
             titleTextField: 'Kelas',
             option: _optionClass,
+            onChanged: (value) {},
           ),
           CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
           CustomDropdown(
             titleTextField: 'Agama',
             option: _optionReligion,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
@@ -198,6 +200,7 @@ class Register extends StatelessWidget {
           CustomDropdown(
             titleTextField: 'Agama',
             option: _optionReligion,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
@@ -238,6 +241,7 @@ class Register extends StatelessWidget {
           CustomDropdown(
             titleTextField: 'Agama',
             option: _optionReligion,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',
@@ -276,12 +280,14 @@ class Register extends StatelessWidget {
           ),
           CustomDropdown(
             titleTextField: 'Agama',
+            onChanged: (value) {},
             option: _optionReligion,
           ),
           CustomTextArea(hintText: 'Masukan alamat', textController: _alamatC),
           CustomDropdown(
             titleTextField: 'Posisi',
             option: _optionStaff,
+            onChanged: (value) {},
           ),
           CustomTextFieldPassword(
             titleTextField: 'Password',

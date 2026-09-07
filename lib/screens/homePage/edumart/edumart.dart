@@ -8,6 +8,8 @@ class EdumartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ClassroomController classroomController = ClassroomController();
+
     TabBar tabBar = TabBar(
       labelStyle: AppTextStyle.paragraphLBold.copyWith(color: AppColors.white),
       indicator: BoxDecoration(
