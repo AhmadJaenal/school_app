@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/models/Submission.dart';
@@ -12,15 +12,17 @@ class TaskHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SubmissionProvider submission =
-        Provider.of<SubmissionProvider>(context, listen: false);
+    SubmissionProvider submission = Provider.of<SubmissionProvider>(
+      context,
+      listen: false,
+    );
 
     return Scaffold(
       appBar: AppBar(
         bottomOpacity: 0,
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(
@@ -46,13 +48,17 @@ class TaskHistoryPage extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(submission[index].createdAt!,
-                          style: AppTextStyle.paragraphLBold),
+                      Text(
+                        submission[index].createdAt!,
+                        style: AppTextStyle.paragraphLBold,
+                      ),
                       const Gap(8),
                       Image.asset('assets/img_event_2.png'),
                       const Gap(8),
-                      Text(submission[index].desc!,
-                          style: AppTextStyle.paragraphL),
+                      Text(
+                        submission[index].desc!,
+                        style: AppTextStyle.paragraphL,
+                      ),
                       const Gap(8),
                     ],
                   );

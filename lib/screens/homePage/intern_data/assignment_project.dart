@@ -1,42 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:school_app/datasource/local_datasource.dart';
-import 'package:school_app/models/project_assignment.dart';
-import 'package:school_app/services/project/assignment.dart';
-import 'package:school_app/widgets/card_assignment.dart';
-import 'package:school_app/widgets/custom_popup_message.dart';
+import 'package:go_router/go_router.dart';
+import 'package:school_app/routing/app_routes.dart';
 import '../../../shared/theme.dart';
 
 class AssignmentProject extends StatelessWidget {
   const AssignmentProject({super.key});
 
+  static const assignments = [
+    ('Budi Septian', 'Membuat desain aplikasi sekolah'),
+    ('Siti Aminah', 'Menyusun dokumentasi proyek'),
+    ('Rizky Pratama', 'Membuat prototipe dashboard'),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    AssignmentProvider assignmentProvider =
-        Provider.of<AssignmentProvider>(context);
-    UserPreferences userPrefs = UserPreferences();
-
-    var loading = const Center(child: CircularProgressIndicator());
-
-    // getProject() async {
-    //   final Future<Map<String, dynamic>> successfulMessage =
-    //       assignmentProvider.getAllAssignment();
-
-    //   successfulMessage.then((response) {
-    //     if (response['status']) {
-    //       popUpSubmission(context, true);
-    //     } else {
-    //       popUpSubmission(context, false);
-    //     }
-    //   });
-    // }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.black100,
@@ -50,37 +32,16 @@ class AssignmentProject extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 14, 24, 16),
-        child: FutureBuilder(
-          future: userPrefs.getUser(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return FutureBuilder(
-                future: assignmentProvider.getAllAssignment(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (!snapshot.hasData) {
-                    return Center(
-                        child: Text(
-                      'Belum ada project yang bisa ditugaskan',
-                      style: AppTextStyle.paragraphL,
-                    ));
-                  }
-                  List<ProjectAssignment> assignment = snapshot.data!['data'];
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: assignment.length,
-                    itemBuilder: (context, index) {
-                      return CardAssignment(
-                        assignment: assignment[index],
-                      );
-                    },
-                  );
-                },
-              );
-            }
-            return const SizedBox();
+        child: ListView.separated(
+          physics: const BouncingScrollPhysics(),
+          itemCount: assignments.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            final assignment = assignments[index];
+            return _AssignmentCard(
+              studentName: assignment.$1,
+              projectName: assignment.$2,
+            );
           },
         ),
       ),
@@ -95,7 +56,7 @@ class AssignmentProject extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Get.toNamed('/add-assignment');
+          context.push(Routes.addAssignment);
         },
         child: Icon(
           Icons.add,
@@ -106,16 +67,63 @@ class AssignmentProject extends StatelessWidget {
       ),
     );
   }
+}
 
-  Future<dynamic> popUpSubmission(BuildContext context, bool isSuccess) {
-    return showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Proyek berhasil dihapus!',
-          failedMessage: 'Proyek gagal dihapus!'),
+class _AssignmentCard extends StatelessWidget {
+  const _AssignmentCard({
+    required this.studentName,
+    required this.projectName,
+  });
+
+  final String studentName;
+  final String projectName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 88,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        image: const DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/image_product.png'),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  studentName,
+                  style: AppTextStyle.h3.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  projectName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.paragraphM.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 43,
+            height: 43,
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: const Icon(Icons.check),
+          ),
+        ],
+      ),
     );
   }
 }

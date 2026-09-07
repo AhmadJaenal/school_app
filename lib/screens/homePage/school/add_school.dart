@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/user.dart';
@@ -13,10 +13,12 @@ import 'package:school_app/widgets/custom_textfield.dart';
 
 class AddSchool extends StatelessWidget {
   AddSchool({super.key});
-  final TextEditingController _nameController =
-      TextEditingController(text: 'SMK PUI CIKIJING');
-  final TextEditingController _durationInternController =
-      TextEditingController(text: '9');
+  final TextEditingController _nameController = TextEditingController(
+    text: 'SMK PUI CIKIJING',
+  );
+  final TextEditingController _durationInternController = TextEditingController(
+    text: '9',
+  );
 
   void dispose() {
     _nameController.dispose();
@@ -43,15 +45,15 @@ class AddSchool extends StatelessWidget {
       if (form!.validate()) {
         form.save();
 
-        final Future<Map<String, dynamic>> successfulMessage =
-            schoolProvider.addNewSchool(
-          name: _nameController.text.toString(),
-          durationIntern: int.parse(_durationInternController.text),
-        );
+        final Future<Map<String, dynamic>> successfulMessage = schoolProvider
+            .addNewSchool(
+              name: _nameController.text.toString(),
+              durationIntern: int.parse(_durationInternController.text),
+            );
 
         successfulMessage.then((response) {
           if (response['status']) {
-            Get.back();
+            context.pop();
             popUpRegister(context, true);
           } else {
             popUpRegister(context, false);
@@ -115,17 +117,18 @@ class AddSchool extends StatelessWidget {
       ),
       floatingActionButton:
           studentAuth.registeredInStatus == AuthStatus.registering
-              ? loading
-              : Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
-                  child: PrimaryButton(
-                    titleButton: "Simpan",
-                    ontap: () {
-                      addSchool();
-                    },
-                  ),
-                ),
+          ? loading
+          : Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
+              child: PrimaryButton(
+                titleButton: "Simpan",
+                ontap: () {
+                  addSchool();
+                },
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -136,9 +139,10 @@ class AddSchool extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Sekolah berhasil ditambahkan!',
-          failedMessage: 'Sekolah gagal ditambahkan!'),
+        isSuccess: isSuccess,
+        successMessage: 'Sekolah berhasil ditambahkan!',
+        failedMessage: 'Sekolah gagal ditambahkan!',
+      ),
     );
   }
 }

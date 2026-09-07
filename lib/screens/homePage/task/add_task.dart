@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/project.dart';
@@ -20,11 +20,13 @@ class AddNewTask extends StatefulWidget {
 }
 
 class _AddNewTaskState extends State<AddNewTask> {
-  final TextEditingController _descController =
-      TextEditingController(text: 'jgk@gmail.com');
+  final TextEditingController _descController = TextEditingController(
+    text: 'jgk@gmail.com',
+  );
 
-  final TextEditingController _titleController =
-      TextEditingController(text: 'hadjsdf');
+  final TextEditingController _titleController = TextEditingController(
+    text: 'hadjsdf',
+  );
 
   @override
   void dispose() {
@@ -61,17 +63,17 @@ class _AddNewTaskState extends State<AddNewTask> {
       if (form!.validate()) {
         form.save();
 
-        final Future<Map<String, dynamic>> successfulMessage =
-            taskProvider.newTask(
-          title: _titleController.text.toString(),
-          desc: _descController.text.toString(),
-          projectId: projectId!,
-        );
+        final Future<Map<String, dynamic>> successfulMessage = taskProvider
+            .newTask(
+              title: _titleController.text.toString(),
+              desc: _descController.text.toString(),
+              projectId: projectId!,
+            );
 
         successfulMessage.then((response) {
           if (response['status']) {
             TaskModel task = response['data'];
-            Get.back();
+            context.pop();
             popUpRegister(context, true);
           } else {
             popUpRegister(context, false);
@@ -129,32 +131,33 @@ class _AddNewTaskState extends State<AddNewTask> {
                 textController: _descController,
               ),
               FutureBuilder(
-                  future: _projectFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (snapshot.hasData) {
-                      List<Project> listProject = snapshot.data!['data'];
-                      List<String> optionProject = [
-                        "Pilih",
-                        ...listProject.map((project) => project.name ?? "")
-                      ];
+                future: _projectFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    List<Project> listProject = snapshot.data!['data'];
+                    List<String> optionProject = [
+                      "Pilih",
+                      ...listProject.map((project) => project.name ?? ""),
+                    ];
 
-                      return CustomDropdown(
-                        titleTextField: 'Pilih Proyek',
-                        option: optionProject,
-                        onChanged: (value) {
-                          final selectedProject = listProject.firstWhere(
-                            (project) => project.name == value,
-                          );
+                    return CustomDropdown(
+                      titleTextField: 'Pilih Proyek',
+                      option: optionProject,
+                      onChanged: (value) {
+                        final selectedProject = listProject.firstWhere(
+                          (project) => project.name == value,
+                        );
 
-                          projectId = selectedProject.id!;
-                        },
-                      );
-                    }
-                    return const Text('Terjadi kesalahan');
-                  }),
+                        projectId = selectedProject.id!;
+                      },
+                    );
+                  }
+                  return const Text('Terjadi kesalahan');
+                },
+              ),
               const Gap(25),
             ],
           ),
@@ -163,8 +166,9 @@ class _AddNewTaskState extends State<AddNewTask> {
       floatingActionButton: taskProvider.taskStatus == ProcessState.uploading
           ? loading
           : Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
               child: PrimaryButton(
                 titleButton: "Simpan",
                 ontap: () {
@@ -183,9 +187,10 @@ class _AddNewTaskState extends State<AddNewTask> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Tugas berhasil ditambahkan!',
-          failedMessage: 'Tugas gagal terdaftar!'),
+        isSuccess: isSuccess,
+        successMessage: 'Tugas berhasil ditambahkan!',
+        failedMessage: 'Tugas gagal terdaftar!',
+      ),
     );
   }
 }

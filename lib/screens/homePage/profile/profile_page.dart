@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
-import 'package:school_app/services/auth/student_auth.dart';
+import 'package:school_app/routing/app_routes.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
@@ -21,8 +21,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    UserController userController = UserController();
-
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -30,34 +28,15 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               const Gap(17),
-              Image.asset(
-                'assets/icon_profile.png',
-                width: 103,
-              ),
+              Image.asset('assets/icon_profile.png', width: 103),
               const Gap(6),
-              FutureBuilder(
-                future: userController.fetchCurrentUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasData) {
-                    return Text(
-                      'Budi Septian',
-                      style: AppTextStyle.h2.copyWith(
-                        color: AppColors.black100,
-                      ),
-                    );
-                  } else {
-                    return const Center(child: Text("Tidak ada data"));
-                  }
-                },
+              Text(
+                'Budi Septian',
+                style: AppTextStyle.h2.copyWith(color: AppColors.black100),
               ),
               Text(
                 'Siswa',
-                style: AppTextStyle.h3.copyWith(
-                  color: AppColors.black80,
-                ),
+                style: AppTextStyle.h3.copyWith(color: AppColors.black80),
               ),
               const Gap(14),
               Padding(
@@ -70,8 +49,11 @@ class _ProfilePageState extends State<ProfilePage> {
               const Gap(49),
               Row(
                 children: [
-                  Image.asset('assets/icon_coin.png',
-                      width: 24, color: AppColors.primary1),
+                  Image.asset(
+                    'assets/icon_coin.png',
+                    width: 24,
+                    color: AppColors.primary1,
+                  ),
                   const Gap(16),
                   Text(
                     'Poinku',
@@ -115,7 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: double.infinity,
                       height: 165,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 22),
+                        horizontal: 32,
+                        vertical: 22,
+                      ),
                       margin: EdgeInsets.symmetric(
                         horizontal: AppMargin.defaultMargin,
                         vertical: 28,
@@ -147,15 +131,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               SizedBox(
                                 width: 130,
                                 child: SecondaryButton(
-                                    titleButton: 'Batal',
-                                    ontap: () => context.pop()),
+                                  titleButton: 'Batal',
+                                  ontap: () => context.pop(),
+                                ),
                               ),
                               SizedBox(
                                 width: 130,
                                 child: PrimaryButton(
                                   titleButton: 'Logout',
                                   ontap: () {
-                                    usertAuth.logOut(context);
+                                    context.go(Routes.login);
                                   },
                                 ),
                               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/school.dart';
@@ -20,14 +20,17 @@ class AddChildren extends StatefulWidget {
 }
 
 class _AddChildrenState extends State<AddChildren> {
-  final TextEditingController _emailController =
-      TextEditingController(text: 'jgk@gmail.com');
+  final TextEditingController _emailController = TextEditingController(
+    text: 'jgk@gmail.com',
+  );
 
-  final TextEditingController _nameController =
-      TextEditingController(text: 'hadjsdf');
+  final TextEditingController _nameController = TextEditingController(
+    text: 'hadjsdf',
+  );
 
-  final TextEditingController _passwordController =
-      TextEditingController(text: 'password');
+  final TextEditingController _passwordController = TextEditingController(
+    text: 'password',
+  );
 
   void _clearTextControllers() {
     _emailController.clear();
@@ -66,18 +69,18 @@ class _AddChildrenState extends State<AddChildren> {
       if (form!.validate()) {
         form.save();
 
-        final Future<Map<String, dynamic>> successfulMessage =
-            studentAuth.register(
-          name: _nameController.text.toString(),
-          email: _emailController.text.toString(),
-          password: _passwordController.text.toString(),
-          schoolId: schoolId!,
-        );
+        final Future<Map<String, dynamic>> successfulMessage = studentAuth
+            .register(
+              name: _nameController.text.toString(),
+              email: _emailController.text.toString(),
+              password: _passwordController.text.toString(),
+              schoolId: schoolId!,
+            );
 
         successfulMessage.then((response) {
           if (response['status']) {
             User user = response['data'];
-            Get.back();
+            context.pop();
             popUpRegister(context, true);
           } else {
             popUpRegister(context, false);
@@ -140,32 +143,33 @@ class _AddChildrenState extends State<AddChildren> {
                 textController: _passwordController,
               ),
               FutureBuilder(
-                  future: _schoolFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (snapshot.hasData) {
-                      List<SchoolModel> listSchool = snapshot.data!['data'];
-                      List<String> optionClass = [
-                        "Pilih",
-                        ...listSchool.map((school) => school.name ?? "")
-                      ];
+                future: _schoolFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    List<SchoolModel> listSchool = snapshot.data!['data'];
+                    List<String> optionClass = [
+                      "Pilih",
+                      ...listSchool.map((school) => school.name ?? ""),
+                    ];
 
-                      return CustomDropdown(
-                        titleTextField: 'Sekolah',
-                        option: optionClass,
-                        onChanged: (value) {
-                          final selectedSchool = listSchool.firstWhere(
-                            (school) => school.name == value,
-                          );
+                    return CustomDropdown(
+                      titleTextField: 'Sekolah',
+                      option: optionClass,
+                      onChanged: (value) {
+                        final selectedSchool = listSchool.firstWhere(
+                          (school) => school.name == value,
+                        );
 
-                          schoolId = selectedSchool.id!;
-                        },
-                      );
-                    }
-                    return const Text('Terjadi kesalahan');
-                  }),
+                        schoolId = selectedSchool.id!;
+                      },
+                    );
+                  }
+                  return const Text('Terjadi kesalahan');
+                },
+              ),
               const Gap(25),
             ],
           ),
@@ -173,18 +177,19 @@ class _AddChildrenState extends State<AddChildren> {
       ),
       floatingActionButton:
           studentAuth.registeredInStatus == AuthStatus.registering
-              ? loading
-              : Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
-                  child: PrimaryButton(
-                    titleButton: "Simpan",
-                    ontap: () {
-                      doRegister();
-                      _clearTextControllers();
-                    },
-                  ),
-                ),
+          ? loading
+          : Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
+              child: PrimaryButton(
+                titleButton: "Simpan",
+                ontap: () {
+                  doRegister();
+                  _clearTextControllers();
+                },
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -195,9 +200,10 @@ class _AddChildrenState extends State<AddChildren> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Register berhasil!',
-          failedMessage: 'Email sudah terdaftar!'),
+        isSuccess: isSuccess,
+        successMessage: 'Register berhasil!',
+        failedMessage: 'Email sudah terdaftar!',
+      ),
     );
   }
 }

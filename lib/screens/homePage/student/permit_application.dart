@@ -13,48 +13,14 @@ class PermitApplication extends StatefulWidget {
 }
 
 class _PermitApplicationState extends State<PermitApplication> {
-  final List<String> _optionAbsence = [
-    'Pilih',
-    'Izin',
-    'Sakit',
-  ];
+  final List<String> _optionAbsence = ['Pilih', 'Izin', 'Sakit'];
 
   final formKey = GlobalKey<FormState>();
   final TextEditingController _descController = TextEditingController();
   String? selectedAbsenceType;
 
-  late Future<bool> _presenceFuture;
-  PresenceProvider presence = PresenceProvider();
-
-  @override
-  void initState() {
-    super.initState();
-    _presenceFuture = presence.checkPresenceToday();
-  }
-
   @override
   Widget build(BuildContext context) {
-    var loading = const Center(child: CircularProgressIndicator());
-    doPresence({required String absenType}) {
-      final form = formKey.currentState;
-      if (form!.validate()) {
-        form.save();
-
-        final Future<Map<String, dynamic>> successfulMessage =
-            presence.addPresencePermission(status: absenType, type: '-');
-
-        successfulMessage.then((response) {
-          if (response['status']) {
-            Presence presence = response['data'];
-            Navigator.of(context).pushReplacementNamed('/absence-history');
-            popUpPresence(context, true);
-          } else {
-            popUpPresence(context, false);
-          }
-        });
-      }
-    }
-
     return Scaffold(
       backgroundColor: AppColors.white,
       resizeToAvoidBottomInset: false,
@@ -79,6 +45,7 @@ class _PermitApplicationState extends State<PermitApplication> {
             CustomDropdown(
               titleTextField: 'Jenis Izin',
               option: _optionAbsence,
+              onChanged: (value) => selectedAbsenceType = value,
             ),
             const Gap(15),
             Text(
@@ -108,46 +75,32 @@ class _PermitApplicationState extends State<PermitApplication> {
                 height: 280,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: AppColors.black60,
-                    width: 1,
-                  ),
+                  border: Border.all(color: AppColors.black60, width: 1),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.camera_alt,
-                      size: 45,
-                      color: AppColors.black80,
-                    ),
+                    Icon(Icons.camera_alt, size: 45, color: AppColors.black80),
                     Text(
                       'Ambil Gambar',
-                      style: AppTextStyle.h3.copyWith(
-                        color: AppColors.black80,
-                      ),
+                      style: AppTextStyle.h3.copyWith(color: AppColors.black80),
                     ),
                   ],
                 ),
               ),
             ),
             const Gap(15),
-            PrimaryButton(titleButton: 'Kirim', ontap: () {}),
+            PrimaryButton(
+              titleButton: 'Kirim',
+              ontap: () {
+                if (formKey.currentState?.validate() ?? true) {
+                  context.go('/absence-history');
+                }
+              },
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Future<dynamic> popUpPresence(BuildContext context, bool isSuccess) {
-    return showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Absensi berhasil!',
-          failedMessage: 'Absensi gagal!'),
     );
   }
 }

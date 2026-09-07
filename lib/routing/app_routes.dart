@@ -12,6 +12,7 @@ abstract class Routes {
   static const String nav = '/nav';
   static const String notification = '/notification';
   static const String listEvent = '/list-event';
+  static const String addAssignment = '/add-assignment';
 
   // Student
   static const String absenceHistory = '/absence-history';

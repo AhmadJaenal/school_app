@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 // import 'package:school_app/models/student.dart';
 import 'package:school_app/screens/face_recognition/detector_view.dart';
@@ -16,10 +16,8 @@ class CameraFaceDetection extends StatefulWidget {
 
 class CameraFaceDetectionState extends State<CameraFaceDetection> {
   final FaceDetector _faceDetector = FaceDetector(
-      options: FaceDetectorOptions(
-    enableContours: true,
-    enableLandmarks: true,
-  ));
+    options: FaceDetectorOptions(enableContours: true, enableLandmarks: true),
+  );
 
   bool _hasNavigated = false;
   bool _canProcess = true;
@@ -69,7 +67,7 @@ class CameraFaceDetectionState extends State<CameraFaceDetection> {
       if (!_hasNavigated) {
         _hasNavigated = true;
         Future.delayed(const Duration(seconds: 3), () {
-          Get.back();
+          if (mounted) context.pop();
         });
       }
     } else {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:school_app/routing/app_routes.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_popup_message.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
 
 class Login extends StatefulWidget {
@@ -12,44 +13,22 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-final formKey = GlobalKey<FormState>();
-TextEditingController _emailC = TextEditingController(text: 'ahmad@gmail.com');
-TextEditingController _passwordC = TextEditingController(text: 'password');
-@override
-void dispose() {
-  _nisn.dispose();
-  _passwordC.dispose();
-}
-
 class _LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController _nisnController =
+      TextEditingController(text: '11199245812');
+  final TextEditingController _passwordController =
+      TextEditingController(text: 'password');
+
+  @override
+  void dispose() {
+    _nisnController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    StudentAuthProvider studentAuth = Provider.of<StudentAuthProvider>(context);
-
-    var loading = const Center(child: CircularProgressIndicator());
-    doLogin() {
-      final form = formKey.currentState;
-      if (form!.validate()) {
-        form.save();
-
-        final Future<Map<String, dynamic>> successfulMessage =
-            studentAuth.login(
-                email: _nisn.text.toString(),
-                password: _passwordC.text.toString());
-
-        successfulMessage.then((response) {
-          if (response['status']) {
-            User user = response['data'];
-            Navigator.of(context).pushReplacementNamed('/nav');
-
-            popUpLogin(context, true);
-          } else {
-            popUpLogin(context, false);
-          }
-        });
-      }
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -86,11 +65,11 @@ class _LoginState extends State<Login> {
               CustomTextField(
                 hintText: "Masukan NISN",
                 titleTextField: 'NISN',
-                textController: _nisn,
+                textController: _nisnController,
               ),
               CustomTextFieldPassword(
                   titleTextField: 'Password',
-                  textController: _passwordC,
+                  textController: _passwordController,
                   hintText: 'Masukan password'),
               const Gap(10),
               Align(
@@ -109,8 +88,7 @@ class _LoginState extends State<Login> {
                   titleButton: "Masuk",
                   ontap: () {
                     if (formKey.currentState!.validate()) {
-                    } else {
-                      print('validasi gagal');
+                      context.go(Routes.nav);
                     }
                   }),
               const Spacer(),
@@ -140,18 +118,6 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<dynamic> popUpLogin(BuildContext context, bool isSuccess) {
-    return showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Login berhasil!',
-          failedMessage: 'Email atau password salah!'),
     );
   }
 }

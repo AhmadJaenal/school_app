@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:school_app/datasource/local_datasource.dart';
+import 'package:school_app/models/user.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/widgets/card_menu_home_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,7 +40,8 @@ Future<Position> _determinePosition() async {
 
   if (permission == LocationPermission.deniedForever) {
     return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
+      'Location permissions are permanently denied, we cannot request permissions.',
+    );
   }
 
   return await Geolocator.getCurrentPosition();
@@ -43,8 +50,10 @@ Future<Position> _determinePosition() async {
 Future<String> getAddressFromLatLng() async {
   Position position = await _determinePosition();
   try {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
     Placemark place = placemarks[0];
 
     String address = "${place.street}, ${place.locality}";
@@ -96,38 +105,40 @@ class _HomePageState extends State<HomePage> {
                 Image.asset('assets/icon_profile.png', width: 64),
                 const Gap(28),
                 FutureBuilder(
-                    future: userPrefs.getUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        User userData = snapshot.data!;
-                        return RichText(
-                          text: TextSpan(
-                            style: AppTextStyle.h3
-                                .copyWith(color: AppColors.black),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: "${userData.fullName!} \n",
-                              ),
-                              TextSpan(
-                                text: userData.roles![0]
-                                        .substring(0, 1)
-                                        .toUpperCase() +
-                                    userData.roles![0].substring(1),
-                                style: AppTextStyle.paragraphL
-                                    .copyWith(color: AppColors.black),
-                              ),
-                            ],
+                  future: userPrefs.getUser(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      User userData = snapshot.data!;
+                      return RichText(
+                        text: TextSpan(
+                          style: AppTextStyle.h3.copyWith(
+                            color: AppColors.black,
                           ),
-                        );
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    }),
+                          children: <TextSpan>[
+                            TextSpan(text: "${userData.fullName!} \n"),
+                            TextSpan(
+                              text:
+                                  userData.roles![0]
+                                      .substring(0, 1)
+                                      .toUpperCase() +
+                                  userData.roles![0].substring(1),
+                              style: AppTextStyle.paragraphL.copyWith(
+                                color: AppColors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                ),
                 const Spacer(),
                 GestureDetector(
-                    onTap: () => context.push('/notification'),
-                    child:
-                        Image.asset('assets/icon_notification.png', width: 28)),
+                  onTap: () => context.push('/notification'),
+                  child: Image.asset('assets/icon_notification.png', width: 28),
+                ),
               ],
             ),
           ),
@@ -135,21 +146,25 @@ class _HomePageState extends State<HomePage> {
         body: ListView(
           children: [
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Kehadiran Hari Ini',
-                      style: AppTextStyle.paragraphLBold),
+                  Text(
+                    'Kehadiran Hari Ini',
+                    style: AppTextStyle.paragraphLBold,
+                  ),
                   GestureDetector(
                     onTap: () => context.push('/absence-history'),
                     child: Text(
                       'Rekap Absen',
-                      style: AppTextStyle.paragraphM
-                          .copyWith(color: AppColors.primary1),
+                      style: AppTextStyle.paragraphM.copyWith(
+                        color: AppColors.primary1,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -169,8 +184,10 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(17),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            border:
-                                Border.all(width: 1, color: AppColors.black40),
+                            border: Border.all(
+                              width: 1,
+                              color: AppColors.black40,
+                            ),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,31 +196,36 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   IconButton(
                                     style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                          AppColors.info1.withOpacity(.1),
-                                        ),
-                                        shape: WidgetStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(9),
+                                      backgroundColor: WidgetStateProperty.all(
+                                        AppColors.info1.withOpacity(.1),
+                                      ),
+                                      shape: WidgetStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            9,
                                           ),
-                                        )),
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () {},
                                     icon: Image.asset(
                                       'assets/icon_login.png',
                                       width: 24,
                                     ),
                                   ),
-                                  Text('Hari ini',
-                                      style: AppTextStyle.paragraphM),
+                                  Text(
+                                    'Hari ini',
+                                    style: AppTextStyle.paragraphM,
+                                  ),
                                 ],
                               ),
                               const Gap(8),
                               Text('07:00', style: AppTextStyle.h3),
                               const Gap(8),
-                              Text('Riwayat Pengerjaan',
-                                  style: AppTextStyle.paragraphM),
+                              Text(
+                                'Riwayat Pengerjaan',
+                                style: AppTextStyle.paragraphM,
+                              ),
                             ],
                           ),
                         ),
@@ -212,8 +234,10 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(17),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            border:
-                                Border.all(width: 1, color: AppColors.black40),
+                            border: Border.all(
+                              width: 1,
+                              color: AppColors.black40,
+                            ),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,31 +246,36 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   IconButton(
                                     style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                          AppColors.info1.withOpacity(.1),
-                                        ),
-                                        shape: WidgetStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(9),
+                                      backgroundColor: WidgetStateProperty.all(
+                                        AppColors.info1.withOpacity(.1),
+                                      ),
+                                      shape: WidgetStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            9,
                                           ),
-                                        )),
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () {},
                                     icon: Image.asset(
                                       'assets/icon_logout.png',
                                       width: 24,
                                     ),
                                   ),
-                                  Text('Kemajuan',
-                                      style: AppTextStyle.paragraphM),
+                                  Text(
+                                    'Kemajuan',
+                                    style: AppTextStyle.paragraphM,
+                                  ),
                                 ],
                               ),
                               const Gap(8),
                               Text('15:20', style: AppTextStyle.h3),
                               const Gap(8),
-                              Text('Tanpa Progres',
-                                  style: AppTextStyle.paragraphM),
+                              Text(
+                                'Tanpa Progres',
+                                style: AppTextStyle.paragraphM,
+                              ),
                             ],
                           ),
                         ),
@@ -260,8 +289,9 @@ class _HomePageState extends State<HomePage> {
             ),
             const Gap(12),
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -270,8 +300,9 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => context.push('/list-event'),
                     child: Text(
                       'Lihat Semua',
-                      style: AppTextStyle.paragraphM
-                          .copyWith(color: AppColors.primary1),
+                      style: AppTextStyle.paragraphM.copyWith(
+                        color: AppColors.primary1,
+                      ),
                     ),
                   ),
                 ],
@@ -304,18 +335,23 @@ class _HomePageState extends State<HomePage> {
                               const Spacer(),
                               Text(
                                 'Acara Idul Adha',
-                                style: AppTextStyle.h3
-                                    .copyWith(color: AppColors.white),
+                                style: AppTextStyle.h3.copyWith(
+                                  color: AppColors.white,
+                                ),
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_today_outlined,
-                                      color: AppColors.white, size: 16),
+                                  Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: AppColors.white,
+                                    size: 16,
+                                  ),
                                   const Gap(8),
                                   Text(
                                     '12 Juni 2023',
-                                    style: AppTextStyle.paragraphM
-                                        .copyWith(color: AppColors.white),
+                                    style: AppTextStyle.paragraphM.copyWith(
+                                      color: AppColors.white,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -353,7 +389,6 @@ class _HomePageState extends State<HomePage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData &&
                     snapshot.data!.roles!.contains('intern')) {
-                  User userData = snapshot.data!;
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: Row(
@@ -363,13 +398,13 @@ class _HomePageState extends State<HomePage> {
                           title: 'Tugas',
                           titleButton: 'Lihat',
                           desc: 'Daftar tugas yang harus dikerjakan',
-                          onTap: () => Get.toNamed('/list-project'),
+                          onTap: () => context.push('/list-project'),
                         ),
                         CardMenu(
                           title: 'Izin Absen',
                           titleButton: 'Ajukan Izin',
                           desc: 'Isi form untuk meminta izin absen',
-                          onTap: () => Get.toNamed('/permit-application'),
+                          onTap: () => context.push('/permit-application'),
                         ),
                       ],
                     ),
@@ -395,36 +430,37 @@ class _HomePageState extends State<HomePage> {
                           title: 'Sekolah',
                           titleButton: 'Lihat',
                           desc: 'Daftar sekolah yang sedang melakukan magang',
-                          onTap: () => Get.toNamed('/list-school'),
+                          onTap: () => context.push('/list-school'),
                         ),
                         CardMenu(
                           title: 'Siswa',
                           titleButton: 'Lihat',
                           desc:
                               'Daftar siswa yang sedang melakukan kerja praktek',
-                          onTap: () => Get.toNamed('/list-student'),
+                          onTap: () => context.push('/list-student'),
                         ),
-                        const Spacer(),
                         ElevatedButton(
                           onPressed: () => context.push('/permit-application'),
                           style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              minimumSize: const Size(160, 34),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              )),
+                            elevation: 0,
+                            minimumSize: const Size(160, 34),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                          ),
                           child: Text(
                             'Ajukan Izin',
                             style: AppTextStyle.paragraphLBold.copyWith(
                               color: AppColors.black,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
+                  );
+                }
+                return const SizedBox();
+              },
             ),
             const Gap(17),
             Padding(
@@ -455,8 +491,10 @@ class _HomePageState extends State<HomePage> {
                             const Gap(10),
                             Row(
                               children: [
-                                Icon(Icons.calendar_month_rounded,
-                                    color: AppColors.primary1),
+                                Icon(
+                                  Icons.calendar_month_rounded,
+                                  color: AppColors.primary1,
+                                ),
                                 const Gap(18),
                                 RichText(
                                   text: TextSpan(
@@ -468,8 +506,9 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       TextSpan(
                                         text: 'Selasa, 23 Agustus 2023',
-                                        style: AppTextStyle.paragraphM
-                                            .copyWith(color: AppColors.black80),
+                                        style: AppTextStyle.paragraphM.copyWith(
+                                          color: AppColors.black80,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -479,8 +518,10 @@ class _HomePageState extends State<HomePage> {
                             const Gap(8),
                             Row(
                               children: [
-                                Icon(Icons.access_time,
-                                    color: AppColors.primary1),
+                                Icon(
+                                  Icons.access_time,
+                                  color: AppColors.primary1,
+                                ),
                                 const Gap(18),
                                 RichText(
                                   text: TextSpan(
@@ -492,8 +533,9 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       TextSpan(
                                         text: '07:03:23',
-                                        style: AppTextStyle.paragraphM
-                                            .copyWith(color: AppColors.black80),
+                                        style: AppTextStyle.paragraphM.copyWith(
+                                          color: AppColors.black80,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -541,7 +583,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             const Gap(16),
-                            PrimaryButton(titleButton: 'Hadir', ontap: () {})
+                            PrimaryButton(titleButton: 'Hadir', ontap: () {}),
                           ],
                         ),
                       );

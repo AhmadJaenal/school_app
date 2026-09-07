@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/models/user.dart';
 import 'package:school_app/services/submission/submission_service.dart';
@@ -10,14 +10,15 @@ class UsersSubmittedTasksToday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SubmissionProvider submissionProvider =
-        Provider.of<SubmissionProvider>(context);
+    SubmissionProvider submissionProvider = Provider.of<SubmissionProvider>(
+      context,
+    );
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(

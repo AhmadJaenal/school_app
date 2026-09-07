@@ -63,14 +63,16 @@ class CardSchoolState extends State<CardSchool> {
                     children: [
                       TextSpan(
                         text: widget.school.name!,
-                        style: AppTextStyle.paragraphL
-                            .copyWith(color: AppColors.black),
+                        style: AppTextStyle.paragraphL.copyWith(
+                          color: AppColors.black,
+                        ),
                       ),
                       TextSpan(
                         text:
                             '\nDurasi Magang : ${widget.school.durationIntern} Bulan',
-                        style: AppTextStyle.paragraphL
-                            .copyWith(color: AppColors.black),
+                        style: AppTextStyle.paragraphL.copyWith(
+                          color: AppColors.black,
+                        ),
                       ),
                     ],
                   ),
@@ -92,7 +94,6 @@ class CardSchoolState extends State<CardSchool> {
 //     return GestureDetector(
 //       onTap: () {
 //         saveIntenshipId(user.id);
-//         Get.toNamed('/absence-history');
 //       },
 //       onLongPress: onLongPress,
 //       child: Padding(

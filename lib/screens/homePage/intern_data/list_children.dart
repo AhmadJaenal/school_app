@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:school_app/routing/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/models/user.dart';
 import 'package:school_app/services/student/student_service.dart';
@@ -18,7 +19,7 @@ class ListChildren extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(
@@ -41,6 +42,7 @@ class ListChildren extends StatelessWidget {
           return ListView.builder(
             itemCount: listInternship.length,
             itemBuilder: (context, index) => cardDataChildren(
+              context: context,
               user: listInternship[index],
               onLongPress: () => showModalBottomSheet(
                 context: context,
@@ -49,8 +51,10 @@ class ListChildren extends StatelessWidget {
                 builder: (context) => Container(
                   width: double.infinity,
                   height: 185,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 22,
+                  ),
                   margin: EdgeInsets.symmetric(
                     horizontal: AppMargin.defaultMargin,
                     vertical: 28,
@@ -82,7 +86,9 @@ class ListChildren extends StatelessWidget {
                           SizedBox(
                             width: 130,
                             child: SecondaryButton(
-                                titleButton: 'Batal', ontap: () => Get.back()),
+                              titleButton: 'Batal',
+                              ontap: () => context.pop(),
+                            ),
                           ),
                           // projectProvider.projectStatus ==
                           //         ProjectStatus.delete
@@ -93,7 +99,6 @@ class ListChildren extends StatelessWidget {
                           //           titleButton: 'Ya',
                           //           ontap: () {
                           //             deleteProject();
-                          //             Get.back();
                           //           },
                           //         ),
                           //       ),
@@ -118,14 +123,9 @@ class ListChildren extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Get.toNamed('/add-children');
+          context.push(Routes.addChildren);
         },
-        child: Icon(
-          Icons.add,
-          color: AppColors.white,
-          size: 32,
-          weight: 2,
-        ),
+        child: Icon(Icons.add, color: AppColors.white, size: 32, weight: 2),
       ),
     );
   }
@@ -135,12 +135,15 @@ class ListChildren extends StatelessWidget {
     prefs.setInt('internshipId', idInternship);
   }
 
-  GestureDetector cardDataChildren(
-      {required User user, Function()? onLongPress}) {
+  GestureDetector cardDataChildren({
+    required BuildContext context,
+    required User user,
+    Function()? onLongPress,
+  }) {
     return GestureDetector(
       onTap: () {
         saveIntenshipId(user.id);
-        Get.toNamed('/absence-history');
+        context.push(Routes.absenceHistory);
       },
       onLongPress: onLongPress,
       child: Padding(
@@ -164,13 +167,15 @@ class ListChildren extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: '${user.fullName}\n',
-                    style: AppTextStyle.paragraphL
-                        .copyWith(color: AppColors.black),
+                    style: AppTextStyle.paragraphL.copyWith(
+                      color: AppColors.black,
+                    ),
                   ),
                   TextSpan(
                     text: user.email,
-                    style: AppTextStyle.paragraphL
-                        .copyWith(color: AppColors.black),
+                    style: AppTextStyle.paragraphL.copyWith(
+                      color: AppColors.black,
+                    ),
                   ),
                 ],
               ),
@@ -179,7 +184,7 @@ class ListChildren extends StatelessWidget {
             Text(
               'Kelas 8A',
               style: AppTextStyle.paragraphM.copyWith(color: AppColors.black),
-            )
+            ),
           ],
         ),
       ),

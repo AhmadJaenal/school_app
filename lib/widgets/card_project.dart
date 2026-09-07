@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/datasource/local_datasource.dart';
 import 'package:school_app/models/project.dart';
 import 'package:school_app/models/user.dart';
@@ -42,7 +42,7 @@ class _CardProjectState extends State<CardProject> {
           return GestureDetector(
             onTap: () {
               saveProjectId(widget.project.id);
-              Get.toNamed('/detail-project');
+              context.push('/detail-project');
             },
             onLongPress: widget.onLongPress,
             child: Container(

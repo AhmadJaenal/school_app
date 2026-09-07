@@ -8,15 +8,16 @@ class EdumartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ClassroomController classroomController = ClassroomController();
-
     TabBar tabBar = TabBar(
       labelStyle: AppTextStyle.paragraphLBold.copyWith(color: AppColors.white),
       indicator: BoxDecoration(
-          color: AppColors.primary1, borderRadius: BorderRadius.circular(8)),
+        color: AppColors.primary1,
+        borderRadius: BorderRadius.circular(8),
+      ),
       indicatorSize: TabBarIndicatorSize.tab,
-      unselectedLabelStyle:
-          AppTextStyle.paragraphLBold.copyWith(color: AppColors.primary1),
+      unselectedLabelStyle: AppTextStyle.paragraphLBold.copyWith(
+        color: AppColors.primary1,
+      ),
       tabs: const [
         Tab(text: 'Makanan'),
         Tab(text: 'ATK'),
@@ -45,10 +46,7 @@ class EdumartPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: AppColors.black60,
-                  width: 1,
-                ),
+                border: Border.all(color: AppColors.black60, width: 1),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,8 +103,10 @@ class EdumartPage extends StatelessWidget {
                 onTap: () => context.push('/edumart/cart'),
                 child: Padding(
                   padding: EdgeInsets.only(right: AppMargin.defaultMargin),
-                  child: Icon(Icons.shopping_cart_outlined,
-                      color: AppColors.black100),
+                  child: Icon(
+                    Icons.shopping_cart_outlined,
+                    color: AppColors.black100,
+                  ),
                 ),
               ),
             ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
 import '../../../models/submission.dart';
@@ -22,12 +22,12 @@ class SubmissionTask extends StatelessWidget {
     var loading = const Center(child: CircularProgressIndicator());
 
     deleteSubmission() async {
-      final Future<Map<String, dynamic>> successfulMessage =
-          submission.deleteSubmission();
+      final Future<Map<String, dynamic>> successfulMessage = submission
+          .deleteSubmission();
 
       successfulMessage.then((response) {
         if (response['status']) {
-          Get.toNamed('/list-task');
+          context.push('/list-task');
           popUpSubmission(context, true);
         } else {
           popUpSubmission(context, false);
@@ -39,7 +39,7 @@ class SubmissionTask extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.black100,
@@ -60,8 +60,10 @@ class SubmissionTask extends StatelessWidget {
                 builder: (context) => Container(
                   width: double.infinity,
                   height: 200,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 22,
+                  ),
                   margin: EdgeInsets.symmetric(
                     horizontal: AppMargin.defaultMargin,
                     vertical: 28,
@@ -93,19 +95,23 @@ class SubmissionTask extends StatelessWidget {
                           SizedBox(
                             width: 130,
                             child: SecondaryButton(
-                                titleButton: 'Batal', ontap: () => Get.back()),
+                              titleButton: 'Batal',
+                              ontap: () => context.pop(),
+                            ),
                           ),
                           SizedBox(
                             width: 130,
-                            child: submission.submissionStatus ==
+                            child:
+                                submission.submissionStatus ==
                                     ProcessState.uploading
                                 ? loading
                                 : PrimaryButton(
                                     ontap: () {
                                       deleteSubmission();
-                                      Get.back();
+                                      context.pop();
                                     },
-                                    titleButton: 'Ya'),
+                                    titleButton: 'Ya',
+                                  ),
                           ),
                         ],
                       ),
@@ -116,8 +122,10 @@ class SubmissionTask extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.only(right: AppMargin.defaultMargin),
-              child:
-                  Icon(Icons.delete_outline_outlined, color: AppColors.danger1),
+              child: Icon(
+                Icons.delete_outline_outlined,
+                color: AppColors.danger1,
+              ),
             ),
           ),
         ],
@@ -135,17 +143,21 @@ class SubmissionTask extends StatelessWidget {
 
                 if (!snapshot.data!['status']) {
                   return const Center(
-                      child: Text('Anda belum mengerjakan tugas ini'));
+                    child: Text('Anda belum mengerjakan tugas ini'),
+                  );
                 }
                 Submission submission = snapshot.data!['data'];
                 return Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppMargin.defaultMargin,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(submission.createdAt!,
-                          style: AppTextStyle.paragraphLBold),
+                      Text(
+                        submission.createdAt!,
+                        style: AppTextStyle.paragraphLBold,
+                      ),
                       const Gap(8),
                       Image.asset('assets/img_event_2.png'),
                       const Gap(8),
@@ -155,16 +167,13 @@ class SubmissionTask extends StatelessWidget {
                   ),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.all(AppMargin.defaultMargin),
-        child: PrimaryButton(
-          ontap: () {},
-          titleButton: 'Update Submission',
-        ),
+        child: PrimaryButton(ontap: () {}, titleButton: 'Update Submission'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -176,9 +185,10 @@ class SubmissionTask extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Submission berhasil dihapus!',
-          failedMessage: 'Submission gagal dihapus!'),
+        isSuccess: isSuccess,
+        successMessage: 'Submission berhasil dihapus!',
+        failedMessage: 'Submission gagal dihapus!',
+      ),
     );
   }
 }

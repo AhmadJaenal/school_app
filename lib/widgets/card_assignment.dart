@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:school_app/datasource/local_datasource.dart';
 import 'package:school_app/models/project_assignment.dart';
 import 'package:school_app/models/user.dart';

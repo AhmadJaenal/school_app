@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/models/presence.dart';
 import 'package:school_app/services/presence_service.dart';
 import 'package:school_app/shared/theme.dart';
@@ -11,12 +11,13 @@ class CardAbsence extends StatelessWidget {
   final String title;
   final int amount;
   final Color color;
-  const CardAbsence(
-      {super.key,
-      required this.width,
-      required this.title,
-      required this.amount,
-      required this.color});
+  const CardAbsence({
+    super.key,
+    required this.width,
+    required this.title,
+    required this.amount,
+    required this.color,
+  });
 
   final double width;
 
@@ -29,26 +30,19 @@ class CardAbsence extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: color.withOpacity(.1),
-        border: Border.all(
-          width: 1,
-          color: color.withOpacity(.8),
-        ),
+        border: Border.all(width: 1, color: color.withOpacity(.8)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: AppTextStyle.paragraphLBold.copyWith(
-              color: AppColors.black,
-            ),
+            style: AppTextStyle.paragraphLBold.copyWith(color: AppColors.black),
           ),
           Text(
             amount.toString(),
-            style: AppTextStyle.h3.copyWith(
-              color: color,
-            ),
-          )
+            style: AppTextStyle.h3.copyWith(color: color),
+          ),
         ],
       ),
     );
@@ -84,8 +78,10 @@ class UserAbsenceGrid extends StatelessWidget {
               builder: (context) => Container(
                 width: double.infinity,
                 height: 200,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 22,
+                ),
                 margin: EdgeInsets.symmetric(
                   horizontal: AppMargin.defaultMargin,
                   vertical: 28,
@@ -122,7 +118,7 @@ class UserAbsenceGrid extends StatelessWidget {
                       titleButton: 'Tugas yang dikerjakan',
                       ontap: () {
                         saveDate(listPresence[index].createdAt);
-                        Get.toNamed('/task-history');
+                        context.push('/task-history');
                       },
                     ),
                   ],

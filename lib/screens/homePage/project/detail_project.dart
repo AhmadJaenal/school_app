@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/models/project.dart';
 import 'package:school_app/services/project/project.dart';
@@ -18,7 +18,7 @@ class DetailProject extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.black100,
@@ -58,7 +58,7 @@ class DetailProject extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         child: PrimaryButton(
-          ontap: () => Get.toNamed('/task-project'),
+          ontap: () => context.push('/task-project'),
           titleButton: 'Daftar Tugas',
         ),
       ),

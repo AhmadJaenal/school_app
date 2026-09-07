@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/datasource/local_datasource.dart';
 import 'package:school_app/models/task.dart';
@@ -21,7 +21,7 @@ class DetailTask extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.black100,
@@ -50,15 +50,18 @@ class DetailTask extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Center(
-                      child: Text('Detail tugas tidak tersedia',
-                          style: AppTextStyle.paragraphL),
+                      child: Text(
+                        'Detail tugas tidak tersedia',
+                        style: AppTextStyle.paragraphL,
+                      ),
                     ),
                   );
                 }
                 TaskModel task = snapshot.data!['data'];
                 return Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppMargin.defaultMargin,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -78,7 +81,8 @@ class DetailTask extends StatelessWidget {
                     snapshot.data!.roles!.contains('intern')) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: AppMargin.defaultMargin),
+                      horizontal: AppMargin.defaultMargin,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -89,14 +93,15 @@ class DetailTask extends StatelessWidget {
                           height: 32,
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.toNamed('/submission-task');
+                              context.push('/submission-task');
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
                               backgroundColor: AppColors.primary1,
                               minimumSize: const Size(double.infinity, 56),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -116,7 +121,7 @@ class DetailTask extends StatelessWidget {
                   return const SizedBox();
                 }
               },
-            )
+            ),
           ],
         ),
       ),
@@ -129,13 +134,10 @@ class DetailTask extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  PrimaryButton(
-                    ontap: () {},
-                    titleButton: 'Module',
-                  ),
+                  PrimaryButton(ontap: () {}, titleButton: 'Module'),
                   const Gap(10),
                   PrimaryButton(
-                    ontap: () => Get.toNamed('/add-submission'),
+                    ontap: () => context.push('/add-submission'),
                     titleButton: 'Add Submission',
                   ),
                 ],

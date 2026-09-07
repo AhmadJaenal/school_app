@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task.dart';
 import '../../../services/task/task_service.dart';
@@ -22,7 +22,7 @@ class TaskProject extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.black100,
@@ -50,18 +50,17 @@ class TaskProject extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Row(
                     children: [
-                      Checkbox(
-                        value: false,
-                        onChanged: (bool? value) {},
-                      ),
+                      Checkbox(value: false, onChanged: (bool? value) {}),
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
                             saveTaskId(tasks[index].id);
-                            Get.toNamed('/detail-task');
+                            context.push('/detail-task');
                           },
-                          child: Text(tasks[index].title!,
-                              style: AppTextStyle.paragraphMBold),
+                          child: Text(
+                            tasks[index].title!,
+                            style: AppTextStyle.paragraphMBold,
+                          ),
                         ),
                       ),
                     ],
@@ -70,8 +69,11 @@ class TaskProject extends StatelessWidget {
               );
             }
             return Center(
-                child: Text('Belum ada untuk proyek ini',
-                    style: AppTextStyle.paragraphL));
+              child: Text(
+                'Belum ada untuk proyek ini',
+                style: AppTextStyle.paragraphL,
+              ),
+            );
           },
         ),
       ),

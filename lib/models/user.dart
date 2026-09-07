@@ -1,39 +1,4 @@
 class User {
-  final int id;
-  final String name;
-  final String email;
-  final String token;
-  final List<String> roles;
-  final List<String> permissions;
-
-  User({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.token,
-    required this.roles,
-    required this.permissions,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      token: json['token'],
-      roles: List<String>.from(json['roles'].map((role) => role)),
-      permissions: List<String>.from(
-          json['permissions'].map((permission) => permission)),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-    };
-=======
   final int? id;
   final int? schoolId;
   final String? fullName;
@@ -58,10 +23,10 @@ class User {
     return User(
       id: json['id'],
       schoolId: json['school_id'] ?? 0,
-      fullName: json['name'],
+      fullName: json['name'] ?? json['full_name'],
       email: json['email'],
-      accessToken: json['access_token'].toString(),
-      token: json['type_token'],
+      accessToken: json['access_token']?.toString(),
+      token: json['type_token'] ?? json['token'],
       permissions: json['permissions'],
       roles: json['roles'],
     );
@@ -69,5 +34,18 @@ class User {
 
   static List<User> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => User.fromJson(json)).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'school_id': schoolId,
+      'name': fullName,
+      'email': email,
+      'access_token': accessToken,
+      'type_token': token,
+      'permissions': permissions,
+      'roles': roles,
+    };
   }
 }

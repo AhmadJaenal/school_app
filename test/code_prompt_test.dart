@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/annotations.dart';
 import 'package:school_app/api/urls.dart';
 import 'package:school_app/controllers/auth_controller.dart';
 import 'package:school_app/controllers/classroom_controller.dart';
@@ -32,7 +31,7 @@ void main() {
             "description": "Kelas Matematika",
             "teacher_id": 101,
             "start_date": "2025-08-01",
-            "end_date": "2025-12-31"
+            "end_date": "2025-12-31",
           },
           {
             "id": 2,
@@ -42,14 +41,14 @@ void main() {
             "description": "Kelas Fisika",
             "teacher_id": 102,
             "start_date": "2025-08-01",
-            "end_date": "2025-12-31"
-          }
-        ]
+            "end_date": "2025-12-31",
+          },
+        ],
       };
 
-      when(mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classrooms}')))
-          .thenAnswer(
-              (_) async => http.Response(json.encode(mockResponse), 200));
+      when(
+        mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classrooms}')),
+      ).thenAnswer((_) async => http.Response(json.encode(mockResponse), 200));
 
       final result = await controller.fetchClassrooms();
 
@@ -61,8 +60,9 @@ void main() {
     });
 
     test('throws Exception on non-200 response', () async {
-      when(mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classrooms}')))
-          .thenAnswer((_) async => http.Response('Server error', 500));
+      when(
+        mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classrooms}')),
+      ).thenAnswer((_) async => http.Response('Server error', 500));
 
       expect(() => controller.fetchClassrooms(), throwsException);
     });
@@ -83,15 +83,17 @@ void main() {
           "id": 1,
           "name": "Ahmad",
           "email": "ahmad@example.com",
-          "token": "abc123"
-        }
+          "token": "abc123",
+        },
       };
 
-      when(mockClient.post(
-        Uri.parse('${URLs.baseURL}${URLs.login}'),
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      )).thenAnswer((_) async => http.Response(json.encode(mockResponse), 200));
+      when(
+        mockClient.post(
+          Uri.parse('${URLs.baseURL}${URLs.login}'),
+          headers: anyNamed('headers'),
+          body: anyNamed('body'),
+        ),
+      ).thenAnswer((_) async => http.Response(json.encode(mockResponse), 200));
 
       final user = await controller.actionLogin(
         username: 'ahmad',
@@ -99,17 +101,19 @@ void main() {
       );
 
       expect(user, isA<User>());
-      expect(user.name, equals('Ahmad'));
+      expect(user.fullName, equals('Ahmad'));
       expect(user.email, equals('ahmad@example.com'));
       expect(user.token, equals('abc123'));
     });
 
     test('throws Exception on failed login (status != 200)', () async {
-      when(mockClient.post(
-        Uri.parse('${URLs.baseURL}${URLs.login}'),
-        headers: anyNamed('headers'),
-        body: anyNamed('body'),
-      )).thenAnswer((_) async => http.Response('Unauthorized', 401));
+      when(
+        mockClient.post(
+          Uri.parse('${URLs.baseURL}${URLs.login}'),
+          headers: anyNamed('headers'),
+          body: anyNamed('body'),
+        ),
+      ).thenAnswer((_) async => http.Response('Unauthorized', 401));
 
       expect(
         () async => await controller.actionLogin(
@@ -140,13 +144,13 @@ void main() {
           "description": "Kelas Matematika",
           "teacher_id": 101,
           "start_date": "2025-08-01",
-          "end_date": "2025-12-31"
-        }
+          "end_date": "2025-12-31",
+        },
       };
 
-      when(mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}1')))
-          .thenAnswer(
-              (_) async => http.Response(json.encode(mockResponse), 200));
+      when(
+        mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}1')),
+      ).thenAnswer((_) async => http.Response(json.encode(mockResponse), 200));
 
       final result = await controller.fetchClassroomById(1);
 
@@ -156,28 +160,39 @@ void main() {
     });
 
     test('throws Exception when status code is 404 (Not Found)', () async {
-      when(mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}99')))
-          .thenAnswer((_) async => http.Response('Not Found', 404));
+      when(
+        mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}99')),
+      ).thenAnswer((_) async => http.Response('Not Found', 404));
 
       expect(
-          () async => await controller.fetchClassroomById(99), throwsException);
+        () async => await controller.fetchClassroomById(99),
+        throwsException,
+      );
     });
 
-    test('throws Exception when status code is 500 (Internal Server Error)',
-        () async {
-      when(mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}2')))
-          .thenAnswer((_) async => http.Response('Internal Server Error', 500));
+    test(
+      'throws Exception when status code is 500 (Internal Server Error)',
+      () async {
+        when(
+          mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}2')),
+        ).thenAnswer((_) async => http.Response('Internal Server Error', 500));
 
-      expect(
-          () async => await controller.fetchClassroomById(2), throwsException);
-    });
+        expect(
+          () async => await controller.fetchClassroomById(2),
+          throwsException,
+        );
+      },
+    );
 
     test('throws Exception when called with invalid ID (e.g. 0)', () async {
-      when(mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}0')))
-          .thenAnswer((_) async => http.Response('Bad Request', 400));
+      when(
+        mockClient.get(Uri.parse('${URLs.baseURL}${URLs.classroomById}0')),
+      ).thenAnswer((_) async => http.Response('Bad Request', 400));
 
       expect(
-          () async => await controller.fetchClassroomById(0), throwsException);
+        () async => await controller.fetchClassroomById(0),
+        throwsException,
+      );
     });
   });
 }

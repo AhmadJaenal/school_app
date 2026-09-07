@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
 import '../../../services/submission/submission_service.dart';
@@ -19,11 +19,6 @@ class AddSubmission extends StatefulWidget {
 final formKey = GlobalKey<FormState>();
 
 QuillController controller = QuillController.basic();
-
-@override
-void dispose() {
-  controller.dispose();
-}
 
 void _clearTextControllers() {
   controller.clear();
@@ -45,8 +40,8 @@ class _AddSubmissionState extends State<AddSubmission> {
 
         successfulMessage.then((response) {
           if (response['status']) {
-            Get.back();
-            Get.back();
+            context.pop();
+            context.pop();
             popUpSubmission(context, true);
           } else {
             popUpSubmission(context, false);
@@ -61,7 +56,7 @@ class _AddSubmissionState extends State<AddSubmission> {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.black100,
@@ -80,28 +75,30 @@ class _AddSubmissionState extends State<AddSubmission> {
           child: ListView(
             children: [
               Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppMargin.defaultMargin,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     QuillSimpleToolbar(
                       controller: controller,
-                      configurations: const QuillSimpleToolbarConfigurations(),
+                      config: const QuillSimpleToolbarConfig(),
                     ),
                     SizedBox(
                       height: height * .7,
                       child: QuillEditor.basic(
                         controller: controller,
-                        configurations: const QuillEditorConfigurations(
-                            dialogTheme: QuillDialogTheme(
-                          dialogBackgroundColor: Colors.red,
-                        )),
+                        config: const QuillEditorConfig(
+                          dialogTheme: QuillDialogTheme(
+                            dialogBackgroundColor: Colors.red,
+                          ),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -128,9 +125,10 @@ class _AddSubmissionState extends State<AddSubmission> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       builder: (context) => PopUpMessage(
-          isSuccess: isSuccess,
-          successMessage: 'Tugas berhasil dikumpulkan!',
-          failedMessage: 'Tugas gagal dikumpulkan!'),
+        isSuccess: isSuccess,
+        successMessage: 'Tugas berhasil dikumpulkan!',
+        failedMessage: 'Tugas gagal dikumpulkan!',
+      ),
     );
   }
 }

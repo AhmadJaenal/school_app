@@ -8,14 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:developer' as dev;
 
-enum AssignmentStatus {
-  success,
-  failure,
-  error,
-  uploading,
-  delete,
-  idle,
-}
+enum AssignmentStatus { success, failure, error, uploading, delete, idle }
 
 class AssignmentProvider with ChangeNotifier {
   AssignmentStatus _assignmentStatus = AssignmentStatus.idle;
@@ -30,7 +23,7 @@ class AssignmentProvider with ChangeNotifier {
       Uri.parse(URLs.getAssignmentProject),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
@@ -39,25 +32,28 @@ class AssignmentProvider with ChangeNotifier {
       final Map<String, dynamic> responseData = json.decode(response.body);
       var assignmentData = responseData['data'];
 
-      List<ProjectAssignment> listAssignment =
-          ProjectAssignment.fromJsonList(assignmentData);
+      List<ProjectAssignment> listAssignment = ProjectAssignment.fromJsonList(
+        assignmentData,
+      );
 
       result = {
         'status': true,
         'message': 'Successful',
-        'data': listAssignment
+        'data': listAssignment,
       };
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
   }
 
-  Future<Map<String, dynamic>> addAssignment(
-      {required int projectId, userId}) async {
+  Future<Map<String, dynamic>> addAssignment({
+    required int projectId,
+    userId,
+  }) async {
     Map<String, dynamic> result;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -76,7 +72,7 @@ class AssignmentProvider with ChangeNotifier {
       body: json.encode(assignmentData),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
@@ -96,7 +92,7 @@ class AssignmentProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;

@@ -13,11 +13,12 @@ import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/edupay/invoice_spp.dart';
 import 'package:school_app/screens/homePage/edupay/payment_spp.dart';
 import 'package:school_app/screens/homePage/event/list_event.dart';
+import 'package:school_app/screens/homePage/project/add_assignment.dart';
 import 'package:school_app/screens/homePage/nav/nav_bar.dart';
 import 'package:school_app/screens/homePage/notification/notification.dart';
-import 'package:school_app/screens/homePage/parent/add_children.dart';
-import 'package:school_app/screens/homePage/parent/detail_data.dart';
-import 'package:school_app/screens/homePage/parent/list_children.dart';
+import 'package:school_app/screens/homePage/intern_data/add_children.dart';
+import 'package:school_app/screens/homePage/intern_data/list_children.dart';
+import 'package:school_app/screens/face_recognition/camera.dart';
 import 'package:school_app/screens/homePage/profile/change_password.dart';
 import 'package:school_app/screens/homePage/profile/detail_profile.dart';
 import 'package:school_app/screens/homePage/profile/edit_profile.dart';
@@ -93,6 +94,10 @@ abstract class AppRouter {
           path: Routes.listEvent,
           builder: (context, state) => ListEvent(),
         ),
+        GoRoute(
+          path: Routes.addAssignment,
+          builder: (context, state) => const AddAssignment(),
+        ),
 
         // Student
         GoRoute(
@@ -109,7 +114,7 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.camera,
-          builder: (context, state) => const CameraPage(),
+          builder: (context, state) => const CameraFaceDetection(),
         ),
 
         // Parent
@@ -121,15 +126,6 @@ abstract class AppRouter {
           path: Routes.listChildren,
           builder: (context, state) => const ListChildren(),
         ),
-        GoRoute(
-          path: Routes.detailDataChildren,
-          builder: (context, state) {
-            final childId = state.pathParameters['childId']!;
-            // TODO: teruskan childId ke DetailData sesuai constructor aslinya
-            return const DetailData();
-          },
-        ),
-
         // Profile
         GoRoute(
           path: Routes.profilePage,
