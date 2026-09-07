@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
@@ -25,7 +25,7 @@ class PermitApplication extends StatelessWidget {
         bottomOpacity: 0,
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(
@@ -64,7 +64,7 @@ class PermitApplication extends StatelessWidget {
             const Gap(6),
             GestureDetector(
               onTap: () {
-                Get.toNamed('/camera');
+                context.push('/camera');
               },
               child: Container(
                 width: double.infinity,

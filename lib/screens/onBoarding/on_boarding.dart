@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
@@ -13,7 +13,7 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
   get controllerCarousel => _controller;
   int _current = 0;
 
@@ -131,7 +131,7 @@ class _OnBoardingState extends State<OnBoarding> {
             PrimaryButton(
               titleButton: 'Selanjutnya',
               ontap: () {
-                Get.toNamed('/login');
+                context.push('/login');
               },
             )
           ],

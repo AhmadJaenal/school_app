@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
@@ -71,7 +70,7 @@ class _LoginState extends State<Login> {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () => Get.toNamed('/forgot-password'),
+                  onTap: () => {},
                   child: Text(
                     "Lupa Password ?",
                     style: AppTextStyle.paragraphM
@@ -84,7 +83,6 @@ class _LoginState extends State<Login> {
                   titleButton: "Masuk",
                   ontap: () {
                     if (formKey.currentState!.validate()) {
-                      Get.toNamed('/nav');
                     } else {
                       print('validasi gagal');
                     }
@@ -93,7 +91,6 @@ class _LoginState extends State<Login> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.toNamed('/register');
                   },
                   child: RichText(
                     text: TextSpan(

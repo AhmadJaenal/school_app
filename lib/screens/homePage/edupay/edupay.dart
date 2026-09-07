@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
@@ -414,7 +414,7 @@ class Edupay extends StatelessWidget {
             ),
             const Gap(12),
             GestureDetector(
-              onTap: () => Get.toNamed('/bill-page'),
+              onTap: () => context.push('/edupay/bill'),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

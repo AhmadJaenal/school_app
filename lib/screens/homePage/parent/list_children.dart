@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 
 class ListChildren extends StatelessWidget {
@@ -14,7 +14,7 @@ class ListChildren extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(
@@ -25,9 +25,9 @@ class ListChildren extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          CardDataChildren(),
-          CardDataChildren(),
-          CardDataChildren(),
+          CardDataChildren(context),
+          CardDataChildren(context),
+          CardDataChildren(context),
         ],
       ),
       floatingActionButton: ElevatedButton(
@@ -41,7 +41,7 @@ class ListChildren extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Get.toNamed('/add-children');
+          context.push('/add-children');
         },
         child: Icon(
           Icons.add,
@@ -53,9 +53,9 @@ class ListChildren extends StatelessWidget {
     );
   }
 
-  GestureDetector CardDataChildren() {
+  GestureDetector CardDataChildren(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed('/detail-data-children'),
+      onTap: () => context.push('/detail-data-children/1'),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         child: Row(

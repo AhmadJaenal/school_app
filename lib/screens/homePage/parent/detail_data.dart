@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_absence.dart';
@@ -19,7 +19,7 @@ class DetailData extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(
@@ -118,7 +118,7 @@ class DetailData extends StatelessWidget {
               children: [
                 Text('Aktivitas', style: AppTextStyle.paragraphLBold),
                 GestureDetector(
-                  onTap: () => Get.toNamed('/activity-student'),
+                  onTap: () => context.push('/activity-student'),
                   child: Text(
                     'Lihat Semua',
                     style: AppTextStyle.paragraphM

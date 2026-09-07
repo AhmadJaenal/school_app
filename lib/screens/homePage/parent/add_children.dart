@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 import 'package:school_app/widgets/custom_textfield.dart';
@@ -28,7 +28,7 @@ class AddChildren extends StatelessWidget {
         elevation: 0,
         actions: [
           GestureDetector(
-              onTap: () => Get.toNamed('/notification'),
+              onTap: () => context.push('/notification'),
               child: Padding(
                 padding: EdgeInsets.only(right: AppMargin.defaultMargin),
                 child: Image.asset('assets/icon_notification.png', width: 28),

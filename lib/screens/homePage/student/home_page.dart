@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const Spacer(),
                 GestureDetector(
-                    onTap: () => Get.toNamed('/notification'),
+                    onTap: () => context.push('/notification'),
                     child:
                         Image.asset('assets/icon_notification.png', width: 28)),
               ],
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   Text('Kehadiran Hari Ini',
                       style: AppTextStyle.paragraphLBold),
                   GestureDetector(
-                    onTap: () => Get.toNamed('/absence-history'),
+                    onTap: () => context.push('/absence-history'),
                     child: Text(
                       'Rekap Absen',
                       style: AppTextStyle.paragraphM
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text('Event', style: AppTextStyle.paragraphLBold),
                   GestureDetector(
-                    onTap: () => Get.toNamed('/list-event'),
+                    onTap: () => context.push('/list-event'),
                     child: Text(
                       'Lihat Semua',
                       style: AppTextStyle.paragraphM
@@ -349,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const Spacer(),
                         ElevatedButton(
-                          onPressed: () => Get.toNamed('/permit-application'),
+                          onPressed: () => context.push('/permit-application'),
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
                               minimumSize: const Size(160, 34),
@@ -453,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                             const Gap(11),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed('/camera');
+                                context.push('/camera');
                               },
                               child: Container(
                                 width: double.infinity,

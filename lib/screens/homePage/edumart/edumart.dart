@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 
 class EdumartPage extends StatelessWidget {
@@ -35,7 +35,7 @@ class EdumartPage extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => Get.toNamed('/detail-product'),
+            onTap: () => context.push('/edumart/product/${index + 1}'),
             child: Container(
               width: 200,
               height: 400,
@@ -100,7 +100,7 @@ class EdumartPage extends StatelessWidget {
             ),
             actions: [
               GestureDetector(
-                onTap: () => Get.toNamed('/cart-product'),
+                onTap: () => context.push('/edumart/cart'),
                 child: Padding(
                   padding: EdgeInsets.only(right: AppMargin.defaultMargin),
                   child: Icon(Icons.shopping_cart_outlined,

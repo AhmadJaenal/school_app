@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/screens/homePage/profile/history_payment.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_cart_product.dart';
@@ -45,7 +45,7 @@ class HistoryEdumart extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             leading: GestureDetector(
-              onTap: () => Get.back(),
+              onTap: () => context.pop(),
               child: Icon(Icons.arrow_back_ios_new_rounded,
                   color: AppColors.black),
             ),

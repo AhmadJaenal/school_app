@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:school_app/routing/app_routes.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_cart_product.dart';
 import 'package:school_app/widgets/custom_button.dart';
@@ -22,13 +22,13 @@ class _CartProductState extends State<CartProduct> {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child:
               Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black100),
         ),
         actions: [
           GestureDetector(
-            onTap: () => Get.toNamed('/history-edumart'),
+            onTap: () => context.push(Routes.historyEdumart),
             child: Padding(
               padding: EdgeInsets.only(right: AppMargin.defaultMargin),
               child: Icon(Icons.history, color: AppColors.black100),
@@ -110,7 +110,7 @@ class _CartProductState extends State<CartProduct> {
                   child: PrimaryButton(
                     titleButton: 'Checkout',
                     ontap: () {
-                      Get.offAllNamed('/invoice');
+                      context.go(Routes.invoice);
                     },
                   ),
                 ),

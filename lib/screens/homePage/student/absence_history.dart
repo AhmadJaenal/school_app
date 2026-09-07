@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/card_absence.dart';
 import 'package:school_app/widgets/card_activity.dart';
@@ -26,7 +26,7 @@ class AbsenceHistory extends StatelessWidget {
         bottomOpacity: 0,
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(
@@ -136,7 +136,7 @@ class AbsenceHistory extends StatelessWidget {
               children: [
                 Text('Aktivitas', style: AppTextStyle.paragraphLBold),
                 GestureDetector(
-                  onTap: () => Get.toNamed('/activity-student'),
+                  onTap: () => context.push('/activity-student'),
                   child: Text(
                     'Lihat Semua',
                     style: AppTextStyle.paragraphM

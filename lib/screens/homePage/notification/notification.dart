@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 
 // ignore: must_be_immutable
@@ -23,7 +23,7 @@ class NotificationPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
         ),
         title: Text(

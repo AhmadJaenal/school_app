@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: PrimaryButton(
                   titleButton: "Edit Profile",
-                  ontap: () => Get.toNamed('/edit-profile'),
+                  ontap: () => context.push('/profile/edit'),
                 ),
               ),
               const Gap(49),
@@ -65,17 +65,17 @@ class ProfilePage extends StatelessWidget {
               TileMenuProfile(
                 icon: 'icon_card_profile.png',
                 title: 'Profil Lengkap',
-                ontap: () => Get.toNamed('/detail-profile'),
+                ontap: () => context.push('/profile/detail'),
               ),
               TileMenuProfile(
                 icon: 'icon_history.png',
                 title: 'Riwayat Pembayaran',
-                ontap: () => Get.toNamed('/history-payment'),
+                ontap: () => context.push('/profile/history-payment'),
               ),
               TileMenuProfile(
                 icon: 'icon_password.png',
                 title: 'Ganti Password',
-                ontap: () => Get.toNamed('/change-password'),
+                ontap: () => context.push('/profile/change-password'),
               ),
               TileMenuProfile(
                 icon: 'icon_box_logout.png',
@@ -122,7 +122,7 @@ class ProfilePage extends StatelessWidget {
                                 width: 130,
                                 child: SecondaryButton(
                                     titleButton: 'Batal',
-                                    ontap: () => Get.back()),
+                                    ontap: () => context.pop()),
                               ),
                               SizedBox(
                                 width: 130,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
@@ -15,7 +15,7 @@ class InvoiceSPP extends StatelessWidget {
         elevation: 0,
         backgroundColor: AppColors.primary1,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () => context.pop(),
           child: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.white),
         ),
         title: Text(
@@ -303,7 +303,7 @@ class InvoiceSPP extends StatelessWidget {
         child: PrimaryButton(
             titleButton: 'Menu',
             ontap: () {
-              Get.offNamed('/nav');
+              context.go('/nav');
             }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

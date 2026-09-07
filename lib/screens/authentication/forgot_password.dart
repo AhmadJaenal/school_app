@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:school_app/shared/theme.dart';
 import 'package:school_app/widgets/custom_button.dart';
 
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({super.key});
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
@@ -23,9 +22,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         leading: IconButton(
           padding: const EdgeInsets.only(left: 24),
           icon: const Icon(Icons.keyboard_arrow_left_rounded, size: 26),
-          onPressed: () {
-            Get.back();
-          },
+          onPressed: () {},
         ),
       ),
       body: Padding(
