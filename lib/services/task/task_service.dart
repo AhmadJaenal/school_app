@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:school_app/api/urls.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/task.dart';
 import 'package:school_app/models/submission.dart';
@@ -36,7 +36,7 @@ class TaskProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -65,7 +65,7 @@ class TaskProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -135,8 +135,11 @@ class TaskProvider with ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> newTask(
-      {required String title, desc, required int projectId}) async {
+  Future<Map<String, dynamic>> newTask({
+    required String title,
+    desc,
+    required int projectId,
+  }) async {
     Map<String, dynamic> result;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -156,7 +159,7 @@ class TaskProvider with ChangeNotifier {
       body: json.encode(taskData),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
@@ -174,7 +177,7 @@ class TaskProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -210,7 +213,7 @@ class TaskProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;

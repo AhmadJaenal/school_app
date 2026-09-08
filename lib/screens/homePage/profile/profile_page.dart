@@ -3,8 +3,10 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_app/screens/homePage/student/card_tile_menu_profile.dart';
 import 'package:school_app/routing/app_routes.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

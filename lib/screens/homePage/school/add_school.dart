@@ -3,13 +3,14 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
-import 'package:school_app/models/user.dart';
 import 'package:school_app/services/auth/student_auth.dart';
 import 'package:school_app/services/school/school_service.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_popup_message.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/modals/custom_popup_message.dart';
+import 'package:school_app/widgets/forms/custom_textfield.dart';
 
 class AddSchool extends StatelessWidget {
   AddSchool({super.key});

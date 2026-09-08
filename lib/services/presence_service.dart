@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:school_app/core/platform/status.dart';
-import 'package:school_app/datasource/local_datasource.dart';
+import 'package:school_app/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:school_app/models/presence.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../api/urls.dart';
+import '../network/urls.dart';
 
 import 'dart:developer' as dev;
 
@@ -48,8 +50,10 @@ class PresenceProvider with ChangeNotifier {
   ProcessState _presenceStatus = ProcessState.idle;
   ProcessState get presenceStatus => _presenceStatus;
 
-  Future<Map<String, dynamic>> addPresencePermission(
-      {required String status, required String type}) async {
+  Future<Map<String, dynamic>> addPresencePermission({
+    required String status,
+    required String type,
+  }) async {
     Map<String, dynamic> result;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     int userId = prefs.getInt('userId')!;
@@ -70,7 +74,7 @@ class PresenceProvider with ChangeNotifier {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
     if (response.statusCode == 201) {
@@ -87,10 +91,12 @@ class PresenceProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
-      dev.log(json.decode(response.body).toString(),
-          name: 'response code absen');
+      dev.log(
+        json.decode(response.body).toString(),
+        name: 'response code absen',
+      );
     }
     return result;
   }
@@ -124,7 +130,7 @@ class PresenceProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;

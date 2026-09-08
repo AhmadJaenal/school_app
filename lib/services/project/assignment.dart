@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-import 'package:school_app/api/urls.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/models/project_assignment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

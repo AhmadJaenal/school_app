@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
 class PaymentSPP extends StatelessWidget {
   const PaymentSPP({super.key});
@@ -106,9 +108,7 @@ class PaymentSPP extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.defaultMargin,
-            ),
+            margin: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -165,9 +165,7 @@ class PaymentSPP extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.defaultMargin,
-            ),
+            margin: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -200,10 +198,11 @@ class PaymentSPP extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         child: PrimaryButton(
-            titleButton: 'Bayar',
-            ontap: () {
-              context.push('/edupay/invoice');
-            }),
+          titleButton: 'Bayar',
+          ontap: () {
+            context.push('/edupay/invoice');
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

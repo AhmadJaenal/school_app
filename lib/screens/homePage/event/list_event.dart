@@ -1,9 +1,8 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 class ListEvent extends StatelessWidget {
   ListEvent({super.key});
@@ -59,13 +58,17 @@ class ListEvent extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Icon(Icons.calendar_today_outlined,
-                              color: AppColors.white, size: 16),
+                          Icon(
+                            Icons.calendar_today_outlined,
+                            color: AppColors.white,
+                            size: 16,
+                          ),
                           const Gap(8),
                           Text(
                             event[index][2],
-                            style: AppTextStyle.paragraphM
-                                .copyWith(color: AppColors.white),
+                            style: AppTextStyle.paragraphM.copyWith(
+                              color: AppColors.white,
+                            ),
                           ),
                         ],
                       ),

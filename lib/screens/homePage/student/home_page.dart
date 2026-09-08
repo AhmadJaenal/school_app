@@ -4,15 +4,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:school_app/datasource/local_datasource.dart';
+import 'package:school_app/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:school_app/models/user.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/card_menu_home_page.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/cards/card_menu_home_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/card_activity.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/cards/card_activity.dart';
 
 // ignore: must_be_immutable
 class ActivityStudent extends StatelessWidget {
@@ -12,7 +14,7 @@ class ActivityStudent extends StatelessWidget {
     [
       'Pembayaran SPP',
       'Segera lakukan pembayaran SPP sebelum tanggal 19 September 2023',
-      '18:29'
+      '18:29',
     ],
   ];
 
@@ -36,8 +38,9 @@ class ActivityStudent extends StatelessWidget {
           itemCount: notification.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
               child: const CardActivity(),
             );
           },

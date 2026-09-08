@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/forms/custom_textfield.dart';
 import 'dart:developer' as developer;
 
 class Register extends StatelessWidget {
@@ -56,21 +58,20 @@ class Register extends StatelessWidget {
     'Khonghucu',
   ];
 
-  final List<String> _optionStaff = [
-    'Pilih',
-    'TU',
-    'Wakil Kepala Sekolah',
-  ];
+  final List<String> _optionStaff = ['Pilih', 'TU', 'Wakil Kepala Sekolah'];
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     TabBar tabBar = TabBar(
       labelStyle: AppTextStyle.paragraphLBold.copyWith(color: AppColors.white),
       indicator: BoxDecoration(
-          color: AppColors.primary1, borderRadius: BorderRadius.circular(8)),
+        color: AppColors.primary1,
+        borderRadius: BorderRadius.circular(8),
+      ),
       indicatorSize: TabBarIndicatorSize.tab,
-      unselectedLabelStyle:
-          AppTextStyle.paragraphLBold.copyWith(color: AppColors.primary1),
+      unselectedLabelStyle: AppTextStyle.paragraphLBold.copyWith(
+        color: AppColors.primary1,
+      ),
       tabs: const [
         Tab(text: 'Siswa'),
         Tab(text: 'Guru'),
@@ -84,31 +85,32 @@ class Register extends StatelessWidget {
         children: [
           const Gap(10),
           PrimaryButton(
-              titleButton: 'Daftar',
-              ontap: () {
-                if (formKey.currentState!.validate()) {
-                  _clearTextControllers();
-                  developer.log('validari berhasil');
-                } else {
-                  developer.log('validari gagal');
-                }
-              }),
+            titleButton: 'Daftar',
+            ontap: () {
+              if (formKey.currentState!.validate()) {
+                _clearTextControllers();
+                developer.log('validari berhasil');
+              } else {
+                developer.log('validari gagal');
+              }
+            },
+          ),
           const Gap(18),
           GestureDetector(
             onTap: () {},
             child: Center(
               child: RichText(
                 text: TextSpan(
-                  style:
-                      AppTextStyle.paragraphM.copyWith(color: AppColors.black),
+                  style: AppTextStyle.paragraphM.copyWith(
+                    color: AppColors.black,
+                  ),
                   children: <TextSpan>[
-                    const TextSpan(
-                      text: 'Sudah punya akun? ',
-                    ),
+                    const TextSpan(text: 'Sudah punya akun? '),
                     TextSpan(
                       text: ' Masuk',
-                      style: AppTextStyle.paragraphM
-                          .copyWith(color: const Color(0xff3085FE)),
+                      style: AppTextStyle.paragraphM.copyWith(
+                        color: const Color(0xff3085FE),
+                      ),
                     ),
                   ],
                 ),
@@ -314,14 +316,14 @@ class Register extends StatelessWidget {
             leadingWidth: double.infinity,
             leading: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: AppMargin.defaultMargin, vertical: 10),
+                horizontal: AppMargin.defaultMargin,
+                vertical: 10,
+              ),
               child: RichText(
                 text: TextSpan(
                   style: AppTextStyle.h1.copyWith(color: AppColors.black),
                   children: <TextSpan>[
-                    const TextSpan(
-                      text: 'Daftar Akun Baru\n',
-                    ),
+                    const TextSpan(text: 'Daftar Akun Baru\n'),
                     TextSpan(
                       text: 'Halo, silakan pilih jenis akun',
                       style: AppTextStyle.paragraphSecondaryS.copyWith(
@@ -350,12 +352,7 @@ class Register extends StatelessWidget {
         body: Form(
           key: formKey,
           child: TabBarView(
-            children: [
-              studentPage(),
-              teacherPage(),
-              parentPage(),
-              staffPage(),
-            ],
+            children: [studentPage(), teacherPage(), parentPage(), staffPage()],
           ),
         ),
       ),

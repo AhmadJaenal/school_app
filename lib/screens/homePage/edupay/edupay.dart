@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
-import 'package:school_app/widgets/transaction_widget.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/forms/custom_textfield.dart';
+import 'package:school_app/widgets/cards/transaction_widget.dart';
 
 class Edupay extends StatelessWidget {
   Edupay({super.key});
@@ -73,99 +75,106 @@ class Edupay extends StatelessWidget {
                                 initialChildSize: 0.6,
                                 minChildSize: 0.5,
                                 maxChildSize: 1.0,
-                                builder: (BuildContext context,
-                                        ScrollController scrollController) =>
-                                    SingleChildScrollView(
-                                  controller: scrollController,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 32, vertical: 16),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Center(
-                                          child: Container(
-                                            width: 50,
-                                            height: 4,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: AppColors.black60,
-                                            ),
-                                          ),
+                                builder:
+                                    (
+                                      BuildContext context,
+                                      ScrollController scrollController,
+                                    ) => SingleChildScrollView(
+                                      controller: scrollController,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 32,
+                                          vertical: 16,
                                         ),
-                                        const Gap(16),
-                                        Center(
-                                          child: Text(
-                                            'Tabungkan',
-                                            style: AppTextStyle.h3.copyWith(
-                                              color: AppColors.black,
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(12),
-                                        Text(
-                                          'Jumlah Simpan (Rp)',
-                                          style:
-                                              AppTextStyle.paragraphL.copyWith(
-                                            color: AppColors.black80,
-                                          ),
-                                        ),
-                                        const Gap(16),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            CardNominal(
-                                              amount: '10.000',
-                                              onPressed: () {},
+                                            Center(
+                                              child: Container(
+                                                width: 50,
+                                                height: 4,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: AppColors.black60,
+                                                ),
+                                              ),
                                             ),
-                                            CardNominal(
-                                              amount: '20.000',
-                                              onPressed: () {},
+                                            const Gap(16),
+                                            Center(
+                                              child: Text(
+                                                'Tabungkan',
+                                                style: AppTextStyle.h3.copyWith(
+                                                  color: AppColors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(12),
+                                            Text(
+                                              'Jumlah Simpan (Rp)',
+                                              style: AppTextStyle.paragraphL
+                                                  .copyWith(
+                                                    color: AppColors.black80,
+                                                  ),
+                                            ),
+                                            const Gap(16),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                CardNominal(
+                                                  amount: '10.000',
+                                                  onPressed: () {},
+                                                ),
+                                                CardNominal(
+                                                  amount: '20.000',
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                            const Gap(12),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                CardNominal(
+                                                  amount: '50.000',
+                                                  onPressed: () {},
+                                                ),
+                                                CardNominal(
+                                                  amount: '100.000',
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                            const Gap(12),
+                                            CustomTextField(
+                                              hintText: 'Masukan Nominal',
+                                              titleTextField:
+                                                  'Masukkan Jumlah (Rp)',
+                                              textController: amountController,
+                                            ),
+                                            const Gap(16),
+                                            Text(
+                                              'Masukkan nominal uang yang akan Anda/n Tabungkan.',
+                                              style: AppTextStyle.paragraphL
+                                                  .copyWith(
+                                                    color: AppColors.black80,
+                                                  ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            const Gap(16),
+                                            PrimaryButton(
+                                              titleButton: 'Simpan',
+                                              ontap: () {},
                                             ),
                                           ],
                                         ),
-                                        const Gap(12),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CardNominal(
-                                              amount: '50.000',
-                                              onPressed: () {},
-                                            ),
-                                            CardNominal(
-                                              amount: '100.000',
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
-                                        const Gap(12),
-                                        CustomTextField(
-                                          hintText: 'Masukan Nominal',
-                                          titleTextField:
-                                              'Masukkan Jumlah (Rp)',
-                                          textController: amountController,
-                                        ),
-                                        const Gap(16),
-                                        Text(
-                                          'Masukkan nominal uang yang akan Anda/n Tabungkan.',
-                                          style:
-                                              AppTextStyle.paragraphL.copyWith(
-                                            color: AppColors.black80,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const Gap(16),
-                                        PrimaryButton(
-                                            titleButton: 'Simpan',
-                                            ontap: () {}),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
                               ),
                             );
                           },
@@ -177,8 +186,10 @@ class Edupay extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          icon: Icon(Icons.file_download_outlined,
-                              color: AppColors.secondary1),
+                          icon: Icon(
+                            Icons.file_download_outlined,
+                            color: AppColors.secondary1,
+                          ),
                           label: Text(
                             'Tabungkan',
                             style: AppTextStyle.paragraphSBold.copyWith(
@@ -197,7 +208,9 @@ class Edupay extends StatelessWidget {
                               builder: (context) => Container(
                                 width: double.infinity,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 32, vertical: 25),
+                                  horizontal: 32,
+                                  vertical: 25,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(20),
@@ -268,7 +281,9 @@ class Edupay extends StatelessWidget {
                                     ),
                                     const Gap(16),
                                     PrimaryButton(
-                                        titleButton: 'Simpan', ontap: () {}),
+                                      titleButton: 'Simpan',
+                                      ontap: () {},
+                                    ),
                                   ],
                                 ),
                               ),
@@ -282,8 +297,10 @@ class Edupay extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          icon: Icon(Icons.add_circle_outline_outlined,
-                              color: AppColors.secondary1),
+                          icon: Icon(
+                            Icons.add_circle_outline_outlined,
+                            color: AppColors.secondary1,
+                          ),
                           label: Text(
                             'Top-Up',
                             style: AppTextStyle.paragraphSBold.copyWith(
@@ -316,13 +333,15 @@ class Edupay extends StatelessWidget {
                     children: [
                       Text(
                         'Tabungan',
-                        style: AppTextStyle.paragraphMBold
-                            .copyWith(color: AppColors.black100),
+                        style: AppTextStyle.paragraphMBold.copyWith(
+                          color: AppColors.black100,
+                        ),
                       ),
                       Text(
                         'Rp500.000',
-                        style:
-                            AppTextStyle.h2.copyWith(color: AppColors.black100),
+                        style: AppTextStyle.h2.copyWith(
+                          color: AppColors.black100,
+                        ),
                       ),
                     ],
                   ),
@@ -332,8 +351,9 @@ class Edupay extends StatelessWidget {
                     children: [
                       Text(
                         'Tarik Uang',
-                        style: AppTextStyle.paragraphXS
-                            .copyWith(color: AppColors.black100),
+                        style: AppTextStyle.paragraphXS.copyWith(
+                          color: AppColors.black100,
+                        ),
                       ),
                       SizedBox(
                         width: 130,
@@ -344,8 +364,9 @@ class Edupay extends StatelessWidget {
                               context: context,
                               isScrollControlled: true,
                               builder: (context) => Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 32),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                ),
                                 height: 300,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -375,7 +396,9 @@ class Edupay extends StatelessWidget {
                                     ),
                                     const Gap(16),
                                     PrimaryButton(
-                                        titleButton: 'Simpan', ontap: () {}),
+                                      titleButton: 'Simpan',
+                                      ontap: () {},
+                                    ),
                                   ],
                                 ),
                               ),
@@ -390,8 +413,10 @@ class Edupay extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          icon: Icon(Icons.file_upload_outlined,
-                              color: AppColors.white),
+                          icon: Icon(
+                            Icons.file_upload_outlined,
+                            color: AppColors.white,
+                          ),
                           label: Text(
                             'Ambil Tabungan',
                             style: AppTextStyle.paragraphSBold.copyWith(
@@ -408,9 +433,7 @@ class Edupay extends StatelessWidget {
             const Gap(17),
             Text(
               'Pembayaran Tagihan',
-              style: AppTextStyle.h3.copyWith(
-                color: AppColors.black,
-              ),
+              style: AppTextStyle.h3.copyWith(color: AppColors.black),
             ),
             const Gap(12),
             GestureDetector(
@@ -450,9 +473,7 @@ class Edupay extends StatelessWidget {
               children: [
                 Text(
                   'Riwayat',
-                  style: AppTextStyle.h3.copyWith(
-                    color: AppColors.black,
-                  ),
+                  style: AppTextStyle.h3.copyWith(color: AppColors.black),
                 ),
                 Text(
                   'Lihat Semua',

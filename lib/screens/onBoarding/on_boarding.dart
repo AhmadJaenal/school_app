@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -23,17 +25,17 @@ class _OnBoardingState extends State<OnBoarding> {
       [
         "onboard1.png",
         "Absensi Harian yang Mudah",
-        "Catat kehadiran siswa secara praktis, baik saat masuk maupun pulang.."
+        "Catat kehadiran siswa secara praktis, baik saat masuk maupun pulang..",
       ],
       [
         "onboard2.png",
         "Belanja dengan Nyaman",
-        "Telusuri produk EduMart sekolah dan tambahkan ke keranjang dengan satu ketukan."
+        "Telusuri produk EduMart sekolah dan tambahkan ke keranjang dengan satu ketukan.",
       ],
       [
         "onboard3.png",
         "Pembayaran dengan Aman",
-        "Lakukan pembayaran melalui metode pembayaran yang aman dan terpercaya."
+        "Lakukan pembayaran melalui metode pembayaran yang aman dan terpercaya.",
       ],
     ];
     double height = MediaQuery.of(context).size.height;
@@ -56,9 +58,7 @@ class _OnBoardingState extends State<OnBoarding> {
             items: onBoarding.map((hero) {
               return Padding(
                 padding: const EdgeInsets.only(top: 70),
-                child: Image.asset(
-                  'assets/${hero[0]}',
-                ),
+                child: Image.asset('assets/${hero[0]}'),
               );
             }).toList(),
           ),
@@ -66,13 +66,13 @@ class _OnBoardingState extends State<OnBoarding> {
       ),
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: AppMargin.defaultMargin, vertical: 30),
+          horizontal: AppMargin.defaultMargin,
+          vertical: 30,
+        ),
         width: double.infinity,
         height: height * .4,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(30),
-          ),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
           color: AppColors.white,
         ),
         child: Column(
@@ -87,8 +87,9 @@ class _OnBoardingState extends State<OnBoarding> {
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color:
-                        _current == 0 ? AppColors.primary3 : AppColors.black40,
+                    color: _current == 0
+                        ? AppColors.primary3
+                        : AppColors.black40,
                   ),
                 ),
                 AnimatedContainer(
@@ -98,8 +99,9 @@ class _OnBoardingState extends State<OnBoarding> {
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color:
-                        _current == 1 ? AppColors.primary3 : AppColors.black40,
+                    color: _current == 1
+                        ? AppColors.primary3
+                        : AppColors.black40,
                   ),
                 ),
                 AnimatedContainer(
@@ -109,8 +111,9 @@ class _OnBoardingState extends State<OnBoarding> {
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color:
-                        _current == 2 ? AppColors.primary3 : AppColors.black40,
+                    color: _current == 2
+                        ? AppColors.primary3
+                        : AppColors.black40,
                   ),
                 ),
               ],
@@ -133,7 +136,7 @@ class _OnBoardingState extends State<OnBoarding> {
               ontap: () {
                 context.push('/login');
               },
-            )
+            ),
           ],
         ),
       ),

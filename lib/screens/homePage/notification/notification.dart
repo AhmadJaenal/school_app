@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 // ignore: must_be_immutable
 class NotificationPage extends StatelessWidget {
@@ -12,7 +14,7 @@ class NotificationPage extends StatelessWidget {
     [
       'Pembayaran SPP',
       'Segera lakukan pembayaran SPP sebelum tanggal 19 September 2023',
-      '18:29'
+      '18:29',
     ],
   ];
 
@@ -37,13 +39,16 @@ class NotificationPage extends StatelessWidget {
           itemCount: notification.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppMargin.defaultMargin,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(notification[index][0],
-                      style: AppTextStyle.paragraphLBold),
+                  Text(
+                    notification[index][0],
+                    style: AppTextStyle.paragraphLBold,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -56,8 +61,10 @@ class NotificationPage extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Text(notification[index][2],
-                          style: AppTextStyle.paragraphS),
+                      Text(
+                        notification[index][2],
+                        style: AppTextStyle.paragraphS,
+                      ),
                     ],
                   ),
                   const Gap(24),

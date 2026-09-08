@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:school_app/api/urls.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as dev;
@@ -14,10 +14,13 @@ class StudentProvider with ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('accessToken')!;
 
-    Response response = await get(Uri.parse(URLs.getAllStudent), headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    });
+    Response response = await get(
+      Uri.parse(URLs.getAllStudent),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
 
     dev.log(name: 'test', response.statusCode.toString());
 
@@ -31,7 +34,7 @@ class StudentProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:school_app/core/platform/status.dart';
 
-import '../../api/urls.dart';
+import '../../network/urls.dart';
 import '../../models/project.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,10 +20,13 @@ class ProjectProvider with ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('accessToken')!;
 
-    Response response = await get(Uri.parse(URLs.allProject), headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    });
+    Response response = await get(
+      Uri.parse(URLs.allProject),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -34,7 +37,7 @@ class ProjectProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -46,11 +49,13 @@ class ProjectProvider with ChangeNotifier {
     String accessToken = prefs.getString('accessToken')!;
     int projectId = prefs.getInt('projectId')!;
 
-    Response response =
-        await get(Uri.parse("${URLs.getProjectById}/$projectId"), headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    });
+    Response response = await get(
+      Uri.parse("${URLs.getProjectById}/$projectId"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -61,7 +66,7 @@ class ProjectProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -90,7 +95,7 @@ class ProjectProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -126,7 +131,7 @@ class ProjectProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;

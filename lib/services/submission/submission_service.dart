@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:school_app/api/urls.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/Submission.dart';
 import 'package:school_app/models/user.dart';
@@ -23,7 +23,7 @@ class SubmissionProvider with ChangeNotifier {
     final Map<String, dynamic> submissionData = {
       'task_id': taskId,
       'desc': desc,
-      'url_image': 'Mobile Dev'
+      'url_image': 'Mobile Dev',
     };
 
     _submissionStatus = ProcessState.uploading;
@@ -35,7 +35,7 @@ class SubmissionProvider with ChangeNotifier {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
@@ -56,7 +56,7 @@ class SubmissionProvider with ChangeNotifier {
 
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;
@@ -89,12 +89,12 @@ class SubmissionProvider with ChangeNotifier {
       result = {
         'status': true,
         'message': 'Successful',
-        'data': listSubmission
+        'data': listSubmission,
       };
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;
@@ -124,7 +124,7 @@ class SubmissionProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;
@@ -143,7 +143,7 @@ class SubmissionProvider with ChangeNotifier {
       Uri.parse('${URLs.deleteSubmission}/$submissionId/delete'),
       headers: {
         'Accept': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
@@ -161,7 +161,7 @@ class SubmissionProvider with ChangeNotifier {
 
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;

@@ -3,9 +3,11 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:school_app/models/presence.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/card_absence.dart';
-import 'package:school_app/widgets/card_activity.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/cards/card_absence.dart';
+import 'package:school_app/widgets/cards/card_activity.dart';
 
 class AbsenceHistory extends StatelessWidget {
   const AbsenceHistory({super.key});

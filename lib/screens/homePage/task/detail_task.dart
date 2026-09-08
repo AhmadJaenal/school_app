@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/datasource/local_datasource.dart';
+import 'package:school_app/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:school_app/models/task.dart';
 import 'package:school_app/services/task/task_service.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
-import '../../../shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 class DetailTask extends StatelessWidget {
   const DetailTask({super.key});

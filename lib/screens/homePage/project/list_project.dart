@@ -3,15 +3,17 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/core/platform/status.dart';
-import 'package:school_app/datasource/local_datasource.dart';
+import 'package:school_app/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:school_app/models/user.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_popup_message.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/modals/custom_popup_message.dart';
 import '../../../models/project.dart';
 import '../../../services/project/project.dart';
-import '../../../shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
-import '../../../widgets/card_project.dart';
+import '../../../widgets/cards/card_project.dart';
 
 class ListProject extends StatelessWidget {
   const ListProject({super.key});

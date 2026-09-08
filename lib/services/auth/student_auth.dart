@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:school_app/api/urls.dart';
+import 'package:school_app/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/core/platform/status.dart';
-import 'package:school_app/datasource/local_datasource.dart';
 import 'dart:developer' as dev;
 
 import 'package:school_app/models/user.dart';
@@ -21,7 +21,7 @@ class StudentAuthProvider with ChangeNotifier {
 
     final Map<String, dynamic> loginData = {
       'email': email,
-      'password': password
+      'password': password,
     };
 
     _loggedInStatus = AuthStatus.authenticating;
@@ -49,14 +49,18 @@ class StudentAuthProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
   }
 
-  Future<Map<String, dynamic>> register(
-      {required String name, email, password, required int schoolId}) async {
+  Future<Map<String, dynamic>> register({
+    required String name,
+    email,
+    password,
+    required int schoolId,
+  }) async {
     Map<String, dynamic> result;
 
     final Map<String, dynamic> loginData = {
@@ -90,7 +94,7 @@ class StudentAuthProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -100,7 +104,8 @@ class StudentAuthProvider with ChangeNotifier {
     UserPreferences().removeUser();
     _loggedInStatus = AuthStatus.loggedOut;
     notifyListeners();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 }

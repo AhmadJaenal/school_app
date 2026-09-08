@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/models/Submission.dart';
 import 'package:school_app/services/submission/submission_service.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 class TaskHistoryPage extends StatelessWidget {
   const TaskHistoryPage({super.key});

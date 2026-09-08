@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/models/user.dart';
 import 'package:school_app/services/submission/submission_service.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 class UsersSubmittedTasksToday extends StatelessWidget {
   const UsersSubmittedTasksToday({super.key});

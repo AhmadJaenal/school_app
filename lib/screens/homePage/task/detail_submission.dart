@@ -6,10 +6,12 @@ import 'package:school_app/core/platform/status.dart';
 import '../../../models/submission.dart';
 import '../../../services/submission/submission_service.dart';
 import '../../../services/task/task_service.dart';
-import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_popup_message.dart';
+import '../../../widgets/buttons/custom_button.dart';
+import '../../../widgets/modals/custom_popup_message.dart';
 
-import '../../../shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 class SubmissionTask extends StatelessWidget {
   const SubmissionTask({super.key});

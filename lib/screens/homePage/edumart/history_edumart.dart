@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/screens/homePage/profile/history_payment.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/card_cart_product.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/cards/card_cart_product.dart';
 
 class HistoryEdumart extends StatelessWidget {
   const HistoryEdumart({super.key});
@@ -12,10 +13,13 @@ class HistoryEdumart extends StatelessWidget {
     TabBar tabBar = TabBar(
       labelStyle: AppTextStyle.paragraphLBold.copyWith(color: AppColors.white),
       indicator: BoxDecoration(
-          color: AppColors.primary1, borderRadius: BorderRadius.circular(8)),
+        color: AppColors.primary1,
+        borderRadius: BorderRadius.circular(8),
+      ),
       indicatorSize: TabBarIndicatorSize.tab,
-      unselectedLabelStyle:
-          AppTextStyle.paragraphLBold.copyWith(color: AppColors.primary1),
+      unselectedLabelStyle: AppTextStyle.paragraphLBold.copyWith(
+        color: AppColors.primary1,
+      ),
       tabs: const [
         Tab(text: 'Produk'),
         Tab(text: 'SPP'),
@@ -46,8 +50,10 @@ class HistoryEdumart extends StatelessWidget {
             elevation: 0,
             leading: GestureDetector(
               onTap: () => context.pop(),
-              child: Icon(Icons.arrow_back_ios_new_rounded,
-                  color: AppColors.black),
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: AppColors.black,
+              ),
             ),
             title: Text(
               'Riwayat Pembayaran',
@@ -69,13 +75,7 @@ class HistoryEdumart extends StatelessWidget {
             ),
           ),
         ),
-        body: TabBarView(
-          children: [
-            product(),
-            product(),
-            product(),
-          ],
-        ),
+        body: TabBarView(children: [product(), product(), product()]),
       ),
     );
   }

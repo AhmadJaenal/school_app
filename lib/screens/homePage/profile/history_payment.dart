@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
 class HistoryPayment extends StatelessWidget {
   const HistoryPayment({super.key});
@@ -11,10 +13,13 @@ class HistoryPayment extends StatelessWidget {
     TabBar tabBar = TabBar(
       labelStyle: AppTextStyle.paragraphLBold.copyWith(color: AppColors.white),
       indicator: BoxDecoration(
-          color: AppColors.primary1, borderRadius: BorderRadius.circular(8)),
+        color: AppColors.primary1,
+        borderRadius: BorderRadius.circular(8),
+      ),
       indicatorSize: TabBarIndicatorSize.tab,
-      unselectedLabelStyle:
-          AppTextStyle.paragraphLBold.copyWith(color: AppColors.primary1),
+      unselectedLabelStyle: AppTextStyle.paragraphLBold.copyWith(
+        color: AppColors.primary1,
+      ),
       tabs: const [
         Tab(text: 'Produk'),
         Tab(text: 'SPP'),
@@ -33,27 +38,30 @@ class HistoryPayment extends StatelessWidget {
               width: double.infinity,
               height: 65,
               margin: EdgeInsets.symmetric(
-                  horizontal: AppMargin.defaultMargin, vertical: 6),
+                horizontal: AppMargin.defaultMargin,
+                vertical: 6,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: AppTextStyle.paragraphL
-                          .copyWith(color: AppColors.black),
+                      style: AppTextStyle.paragraphL.copyWith(
+                        color: AppColors.black,
+                      ),
                       children: <TextSpan>[
-                        const TextSpan(
-                          text: 'EduMart\n',
-                        ),
+                        const TextSpan(text: 'EduMart\n'),
                         TextSpan(
                           text: 'Rp42.000\n',
-                          style:
-                              AppTextStyle.h3.copyWith(color: AppColors.black),
+                          style: AppTextStyle.h3.copyWith(
+                            color: AppColors.black,
+                          ),
                         ),
                         TextSpan(
                           text: '3 Item',
-                          style: AppTextStyle.paragraphS
-                              .copyWith(color: AppColors.black),
+                          style: AppTextStyle.paragraphS.copyWith(
+                            color: AppColors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -61,21 +69,22 @@ class HistoryPayment extends StatelessWidget {
                   RichText(
                     textAlign: TextAlign.right,
                     text: TextSpan(
-                      style: AppTextStyle.paragraphL
-                          .copyWith(color: AppColors.black),
+                      style: AppTextStyle.paragraphL.copyWith(
+                        color: AppColors.black,
+                      ),
                       children: <TextSpan>[
-                        const TextSpan(
-                          text: '26 Agt 2023\n',
-                        ),
+                        const TextSpan(text: '26 Agt 2023\n'),
                         TextSpan(
                           text: '\n',
-                          style:
-                              AppTextStyle.h3.copyWith(color: AppColors.black),
+                          style: AppTextStyle.h3.copyWith(
+                            color: AppColors.black,
+                          ),
                         ),
                         TextSpan(
                           text: 'Virtual Account ',
-                          style: AppTextStyle.paragraphS
-                              .copyWith(color: AppColors.black),
+                          style: AppTextStyle.paragraphS.copyWith(
+                            color: AppColors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -93,10 +102,7 @@ class HistoryPayment extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/no_payment_history.png',
-            width: width * .7,
-          ),
+          Image.asset('assets/no_payment_history.png', width: width * .7),
           Text(
             'Riwayat kosong',
             style: AppTextStyle.h2.copyWith(color: AppColors.black),
@@ -119,10 +125,7 @@ class HistoryPayment extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/no_payment_history.png',
-            width: width * .7,
-          ),
+          Image.asset('assets/no_payment_history.png', width: width * .7),
           Text(
             'Riwayat kosong',
             style: AppTextStyle.h2.copyWith(color: AppColors.black),
@@ -149,8 +152,10 @@ class HistoryPayment extends StatelessWidget {
             elevation: 0,
             leading: GestureDetector(
               onTap: () => context.pop(),
-              child: Icon(Icons.arrow_back_ios_new_rounded,
-                  color: AppColors.black),
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: AppColors.black,
+              ),
             ),
             title: Text(
               'Riwayat Pembayaran',
@@ -172,13 +177,7 @@ class HistoryPayment extends StatelessWidget {
             ),
           ),
         ),
-        body: TabBarView(
-          children: [
-            product(),
-            spp(),
-            event(),
-          ],
-        ),
+        body: TabBarView(children: [product(), spp(), event()]),
       ),
     );
   }

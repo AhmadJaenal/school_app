@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 import 'package:school_app/routing/app_routes.dart';
-import '../../../shared/theme.dart';
 
 class AssignmentProject extends StatelessWidget {
   const AssignmentProject({super.key});
@@ -58,22 +59,14 @@ class AssignmentProject extends StatelessWidget {
         onPressed: () {
           context.push(Routes.addAssignment);
         },
-        child: Icon(
-          Icons.add,
-          color: AppColors.white,
-          size: 32,
-          weight: 2,
-        ),
+        child: Icon(Icons.add, color: AppColors.white, size: 32, weight: 2),
       ),
     );
   }
 }
 
 class _AssignmentCard extends StatelessWidget {
-  const _AssignmentCard({
-    required this.studentName,
-    required this.projectName,
-  });
+  const _AssignmentCard({required this.studentName, required this.projectName});
 
   final String studentName;
   final String projectName;

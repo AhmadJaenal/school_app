@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 import 'package:school_app/routing/app_routes.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/card_cart_product.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/widgets/cards/card_cart_product.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
 class CartProduct extends StatefulWidget {
   const CartProduct({super.key});
@@ -23,8 +25,10 @@ class _CartProductState extends State<CartProduct> {
         elevation: 0,
         leading: GestureDetector(
           onTap: () => context.pop(),
-          child:
-              Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black100),
+          child: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.black100,
+          ),
         ),
         actions: [
           GestureDetector(
@@ -69,8 +73,9 @@ class _CartProductState extends State<CartProduct> {
                 const Gap(4),
                 Text(
                   "Tukarkan 1000 poin",
-                  style: AppTextStyle.paragraphL
-                      .copyWith(color: AppColors.black100),
+                  style: AppTextStyle.paragraphL.copyWith(
+                    color: AppColors.black100,
+                  ),
                 ),
                 const Gap(4),
                 Icon(Icons.help_outline_rounded, color: AppColors.black60),
@@ -92,12 +97,11 @@ class _CartProductState extends State<CartProduct> {
               children: [
                 RichText(
                   text: TextSpan(
-                    style: AppTextStyle.paragraphM
-                        .copyWith(color: AppColors.black),
+                    style: AppTextStyle.paragraphM.copyWith(
+                      color: AppColors.black,
+                    ),
                     children: <TextSpan>[
-                      const TextSpan(
-                        text: 'Total\n',
-                      ),
+                      const TextSpan(text: 'Total\n'),
                       TextSpan(
                         text: 'Rp72.000',
                         style: AppTextStyle.h3.copyWith(color: AppColors.black),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
 class InvoiceSPP extends StatelessWidget {
   const InvoiceSPP({super.key});
@@ -41,9 +43,7 @@ class InvoiceSPP extends StatelessWidget {
                 const Gap(14),
                 Text(
                   'Rp750.000',
-                  style: AppTextStyle.h1.copyWith(
-                    color: AppColors.black10,
-                  ),
+                  style: AppTextStyle.h1.copyWith(color: AppColors.black10),
                 ),
                 const Gap(14),
                 Row(
@@ -165,9 +165,7 @@ class InvoiceSPP extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.defaultMargin,
-            ),
+            margin: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -212,9 +210,7 @@ class InvoiceSPP extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.defaultMargin,
-            ),
+            margin: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -301,10 +297,11 @@ class InvoiceSPP extends StatelessWidget {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
         child: PrimaryButton(
-            titleButton: 'Menu',
-            ontap: () {
-              context.go('/nav');
-            }),
+          titleButton: 'Menu',
+          ontap: () {
+            context.go('/nav');
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

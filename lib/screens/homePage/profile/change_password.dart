@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/forms/custom_textfield.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -32,8 +34,10 @@ class _ChangePasswordState extends State<ChangePassword> {
           elevation: 0,
           leading: GestureDetector(
             onTap: () => context.pop(),
-            child:
-                Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
+            child: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: AppColors.black,
+            ),
           ),
           title: Text(
             'Ganti Password',
@@ -66,33 +70,41 @@ class _ChangePasswordState extends State<ChangePassword> {
             ontap: () {
               showGeneralDialog(
                 context: context,
-                pageBuilder: (BuildContext context, Animation animation,
-                    Animation secondaryAnimation) {
-                  Future.delayed(const Duration(seconds: 2), () {
-                    context.pop();
-                  });
-                  return Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 50),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        color: AppColors.success4,
-                      ),
-                      child: Text(
-                        'Password berhasil diubah!',
-                        style: AppTextStyle.paragraphL.copyWith(
-                          color: AppColors.green,
-                          decoration: TextDecoration.none,
+                pageBuilder:
+                    (
+                      BuildContext context,
+                      Animation animation,
+                      Animation secondaryAnimation,
+                    ) {
+                      Future.delayed(const Duration(seconds: 2), () {
+                        context.pop();
+                      });
+                      return Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 50,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: AppColors.success4,
+                          ),
+                          child: Text(
+                            'Password berhasil diubah!',
+                            style: AppTextStyle.paragraphL.copyWith(
+                              color: AppColors.green,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                },
+                      );
+                    },
               );
             },
           ),

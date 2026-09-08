@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
 
-import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_textfield.dart';
+import '../../../widgets/buttons/custom_button.dart';
+import '../../../widgets/forms/custom_textfield.dart';
 
 class AddAssignment extends StatefulWidget {
   const AddAssignment({super.key});
@@ -15,11 +17,13 @@ class AddAssignment extends StatefulWidget {
 }
 
 class _AddAssignmentState extends State<AddAssignment> {
-  final TextEditingController _descController =
-      TextEditingController(text: 'jgk@gmail.com');
+  final TextEditingController _descController = TextEditingController(
+    text: 'jgk@gmail.com',
+  );
 
-  final TextEditingController _titleController =
-      TextEditingController(text: 'hadjsdf');
+  final TextEditingController _titleController = TextEditingController(
+    text: 'hadjsdf',
+  );
 
   @override
   void dispose() {
@@ -76,7 +80,7 @@ class _AddAssignmentState extends State<AddAssignment> {
                   'Pilih',
                   'Budi Septian',
                   'Siti Aminah',
-                  'Rizky Pratama'
+                  'Rizky Pratama',
                 ],
                 onChanged: (_) {},
               ),

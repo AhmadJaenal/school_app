@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
-import 'package:school_app/api/urls.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/core/platform/status.dart';
 import 'package:school_app/models/school.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,7 +36,7 @@ class SchoolProvider with ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;
@@ -71,14 +71,16 @@ class SchoolProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['errors']
+        'message': json.decode(response.body)['errors'],
       };
     }
     return result;
   }
 
-  Future<Map<String, dynamic>> addNewSchool(
-      {required String name, required int durationIntern}) async {
+  Future<Map<String, dynamic>> addNewSchool({
+    required String name,
+    required int durationIntern,
+  }) async {
     Map<String, dynamic> result;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -97,7 +99,7 @@ class SchoolProvider with ChangeNotifier {
       body: json.encode(schoolData),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $accessToken'
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
@@ -117,7 +119,7 @@ class SchoolProvider with ChangeNotifier {
       notifyListeners();
       result = {
         'status': false,
-        'message': json.decode(response.body)['error']
+        'message': json.decode(response.body)['error'],
       };
     }
     return result;

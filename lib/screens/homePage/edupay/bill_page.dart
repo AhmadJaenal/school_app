@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/transaction_widget.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/cards/transaction_widget.dart';
 
 class BillPage extends StatelessWidget {
   const BillPage({super.key});
@@ -104,23 +106,21 @@ class BillPage extends StatelessWidget {
                 children: [
                   Text(
                     'Tagihan Bulan ini',
-                    style: AppTextStyle.h2.copyWith(
-                      color: AppColors.white,
-                    ),
+                    style: AppTextStyle.h2.copyWith(color: AppColors.white),
                   ),
                   const Gap(10),
                   RichText(
                     text: TextSpan(
-                      style: AppTextStyle.paragraphS
-                          .copyWith(color: AppColors.white),
+                      style: AppTextStyle.paragraphS.copyWith(
+                        color: AppColors.white,
+                      ),
                       children: <TextSpan>[
-                        const TextSpan(
-                          text: 'Jatuh Tempo ',
-                        ),
+                        const TextSpan(text: 'Jatuh Tempo '),
                         TextSpan(
                           text: '10 Okt',
-                          style: AppTextStyle.paragraphSBold
-                              .copyWith(color: AppColors.white),
+                          style: AppTextStyle.paragraphSBold.copyWith(
+                            color: AppColors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -130,19 +130,18 @@ class BillPage extends StatelessWidget {
                     children: [
                       Text(
                         'Rp750.000',
-                        style: AppTextStyle.h2.copyWith(
-                          color: AppColors.white,
-                        ),
+                        style: AppTextStyle.h2.copyWith(color: AppColors.white),
                       ),
                       SizedBox(
                         width: 80,
                         height: 50,
                         child: PrimaryButton(
-                            titleButton: 'Bayar',
-                            ontap: () {
-                              context.push('/edupay/payment-spp');
-                            }),
-                      )
+                          titleButton: 'Bayar',
+                          ontap: () {
+                            context.push('/edupay/payment-spp');
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ],

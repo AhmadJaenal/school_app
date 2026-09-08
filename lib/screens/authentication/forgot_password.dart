@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -31,17 +33,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Gap(20),
-            Text(
-              "Lupa password 🤔",
-              style: AppTextStyle.h1,
-            ),
+            Text("Lupa password 🤔", style: AppTextStyle.h1),
             const Gap(5),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Text(
                 "Pilih informasi kontak mana yang ingin Anda gunakan untuk mereset kata sandi Anda.",
-                style: AppTextStyle.paragraphSecondaryS
-                    .copyWith(color: AppColors.black60),
+                style: AppTextStyle.paragraphSecondaryS.copyWith(
+                  color: AppColors.black60,
+                ),
               ),
             ),
             Center(
@@ -60,14 +60,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: Container(
                 width: double.infinity,
                 height: 62,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 11,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: AppColors.white,
                   border: Border.all(
-                    color:
-                        _isEmailSelected ? AppColors.blue : AppColors.black40,
+                    color: _isEmailSelected
+                        ? AppColors.blue
+                        : AppColors.black40,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -83,24 +86,25 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.lock_open_outlined,
-                        color: _isEmailSelected
-                            ? AppColors.primary1
-                            : AppColors
-                                .black60), // Warna icon sesuai dengan kondisi _isEmailSelected
+                    Icon(
+                      Icons.lock_open_outlined,
+                      color: _isEmailSelected
+                          ? AppColors.primary1
+                          : AppColors.black60,
+                    ), // Warna icon sesuai dengan kondisi _isEmailSelected
                     const Gap(8),
                     RichText(
                       text: TextSpan(
-                        style: AppTextStyle.paragraphMBold
-                            .copyWith(color: AppColors.black),
+                        style: AppTextStyle.paragraphMBold.copyWith(
+                          color: AppColors.black,
+                        ),
                         children: <TextSpan>[
-                          const TextSpan(
-                            text: 'Email\n',
-                          ),
+                          const TextSpan(text: 'Email\n'),
                           TextSpan(
                             text: 'username.email.com',
-                            style: AppTextStyle.paragraphS
-                                .copyWith(color: AppColors.black),
+                            style: AppTextStyle.paragraphS.copyWith(
+                              color: AppColors.black,
+                            ),
                           ),
                         ],
                       ),
@@ -112,14 +116,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             height: 24,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.primary1),
+                              shape: BoxShape.circle,
+                              color: AppColors.primary1,
+                            ),
                             child: Container(
                               width: 8,
                               height: 8,
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.white),
+                                shape: BoxShape.circle,
+                                color: AppColors.white,
+                              ),
                             ),
                           )
                         : Container(
@@ -147,14 +153,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: Container(
                 width: double.infinity,
                 height: 62,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 11,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: AppColors.white,
                   border: Border.all(
-                    color:
-                        _isEmailSelected ? AppColors.black40 : AppColors.blue,
+                    color: _isEmailSelected
+                        ? AppColors.black40
+                        : AppColors.blue,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -170,23 +179,25 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.phone,
-                        color: _isEmailSelected
-                            ? AppColors.black60
-                            : AppColors.primary1),
+                    Icon(
+                      Icons.phone,
+                      color: _isEmailSelected
+                          ? AppColors.black60
+                          : AppColors.primary1,
+                    ),
                     const Gap(8),
                     RichText(
                       text: TextSpan(
-                        style: AppTextStyle.paragraphMBold
-                            .copyWith(color: AppColors.black),
+                        style: AppTextStyle.paragraphMBold.copyWith(
+                          color: AppColors.black,
+                        ),
                         children: <TextSpan>[
-                          const TextSpan(
-                            text: 'Whatsapp\n',
-                          ),
+                          const TextSpan(text: 'Whatsapp\n'),
                           TextSpan(
                             text: '0896562873',
-                            style: AppTextStyle.paragraphS
-                                .copyWith(color: AppColors.black),
+                            style: AppTextStyle.paragraphS.copyWith(
+                              color: AppColors.black,
+                            ),
                           ),
                         ],
                       ),
@@ -209,14 +220,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             height: 24,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.primary1),
+                              shape: BoxShape.circle,
+                              color: AppColors.primary1,
+                            ),
                             child: Container(
                               width: 8,
                               height: 8,
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.white),
+                                shape: BoxShape.circle,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                   ],
@@ -228,10 +241,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
-        child: PrimaryButton(
-          ontap: () {},
-          titleButton: 'Kirim',
-        ),
+        child: PrimaryButton(ontap: () {}, titleButton: 'Kirim'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

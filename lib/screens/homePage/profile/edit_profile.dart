@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/forms/custom_textfield.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -12,12 +14,15 @@ class EditProfile extends StatefulWidget {
   State<EditProfile> createState() => _EditProfileState();
 }
 
-TextEditingController nameController =
-    TextEditingController(text: 'Ahmad Jaenal Aripin');
-TextEditingController emailController =
-    TextEditingController(text: 'ahmadJaenal629@gmail.com');
-TextEditingController alamatController =
-    TextEditingController(text: 'Cingambul');
+TextEditingController nameController = TextEditingController(
+  text: 'Ahmad Jaenal Aripin',
+);
+TextEditingController emailController = TextEditingController(
+  text: 'ahmadJaenal629@gmail.com',
+);
+TextEditingController alamatController = TextEditingController(
+  text: 'Cingambul',
+);
 
 final List<String> _optionReligion = [
   'Pilih',
@@ -53,10 +58,7 @@ class _EditProfileState extends State<EditProfile> {
             Column(
               children: [
                 Center(
-                  child: Image.asset(
-                    'assets/icon_profile.png',
-                    width: 103,
-                  ),
+                  child: Image.asset('assets/icon_profile.png', width: 103),
                 ),
                 Container(
                   width: 36,
@@ -94,10 +96,7 @@ class _EditProfileState extends State<EditProfile> {
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppMargin.defaultMargin),
-        child: PrimaryButton(
-          titleButton: 'Perbarui',
-          ontap: () {},
-        ),
+        child: PrimaryButton(titleButton: 'Perbarui', ontap: () {}),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

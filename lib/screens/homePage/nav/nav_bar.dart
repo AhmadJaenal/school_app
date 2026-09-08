@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school_app/screens/homePage/edumart/edumart.dart';
-import 'package:school_app/screens/homePage/edupay/edupay.dart';
 import 'package:school_app/screens/homePage/profile/profile_page.dart';
 import 'package:school_app/screens/homePage/student/home_page.dart';
-import 'package:school_app/shared/theme.dart';
+import 'package:school_app/commons/app_colors.dart';
 
 class NavBarBottom extends StatefulWidget {
   const NavBarBottom({super.key});
@@ -43,12 +41,8 @@ class _NavBarBottomState extends State<NavBarBottom> {
     return Scaffold(
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-            border: Border(
-          top: BorderSide(
-            color: AppColors.black60,
-            width: 1.0,
-          ),
-        )),
+          border: Border(top: BorderSide(color: AppColors.black60, width: 1.0)),
+        ),
         child: BottomAppBar(
           padding: const EdgeInsets.all(0),
           shape: const CircularNotchedRectangle(),

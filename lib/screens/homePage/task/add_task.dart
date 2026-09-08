@@ -7,10 +7,12 @@ import 'package:school_app/models/project.dart';
 import 'package:school_app/models/task.dart';
 import 'package:school_app/services/project/project.dart';
 import 'package:school_app/services/task/task_service.dart';
-import 'package:school_app/shared/theme.dart';
-import 'package:school_app/widgets/custom_button.dart';
-import 'package:school_app/widgets/custom_popup_message.dart';
-import 'package:school_app/widgets/custom_textfield.dart';
+import 'package:school_app/commons/app_colors.dart';
+import 'package:school_app/commons/app_margin.dart';
+import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/widgets/buttons/custom_button.dart';
+import 'package:school_app/widgets/modals/custom_popup_message.dart';
+import 'package:school_app/widgets/forms/custom_textfield.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
