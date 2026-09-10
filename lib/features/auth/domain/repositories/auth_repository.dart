@@ -7,4 +7,5 @@ abstract class AuthRepository {
   Future<Either<Failure, void>> register(dynamic params, String role);
   Future<Either<Failure, void>> resetPassword();
   Future<Either<Failure, void>> forgotPassword();
+  Future<Either<Failure, void>> logout();
 }

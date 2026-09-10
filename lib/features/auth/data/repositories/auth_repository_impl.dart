@@ -45,4 +45,15 @@ class AuthRepositoryImpl implements AuthRepository {
     await _remoteDataSource.resetPassword();
     return right(null);
   }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    final result = await _remoteDataSource.logout();
+    return result.fold((failure) => left(failure), (_) async {
+      await _sessionManager.remove(SessionKey.token);
+      await _sessionManager.remove(SessionKey.id);
+      await _sessionManager.remove(SessionKey.fullname);
+      return right(null);
+    });
+  }
 }
