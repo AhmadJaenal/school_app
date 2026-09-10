@@ -35,13 +35,13 @@ class AuthRemoteDataSourceImpl extends RepositoryHelper
   }
 
   @override
-  Future<void> forgotPassword() {
-    throw UnimplementedError();
+  Future<void> forgotPassword() async {
+    await callApiBool(api: dioClient.postRequest(URLs.forgotPassword));
   }
 
   @override
-  Future<void> resetPassword() {
-    throw UnimplementedError();
+  Future<void> resetPassword() async {
+    await callApiBool(api: dioClient.postRequest(URLs.resetPassword));
   }
 
   @override

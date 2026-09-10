@@ -17,29 +17,43 @@ abstract class ClassesRemoteDataSource {
   Future<Either<Failure, PaginationResult<StudentModel>>> getStudentsInClass(
     int id,
   );
-  Future<Either<Failure, void>> addStudentToClass(int id);
-  Future<Either<Failure, StudentModel>> moveStudentToClass(int studentId);
-  Future<Either<Failure, StudentModel>> deleteStudentInClass(int studentId);
+  Future<Either<Failure, void>> addStudentToClass(int classId, dynamic params);
+  Future<Either<Failure, StudentModel>> moveStudentToClass(
+    int classId,
+    int studentId,
+  );
+  Future<Either<Failure, StudentModel>> deleteStudentInClass(
+    int classId,
+    int studentId,
+  );
 }
 
 class ClassesRemoteDataSourceImpl extends RepositoryHelper
     implements ClassesRemoteDataSource {
   @override
-  Future<Either<Failure, void>> addStudentToClass(int id) {
-    throw UnimplementedError();
+  Future<Either<Failure, void>> addStudentToClass(int classId, dynamic params) {
+    final dioCall = dioClient.postRequest(
+      URLs.studentsInClass(classId),
+      data: params,
+    );
+    return callApi<void>(api: dioCall);
   }
 
   @override
   Future<Either<Failure, bool>> deleteClass(int id) {
-    var dioCall = dioClient.getRequest("${URLs.classes}/$id");
+    final dioCall = dioClient.deleteRequest(URLs.detailClass(id), data: null);
 
     return callApiBool(api: dioCall);
   }
 
   @override
-  Future<Either<Failure, StudentModel>> deleteStudentInClass(int studentId) {
+  Future<Either<Failure, StudentModel>> deleteStudentInClass(
+    int classId,
+    int studentId,
+  ) {
     final dioCall = dioClient.deleteRequest(
-      "${URLs.classes}/students/$studentId",
+      URLs.removeStudentFromClass(classId: classId, studentId: studentId),
+      data: null,
     );
 
     return callApi(
@@ -60,7 +74,7 @@ class ClassesRemoteDataSourceImpl extends RepositoryHelper
 
   @override
   Future<Either<Failure, DetailClassModel>> getDetailClass(int id) {
-    var dioCall = dioClient.getRequest("${URLs.classes}/$id");
+    final dioCall = dioClient.getRequest(URLs.detailClass(id));
 
     return callApi(
       api: dioCall,
@@ -72,7 +86,7 @@ class ClassesRemoteDataSourceImpl extends RepositoryHelper
   Future<Either<Failure, PaginationResult<StudentModel>>> getStudentsInClass(
     int id,
   ) {
-    var dioCall = dioClient.getRequest("${URLs.classes}/$id/students");
+    final dioCall = dioClient.getRequest(URLs.studentsInClass(id));
 
     return callApiWithPaginationData(
       api: dioCall,
@@ -81,9 +95,12 @@ class ClassesRemoteDataSourceImpl extends RepositoryHelper
   }
 
   @override
-  Future<Either<Failure, StudentModel>> moveStudentToClass(int studentId) {
-    var dioCall = dioClient.postRequest(
-      "${URLs.classes}/students/$studentId/move",
+  Future<Either<Failure, StudentModel>> moveStudentToClass(
+    int classId,
+    int studentId,
+  ) {
+    final dioCall = dioClient.postRequest(
+      URLs.moveStudentToClass(classId: classId, studentId: studentId),
     );
     return callApi(
       api: dioCall,
@@ -93,7 +110,7 @@ class ClassesRemoteDataSourceImpl extends RepositoryHelper
 
   @override
   Future<Either<Failure, ResponseCreateClass>> postClass(params) {
-    var dioCall = dioClient.postRequest(URLs.classes, data: params);
+    final dioCall = dioClient.postRequest(URLs.classes, data: params);
     return callApi(
       api: dioCall,
       jsonCallback: (json) => ResponseCreateClass.fromJson(json),
@@ -102,7 +119,7 @@ class ClassesRemoteDataSourceImpl extends RepositoryHelper
 
   @override
   Future<Either<Failure, ResponseCreateClass>> updateClass(int id) {
-    var dioCall = dioClient.putRequest("${URLs.classes}/$id");
+    final dioCall = dioClient.putRequest(URLs.detailClass(id));
 
     return callApi(
       api: dioCall,

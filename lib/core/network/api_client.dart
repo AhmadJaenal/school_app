@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' hide Response;
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:dio/src/form_data.dart' as d;
-import 'package:dio/src/multipart_file.dart' as dio_multipart;
 import 'package:school_app/core/config/api_config.dart';
 import 'package:school_app/session/session_key.dart';
 import 'package:school_app/session/session_manager.dart';
@@ -13,7 +12,15 @@ class DioClient {
   static final DioClient _instance = DioClient._internal();
   factory DioClient() => _instance;
   late final Dio? dio;
-  final SessionManager _sessionManager = Get.find();
+  SessionManager get _sessionManager {
+    if (GetIt.I.isRegistered<SessionManager>()) {
+      return GetIt.I<SessionManager>();
+    }
+    if (Get.isRegistered<SessionManager>()) {
+      return Get.find<SessionManager>();
+    }
+    throw StateError('SessionManager belum didaftarkan');
+  }
 
   DioClient._internal() {
     final baseUrlUtils = BaseUrlUtils();
@@ -106,7 +113,7 @@ class DioClient {
         ...?options?.headers,
       };
 
-      if (data is d.FormData) {
+      if (data is FormData) {
         headers['Content-Type'] = "multipart/form-data";
       }
 
@@ -185,7 +192,7 @@ class DioClient {
         ...?options?.headers,
       };
 
-      if (data is d.FormData) {
+      if (data is FormData) {
         headers["Content-Type"] = "multipart/form-data";
       }
 
@@ -218,11 +225,8 @@ class DioClient {
 
     try {
       final String fileName = filePath.split('/').last;
-      final d.FormData formData = d.FormData.fromMap({
-        fieldName: await dio_multipart.MultipartFile.fromFile(
-          filePath,
-          filename: fileName,
-        ),
+      final FormData formData = FormData.fromMap({
+        fieldName: await MultipartFile.fromFile(filePath, filename: fileName),
         ...queryParameters ?? {},
       });
 

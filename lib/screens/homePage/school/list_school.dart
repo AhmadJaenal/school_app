@@ -1,42 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:school_app/core/platform/status.dart';
-import 'package:school_app/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:school_app/core/di/injection.dart';
+import 'package:school_app/features/school/domain/usecases/get_schools.dart';
 import 'package:school_app/models/school.dart';
-import 'package:school_app/models/user.dart';
-import 'package:school_app/services/school/school_service.dart';
 import 'package:school_app/widgets/cards/card_school.dart';
-import 'package:school_app/widgets/buttons/custom_button.dart';
-import 'package:school_app/widgets/modals/custom_popup_message.dart';
 import 'package:school_app/commons/app_colors.dart';
-import 'package:school_app/commons/app_margin.dart';
 import 'package:school_app/commons/app_text_styles.dart';
 
-class ListSchool extends StatelessWidget {
+class ListSchool extends StatefulWidget {
   const ListSchool({super.key});
 
   @override
+  State<ListSchool> createState() => _ListSchoolState();
+}
+
+class _ListSchoolState extends State<ListSchool> {
+  late final Future<List<SchoolModel>> _schoolsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _schoolsFuture = sl<GetSchools>().call();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SchoolProvider schoolProvider = Provider.of<SchoolProvider>(context);
-    UserPreferences userPrefs = UserPreferences();
-
-    var loading = const Center(child: CircularProgressIndicator());
-
-    deleteSchool() async {
-      final Future<Map<String, dynamic>> successfulMessage = schoolProvider
-          .deleteSchoolById();
-
-      successfulMessage.then((response) {
-        if (response['status']) {
-          popUpSubmission(context, true);
-        } else {
-          popUpSubmission(context, false);
-        }
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -55,111 +43,30 @@ class ListSchool extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-        child: FutureBuilder(
-          future: userPrefs.getUser(),
+        child: FutureBuilder<List<SchoolModel>>(
+          future: _schoolsFuture,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              User userData = snapshot.data!;
-              return FutureBuilder(
-                future: schoolProvider.getAllSchool(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: Text(
-                        'Tidak ada sekolah yang\nmelakukan magang saat ini',
-                        style: AppTextStyle.paragraphL,
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }
-                  List<SchoolModel> schools = snapshot.data!['data'];
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: schools.length,
-                    itemBuilder: (context, index) => CardSchool(
-                      school: schools[index],
-                      onLongPress: () => userData.roles!.contains('staff')
-                          ? showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              builder: (context) => Container(
-                                width: double.infinity,
-                                height: 185,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 32,
-                                  vertical: 22,
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: AppMargin.defaultMargin,
-                                  vertical: 28,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Hapus data sekolah ini?',
-                                      style: AppTextStyle.h3.copyWith(
-                                        color: AppColors.darkBlue,
-                                      ),
-                                    ),
-                                    const Gap(8),
-                                    Text(
-                                      'Apakah Anda yakin ingin hapus proyek ini?',
-                                      style: AppTextStyle.paragraphL.copyWith(
-                                        color: AppColors.darkBlue,
-                                      ),
-                                    ),
-                                    const Gap(8),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: 130,
-                                          child: SecondaryButton(
-                                            titleButton: 'Batal',
-                                            ontap: () => context.pop(),
-                                          ),
-                                        ),
-                                        schoolProvider.schoolStatus ==
-                                                ProcessState.delete
-                                            ? loading
-                                            : SizedBox(
-                                                width: 130,
-                                                child: PrimaryButton(
-                                                  titleButton: 'Ya',
-                                                  ontap: () {
-                                                    deleteSchool();
-                                                    context.pop();
-                                                  },
-                                                ),
-                                              ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : {},
-                    ),
-                  );
-                },
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError ||
+                !snapshot.hasData ||
+                snapshot.data!.isEmpty) {
+              return Center(
+                child: Text(
+                  snapshot.hasError
+                      ? 'Gagal memuat daftar sekolah'
+                      : 'Tidak ada sekolah yang melakukan magang saat ini',
+                  style: AppTextStyle.paragraphL,
+                  textAlign: TextAlign.center,
+                ),
               );
             }
-            return Center(
-              child: Text(
-                'Tidak ada sekolah yang\nmelakukan magang saat ini',
-                style: AppTextStyle.paragraphL,
-                textAlign: TextAlign.center,
-              ),
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) =>
+                  CardSchool(school: snapshot.data![index]),
             );
           },
         ),
@@ -178,19 +85,6 @@ class ListSchool extends StatelessWidget {
           context.push('/add-school');
         },
         child: Icon(Icons.add, color: AppColors.white, size: 32, weight: 2),
-      ),
-    );
-  }
-
-  Future<dynamic> popUpSubmission(BuildContext context, bool isSuccess) {
-    return showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      builder: (context) => PopUpMessage(
-        isSuccess: isSuccess,
-        successMessage: 'Data sekolah berhasil dihapus!',
-        failedMessage: 'Data sekolah gagal dihapus!',
       ),
     );
   }

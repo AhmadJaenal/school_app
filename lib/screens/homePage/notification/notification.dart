@@ -4,23 +4,28 @@ import 'package:go_router/go_router.dart';
 import 'package:school_app/commons/app_colors.dart';
 import 'package:school_app/commons/app_margin.dart';
 import 'package:school_app/commons/app_text_styles.dart';
+import 'package:school_app/core/di/injection.dart';
+import 'package:school_app/features/notification/domain/usecases/get_notifications.dart';
+import 'package:school_app/features/parents/data/models/school_api_models.dart';
 
-// ignore: must_be_immutable
-class NotificationPage extends StatelessWidget {
-  NotificationPage({super.key});
+class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
 
-  List<List<String>> notification = [
-    ['Izin diterima', 'Permohonan izin diterima oleh sekolah.', '15:29'],
-    [
-      'Pembayaran SPP',
-      'Segera lakukan pembayaran SPP sebelum tanggal 19 September 2023',
-      '18:29',
-    ],
-  ];
+  @override
+  State<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  late final Future<List<NotificationModel>> _notificationsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationsFuture = sl<GetNotifications>().call();
+  }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -34,45 +39,61 @@ class NotificationPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Expanded(
-        child: ListView.builder(
-          itemCount: notification.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppMargin.defaultMargin,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    notification[index][0],
-                    style: AppTextStyle.paragraphLBold,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: width * .7,
-                        child: Text(
-                          notification[index][1],
-                          style: AppTextStyle.paragraphS,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(
-                        notification[index][2],
-                        style: AppTextStyle.paragraphS,
-                      ),
-                    ],
-                  ),
-                  const Gap(24),
-                ],
-              ),
+      body: FutureBuilder<List<NotificationModel>>(
+        future: _notificationsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Gagal memuat notifikasi: ${snapshot.error}'),
             );
-          },
-        ),
+          }
+          final notifications = snapshot.data ?? const <NotificationModel>[];
+          if (notifications.isEmpty) {
+            return const Center(child: Text('Belum ada notifikasi'));
+          }
+          return ListView.builder(
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              final item = notifications[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppMargin.defaultMargin,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title ?? 'Notifikasi',
+                      style: AppTextStyle.paragraphLBold,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.message ?? '',
+                            style: AppTextStyle.paragraphS,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const Gap(12),
+                        Text(
+                          item.createdAt ?? '',
+                          style: AppTextStyle.paragraphS,
+                        ),
+                      ],
+                    ),
+                    const Gap(24),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

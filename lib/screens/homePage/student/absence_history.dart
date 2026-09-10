@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:school_app/core/di/injection.dart';
+import 'package:school_app/features/attendance/domain/entities/attendance.dart';
+import 'package:school_app/features/attendance/domain/usecases/get_attendance.dart';
 import 'package:school_app/models/presence.dart';
 import 'package:school_app/commons/app_colors.dart';
 import 'package:school_app/commons/app_margin.dart';
@@ -9,27 +12,70 @@ import 'package:school_app/commons/app_text_styles.dart';
 import 'package:school_app/widgets/cards/card_absence.dart';
 import 'package:school_app/widgets/cards/card_activity.dart';
 
-class AbsenceHistory extends StatelessWidget {
+class AbsenceHistory extends StatefulWidget {
   const AbsenceHistory({super.key});
+
+  @override
+  State<AbsenceHistory> createState() => _AbsenceHistoryState();
+}
+
+class _AbsenceHistoryState extends State<AbsenceHistory> {
+  late final Future<List<Attendance>> _attendanceFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _attendanceFuture = sl<GetAttendance>().call();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Attendance>>(
+      future: _attendanceFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (snapshot.hasError) {
+          return Scaffold(
+            appBar: AppBar(title: const Text('Riwayat Absensi')),
+            body: Center(
+              child: Text('Gagal memuat absensi: ${snapshot.error}'),
+            ),
+          );
+        }
+        return _AttendanceContent(records: snapshot.data ?? const []);
+      },
+    );
+  }
+}
+
+class _AttendanceContent extends StatelessWidget {
+  const _AttendanceContent({required this.records});
+
+  final List<Attendance> records;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final presence = CountPresence(
-      present: 12,
-      permission: 2,
-      sick: 1,
-      absent: 0,
+      present: records.where((item) => _status(item) == 'Hadir').length,
+      permission: records.where((item) => _status(item) == 'Izin').length,
+      sick: records.where((item) => _status(item) == 'Sakit').length,
+      absent: records.where((item) => _status(item) == 'Alpa').length,
     );
-    final records = List.generate(
-      10,
-      (index) => Presence(
-        id: index + 1,
-        status: index == 2 ? 'Izin' : 'Hadir',
-        type: 'Kantor',
-        createdAt: '2026-09-${index + 1}',
-      ),
-    );
+    final presenceRecords = records
+        .map(
+          (item) => Presence(
+            id: item.id,
+            status: _status(item),
+            type: 'Sekolah',
+            createdAt: item.date,
+          ),
+        )
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -83,7 +129,10 @@ class AbsenceHistory extends StatelessWidget {
           const SizedBox(height: 20),
           Text('Tracking Pengerjaan Tugas', style: AppTextStyle.paragraphLBold),
           const SizedBox(height: 8),
-          SizedBox(height: 200, child: UserAbsenceGrid(listPresence: records)),
+          SizedBox(
+            height: 200,
+            child: UserAbsenceGrid(listPresence: presenceRecords),
+          ),
           const SizedBox(height: 20),
           Text('Lokasi Terakhir', style: AppTextStyle.paragraphLBold),
           const SizedBox(height: 8),
@@ -124,5 +173,21 @@ class AbsenceHistory extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static String _status(Attendance attendance) {
+    switch (attendance.status.toLowerCase()) {
+      case 'present':
+      case 'hadir':
+        return 'Hadir';
+      case 'permission':
+      case 'izin':
+        return 'Izin';
+      case 'sick':
+      case 'sakit':
+        return 'Sakit';
+      default:
+        return 'Alpa';
+    }
   }
 }

@@ -6,7 +6,7 @@ class Register {
   final AuthRepository _repository;
   Register(this._repository);
 
-  Future<Either<Failure, void>> execute() {
-    return _repository.register();
+  Future<Either<Failure, void>> execute(dynamic params, String role) {
+    return _repository.register(params, role);
   }
 }

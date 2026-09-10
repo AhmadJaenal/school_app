@@ -12,6 +12,8 @@ class URLs {
   static const String refreshToken = 'auth/refresh-token';
   static const String logout = 'auth/logout';
   static const String register = 'auth/register';
+  static const String forgotPassword = 'auth/forgot-password';
+  static const String resetPassword = 'auth/reset-password';
 
   // Classes
   static const String classes = 'classes';
@@ -45,6 +47,7 @@ class URLs {
   static String myExamResult(int id) => 'exams/$id/my-result';
 
   // Parents
+  static const String schools = 'schools';
   static String linkStudentToParent(int parentId) =>
       'parents/$parentId/link-student';
 
@@ -91,4 +94,33 @@ class URLs {
   static String detailClassroom(int id) => 'classroom/$id';
   static const String studentClassrooms = 'student/classroom';
   static String detailStudentClassroom(int id) => 'student/classroom/$id';
+
+  // Legacy service endpoints. Keep these as absolute URLs because the old
+  // providers use package:http directly instead of Dio's base URL.
+  static const String checkPresence = '${legacyBaseURL}presence/check-today';
+  static const String addPresence = '${legacyBaseURL}presence';
+  static const String presenceByUserId = '${legacyBaseURL}presence';
+  static const String getAssignmentProject = '${legacyBaseURL}assignments';
+  static const String addAssignment = '${legacyBaseURL}assignments';
+  static const String allProject = '${legacyBaseURL}projects';
+  static const String getProjectById = '${legacyBaseURL}projects/';
+  static const String getProjectByAssignment =
+      '${legacyBaseURL}projects/assigned';
+  static const String deleteProjectById = '${legacyBaseURL}projects/';
+  static const String getAllSchool = '${legacyBaseURL}schools';
+  static const String deleteSchoolById = '${legacyBaseURL}schools/';
+  static const String newSchool = '${legacyBaseURL}schools';
+  static const String getAllStudent = '${legacyBaseURL}students';
+  static const String addSubmission = '${legacyBaseURL}submissions';
+  static const String getSubmissionsByUserIdAndDate =
+      '${legacyBaseURL}submissions';
+  static const String getAllUserBySubmissionToday =
+      '${legacyBaseURL}submissions/today/users';
+  static const String deleteSubmission = '${legacyBaseURL}submissions/';
+  static const String taskByProjectId = '${legacyBaseURL}projects/';
+  static const String taskById = '${legacyBaseURL}tasks/';
+  static const String getSubmissionByTaskIdAndUserId = '${legacyBaseURL}tasks/';
+  static const String getAllTask = '${legacyBaseURL}tasks';
+  static const String addNewTask = '${legacyBaseURL}tasks';
+  static const String deleteTaskById = '${legacyBaseURL}tasks/';
 }

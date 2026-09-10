@@ -7,6 +7,9 @@ import 'package:school_app/commons/app_margin.dart';
 import 'package:school_app/commons/app_text_styles.dart';
 import 'package:school_app/widgets/buttons/custom_button.dart';
 import 'package:school_app/widgets/forms/custom_textfield.dart';
+import 'package:school_app/core/di/injection.dart';
+import 'package:school_app/features/auth/domain/usecases/login.dart'
+    as auth_usecase;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +20,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   final TextEditingController _nisnController = TextEditingController(
     text: '11199245812',
   );
@@ -91,9 +95,23 @@ class _LoginState extends State<Login> {
               const Gap(30),
               PrimaryButton(
                 titleButton: "Masuk",
-                ontap: () {
+                disable: _isLoading,
+                ontap: () async {
+                  if (_isLoading) return;
                   if (formKey.currentState!.validate()) {
-                    context.go(Routes.nav);
+                    setState(() => _isLoading = true);
+                    final result = await sl<auth_usecase.Login>().execute({
+                      'username': _nisnController.text.trim(),
+                      'password': _passwordController.text,
+                    });
+                    if (!mounted) return;
+                    setState(() => _isLoading = false);
+                    result.fold(
+                      (failure) => ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(failure.message))),
+                      (_) => context.go(Routes.nav),
+                    );
                   }
                 },
               ),
