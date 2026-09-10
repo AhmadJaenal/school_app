@@ -29,6 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
           SessionKey.fullname,
           session.user!.username,
         );
+        await _sessionManager.write(SessionKey.role, session.user!.role);
       }
       return right(session);
     });

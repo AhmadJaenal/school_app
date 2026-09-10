@@ -13,6 +13,9 @@ abstract class Routes {
   static const String notification = '/notification';
   static const String listEvent = '/list-event';
   static const String addAssignment = '/add-assignment';
+  static const String exams = '/exams';
+  static const String dailyTests = '/daily-tests';
+  static const String ranking = '/ranking';
 
   // Student
   static const String absenceHistory = '/absence-history';
