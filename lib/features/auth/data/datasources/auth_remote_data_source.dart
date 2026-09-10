@@ -6,9 +6,10 @@ import 'package:school_app/network/urls.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Either<Failure, AuthSessionModel>> login(params);
-  Future<void> register();
+  Future<Either<Failure, bool>> register(params, String role);
   Future<void> forgotPassword();
   Future<void> resetPassword();
+  Future<Either<Failure, bool>> logout();
 }
 
 class AuthRemoteDataSourceImpl extends RepositoryHelper
@@ -24,8 +25,13 @@ class AuthRemoteDataSourceImpl extends RepositoryHelper
   }
 
   @override
-  Future<void> register() {
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> register(dynamic params, String role) {
+    final dioCall = dioClient.postRequest(
+      '${URLs.register}/$role',
+      data: params,
+    );
+
+    return callApiBool(api: dioCall);
   }
 
   @override
@@ -36,5 +42,12 @@ class AuthRemoteDataSourceImpl extends RepositoryHelper
   @override
   Future<void> resetPassword() {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, bool>> logout() {
+    var dioCall = dioClient.postRequest(URLs.logout);
+
+    return callApiBool(api: dioCall);
   }
 }

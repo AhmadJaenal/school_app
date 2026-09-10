@@ -9,14 +9,18 @@ import 'package:school_app/network/dio_exception.dart';
 abstract class RepositoryHelper {
   final DioClient dioClient = DioClient();
 
+  Failure _mapDioException(DioException dioError) {
+    final message = DioExceptions.fromDioError(dioError).message;
+    return BadRequestFailure(message);
+  }
+
   Future<Either<Failure, T>> callApi<T>({
     required Future<Response> api,
     T Function(dynamic json)? jsonCallback,
   }) async {
     try {
-      Response response = await api;
+      final response = await api;
 
-      // Cek response status code
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.data['data'];
 
@@ -28,26 +32,31 @@ abstract class RepositoryHelper {
               return left(ProcessingFailure(e.toString()));
             }
           } else {
-            // Jika callback tidak diberikan, return null
             return right(true as T);
           }
-        } else if (data == null && jsonCallback == null) {
+        } else if (jsonCallback == null) {
           return right(true as T);
         } else {
-          final message = response.data['message'] ?? NotFoundFailure();
-          return left(message);
+          return left(const NotFoundFailure());
         }
+      } else {
+        final message =
+            response.data['message'] ?? 'Terjadi kesalahan pada server';
+        return left(BadRequestFailure(message));
       }
-    } on DioException catch (dioError) {}
-    throw UnknownFailure();
+    } on DioException catch (dioError) {
+      return left(_mapDioException(dioError));
+    } catch (e) {
+      return left(const UnknownFailure());
+    }
   }
 
-  Future<Either<String, T>> callApiWithoutData<T>({
+  Future<Either<Failure, T>> callApiWithoutData<T>({
     required Future<Response> api,
     T Function(Map<String, dynamic> responseJson)? messageMapper,
   }) async {
     try {
-      final Response response = await api;
+      final response = await api;
       final statusCode = response.statusCode;
       final responseData = response.data;
 
@@ -60,49 +69,16 @@ abstract class RepositoryHelper {
       } else {
         final message =
             responseData['message'] ?? 'Terjadi kesalahan pada server';
-        return left(message);
+        return left(BadRequestFailure(message));
       }
+    } on DioException catch (dioError) {
+      return left(_mapDioException(dioError));
     } catch (e) {
-      return left(e.toString());
+      return left(const UnknownFailure());
     }
   }
 
-  String handleDioError(DioException exception) {
-    if (exception.response?.statusCode == 401 ||
-        exception.response?.statusCode == 404) {
-      var errorMessage =
-          exception.response?.data['message'] ?? 'Permintaan tidak valid';
-      return errorMessage;
-    }
-
-    if (exception.response?.statusCode == 422) {
-      var errorMessage =
-          exception.response?.data['message'] ?? 'Validasi gagal';
-      var validations = exception.response?.data['data'];
-
-      if (validations != null) {
-        try {
-          validations.forEach((key, value) {
-            errorMessage += '\n$key: ${value.join(', ')}';
-          });
-        } catch (e) {
-          errorMessage =
-              exception.response?.data['message'] ?? 'Permintaan tidak valid';
-        }
-      }
-      return errorMessage;
-    } else {
-      if (exception.response?.data != null) {
-        final errorMessage = exception.response?.data['message'];
-        if (errorMessage != null) {
-          return errorMessage;
-        }
-      }
-      return DioExceptions.fromDioError(exception).toString();
-    }
-  }
-
-  Future<Either<String, PaginationResult<T>>> callApiWithPaginationData<T>({
+  Future<Either<Failure, PaginationResult<T>>> callApiWithPaginationData<T>({
     required Future<Response> api,
     required T Function(dynamic json) jsonCallback,
   }) async {
@@ -134,42 +110,46 @@ abstract class RepositoryHelper {
             );
           } catch (e) {
             return left(
-              "Terjadi kesalahan saat memproses data list: ${e.toString()}",
+              ProcessingFailure(
+                'Terjadi kesalahan saat memproses data list: ${e.toString()}',
+              ),
             );
           }
         } else {
           return left(
-            'Format data tidak valid: Tidak ditemukan list data yang sesuai.',
+            const BadRequestFailure(
+              'Format data tidak valid: Tidak ditemukan list data yang sesuai.',
+            ),
           );
         }
       } else {
         final message =
             response.data['message'] ??
             'Terjadi kesalahan pada server dengan status: ${response.statusCode}';
-        return left(message);
+        return left(BadRequestFailure(message));
       }
     } on DioException catch (dioError) {
-      return left(DioExceptions.fromDioError(dioError).toString());
+      return left(_mapDioException(dioError));
     } on FormatException catch (formatError) {
       return left(
-        kDebugMode
-            ? "Format data tidak valid: $formatError"
-            : 'Format data tidak valid',
+        ProcessingFailure(
+          kDebugMode
+              ? "Format data tidak valid: $formatError"
+              : 'Format data tidak valid',
+        ),
       );
     } catch (error) {
-      return left(
-        kDebugMode ? "Terjadi kesalahan: $error" : 'Terjadi kesalahan',
-      );
+      return left(const UnknownFailure());
     }
   }
 
-  Future<Either<String, PaginationResult<T>>>
+  Future<Either<Failure, PaginationResult<T>>>
   callApiWithListDataPaginationWithoutRequest<T>({
     required Future<Response> api,
     required T Function(dynamic json) jsonCallback,
   }) async {
     try {
-      Response response = await api;
+      final response = await api;
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.data['data'];
@@ -177,7 +157,6 @@ abstract class RepositoryHelper {
         if (data != null && data is List) {
           try {
             final dataList = data.map((item) => jsonCallback(item)).toList();
-
             final pagination = PaginationInfo.fromJson(
               response.data['pagination'],
             );
@@ -187,31 +166,60 @@ abstract class RepositoryHelper {
             );
           } catch (e) {
             return left(
-              "Terjadi kesalahan saat memproses data list: ${e.toString()}",
+              ProcessingFailure(
+                'Terjadi kesalahan saat memproses data list: ${e.toString()}',
+              ),
             );
           }
         } else {
-          return left('Format data tidak valid: Data tidak berupa list');
+          return left(
+            const BadRequestFailure(
+              'Format data tidak valid: Data tidak berupa list',
+            ),
+          );
         }
       } else {
         final message =
             response.data['message'] ??
             'Terjadi kesalahan pada server dengan status: ${response.statusCode}';
-        return left(message);
+        return left(BadRequestFailure(message));
       }
     } on DioException catch (dioError) {
-      final errorMessage = DioExceptions.fromDioError(dioError).toString();
-      return left(errorMessage);
+      return left(_mapDioException(dioError));
     } on FormatException catch (formatError) {
-      final errorMessage = kDebugMode
-          ? "Format data tidak valid: $formatError"
-          : 'Format data tidak valid';
-      return left(errorMessage);
+      return left(
+        ProcessingFailure(
+          kDebugMode
+              ? "Format data tidak valid: $formatError"
+              : 'Format data tidak valid',
+        ),
+      );
     } catch (error) {
-      final errorMessage = kDebugMode
-          ? "Terjadi kesalahan: $error"
-          : 'Terjadi kesalahan';
-      return left(errorMessage);
+      return left(const UnknownFailure());
+    }
+  }
+
+  Future<Either<Failure, bool>> callApiBool({
+    required Future<Response> api,
+  }) async {
+    try {
+      final response = await api;
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final success = response.data['success'];
+        if (success is bool) {
+          return right(success);
+        }
+        return right(true);
+      }
+
+      final message =
+          response.data['message'] ?? 'Terjadi kesalahan pada server';
+      return left(BadRequestFailure(message));
+    } on DioException catch (dioError) {
+      return left(_mapDioException(dioError));
+    } catch (error) {
+      return left(const UnknownFailure());
     }
   }
 }

@@ -128,8 +128,8 @@ class DioClient {
   }
 
   Future<Response<T>> deleteRequest<T>(
-    String url,
-    String data, {
+    String url, {
+    dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
     if (dio == null) {
