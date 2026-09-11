@@ -1,4 +1,6 @@
-class ExamEntity {
+import 'package:equatable/equatable.dart';
+
+class ExamEntity extends Equatable {
   const ExamEntity({
     this.id,
     this.schoolId,
@@ -7,6 +9,7 @@ class ExamEntity {
     this.examName,
     this.examType,
     this.date,
+    this.academicYearId,
     this.startTime,
     this.endTime,
     this.durationMinutes,
@@ -23,6 +26,7 @@ class ExamEntity {
   final String? examName;
   final String? examType;
   final String? date;
+  final String? academicYearId;
   final String? startTime;
   final String? endTime;
   final int? durationMinutes;
@@ -31,9 +35,28 @@ class ExamEntity {
   final String? supervisorId;
   final List<ExamQuestionEntity> questions;
   final List<ExamParticipantEntity> participants;
+
+  @override
+  List<Object?> get props => [
+    id,
+    schoolId,
+    classId,
+    subjectId,
+    examName,
+    examType,
+    date,
+    startTime,
+    endTime,
+    durationMinutes,
+    isCancelled,
+    room,
+    supervisorId,
+    questions,
+    participants,
+  ];
 }
 
-class ExamQuestionEntity {
+class ExamQuestionEntity extends Equatable {
   const ExamQuestionEntity({
     this.id,
     this.examId,
@@ -50,9 +73,20 @@ class ExamQuestionEntity {
   final int? order;
   final double? scoreWeight;
   final List<ExamOptionEntity> options;
+
+  @override
+  List<Object?> get props => [
+    id,
+    examId,
+    questionType,
+    question,
+    order,
+    scoreWeight,
+    options,
+  ];
 }
 
-class ExamOptionEntity {
+class ExamOptionEntity extends Equatable {
   const ExamOptionEntity({
     this.id,
     this.questionId,
@@ -63,9 +97,12 @@ class ExamOptionEntity {
   final String? questionId;
   final String? optionText;
   final bool? isCorrect;
+
+  @override
+  List<Object?> get props => [id, questionId, optionText, isCorrect];
 }
 
-class ExamParticipantEntity {
+class ExamParticipantEntity extends Equatable {
   const ExamParticipantEntity({
     this.id,
     this.examId,
@@ -86,16 +123,32 @@ class ExamParticipantEntity {
   final double? finalScore;
   final ExamStudentEntity? student;
   final List<ExamAnswerEntity> answers;
+
+  @override
+  List<Object?> get props => [
+    id,
+    examId,
+    studentId,
+    status,
+    startedAt,
+    submittedAt,
+    finalScore,
+    student,
+    answers,
+  ];
 }
 
-class ExamStudentEntity {
+class ExamStudentEntity extends Equatable {
   const ExamStudentEntity({this.id, this.studentNumber, this.fullName});
   final String? id;
   final String? studentNumber;
   final String? fullName;
+
+  @override
+  List<Object?> get props => [id, studentNumber, fullName];
 }
 
-class ExamAnswerEntity {
+class ExamAnswerEntity extends Equatable {
   const ExamAnswerEntity({
     this.id,
     this.examParticipantId,
@@ -110,10 +163,23 @@ class ExamAnswerEntity {
   final String? selectedOptionId;
   final String? essayAnswer;
   final double? questionScore;
+
+  @override
+  List<Object?> get props => [
+    id,
+    examParticipantId,
+    questionId,
+    selectedOptionId,
+    essayAnswer,
+    questionScore,
+  ];
 }
 
-class ExamStartEntity {
+class ExamStartEntity extends Equatable {
   const ExamStartEntity({this.participant, this.questions = const []});
   final ExamParticipantEntity? participant;
   final List<ExamQuestionEntity> questions;
+
+  @override
+  List<Object?> get props => [participant, questions];
 }

@@ -1,4 +1,6 @@
-class Attendance {
+import 'package:equatable/equatable.dart';
+
+class Attendance extends Equatable {
   const Attendance({
     required this.id,
     required this.studentId,
@@ -28,12 +30,32 @@ class Attendance {
   final double? checkOutLongitude;
   final String? note;
   final AttendanceStudent? student;
+
+  @override
+  List<Object?> get props => [
+    id,
+    studentId,
+    date,
+    status,
+    classId,
+    checkIn,
+    checkOut,
+    checkInLatitude,
+    checkInLongitude,
+    checkOutLatitude,
+    checkOutLongitude,
+    note,
+    student,
+  ];
 }
 
-class AttendanceStudent {
+class AttendanceStudent extends Equatable {
   const AttendanceStudent({this.id, this.name, this.nis});
 
   final int? id;
   final String? name;
   final String? nis;
+
+  @override
+  List<Object?> get props => [id, name, nis];
 }

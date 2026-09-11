@@ -1,44 +1,37 @@
-import 'package:equatable/equatable.dart';
+import 'package:school_app/features/classes/domain/entities/reponse_update_class_entity.dart';
 
-class ResponseUpdateClass extends Equatable {
-  final String id;
-  final String schoolId;
-  final String academicYearId;
-  final String className;
-  final String gradeLevel;
-  final String? homeroomTeacherId;
-  final int capacity;
-
+class ResponseUpdateClass extends ResponseUpdateClassEntity {
   const ResponseUpdateClass({
-    required this.id,
-    required this.schoolId,
-    required this.academicYearId,
-    required this.className,
-    required this.gradeLevel,
-    this.homeroomTeacherId,
-    required this.capacity,
+    super.id,
+    super.schoolId,
+    super.academicYearId,
+    super.className,
+    super.gradeLevel,
+    super.homeroomTeacherId,
+    super.capacity,
   });
 
   factory ResponseUpdateClass.fromJson(Map<String, dynamic> json) {
     return ResponseUpdateClass(
-      id: json['id'] as String,
-      schoolId: json['school_id'] as String,
-      academicYearId: json['academic_year_id'] as String,
-      className: json['class_name'] as String,
-      gradeLevel: json['grade_level'] as String,
-      homeroomTeacherId: json['homeroom_teacher_id'],
-      capacity: json['capacity'] as int,
+      id: json['id']?.toString(),
+      schoolId: json['school_id']?.toString(),
+      academicYearId: json['academic_year_id']?.toString(),
+      className: json['class_name'] as String?,
+      gradeLevel: json['grade_level'] as String?,
+      homeroomTeacherId: json['homeroom_teacher_id']?.toString(),
+      capacity: (json['capacity'] as num?)?.toInt(),
     );
   }
 
-  @override
-  List<Object?> get props => [
-    id,
-    schoolId,
-    academicYearId,
-    className,
-    gradeLevel,
-    homeroomTeacherId,
-    capacity,
-  ];
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'school_id': schoolId,
+      'academic_year_id': academicYearId,
+      'class_name': className,
+      'grade_level': gradeLevel,
+      'homeroom_teacher_id': homeroomTeacherId,
+      'capacity': capacity,
+    };
+  }
 }

@@ -1,4 +1,6 @@
-class SchoolEntity {
+import 'package:equatable/equatable.dart';
+
+class SchoolEntity extends Equatable {
   const SchoolEntity({
     this.id,
     this.groupId,
@@ -27,4 +29,21 @@ class SchoolEntity {
   final int? classesCount;
   final int? teachersCount;
   final int? studentsCount;
+
+  @override
+  List<Object?> get props => [
+    id,
+    groupId,
+    schoolName,
+    npsn,
+    educationLevel,
+    address,
+    phoneNumber,
+    email,
+    logoUrl,
+    isActive,
+    classesCount,
+    teachersCount,
+    studentsCount,
+  ];
 }

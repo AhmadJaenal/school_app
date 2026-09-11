@@ -5,9 +5,9 @@ import 'package:school_app/commons/app_colors.dart';
 import 'package:school_app/commons/app_margin.dart';
 import 'package:school_app/commons/app_text_styles.dart';
 import 'package:school_app/core/di/injection.dart';
-import 'package:school_app/core/presentation/bloc/async_state.dart';
-import 'package:school_app/features/exam/data/models/exam_response_models.dart';
+import 'package:school_app/features/exam/domain/entities/exam_entities.dart';
 import 'package:school_app/features/exam/presentation/bloc/exam_cubit.dart';
+import 'package:school_app/helpers/bloc_helper.dart';
 import 'package:school_app/models/pagination_model.dart';
 
 class ExamPage extends StatelessWidget {
@@ -26,25 +26,24 @@ class ExamPage extends StatelessWidget {
           title: Text('Ujian dan Quiz', style: AppTextStyle.h2),
           centerTitle: true,
         ),
-        body: BlocBuilder<ExamCubit, AsyncState<PaginationResult<ExamModel>>>(
-          builder: (context, state) {
-            if (state.status == AsyncStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state.status == AsyncStatus.failure) {
-              return const _Message(message: 'Gagal memuat ujian');
-            }
-            final exams = state.data?.data ?? const <ExamModel>[];
-            if (exams.isEmpty) {
-              return const _Message(message: 'Belum ada ujian');
-            }
-            return ListView.separated(
-              padding: EdgeInsets.all(AppMargin.defaultMargin),
-              itemCount: exams.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (_, index) => _ExamCard(exam: exams[index]),
-            );
-          },
+        body: BlocBuilder<ExamCubit, DataState<PaginationResult<ExamEntity>>>(
+          builder: (context, state) => state.when(
+            initial: () => const SizedBox.shrink(),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (_) => const _Message(message: 'Gagal memuat ujian'),
+            success: (page) {
+              final exams = page.data;
+              if (exams.isEmpty) {
+                return const _Message(message: 'Belum ada ujian');
+              }
+              return ListView.separated(
+                padding: EdgeInsets.all(AppMargin.defaultMargin),
+                itemCount: exams.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                itemBuilder: (_, index) => _ExamCard(exam: exams[index]),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -53,7 +52,7 @@ class ExamPage extends StatelessWidget {
 
 class _ExamCard extends StatelessWidget {
   const _ExamCard({required this.exam});
-  final ExamModel exam;
+  final ExamEntity exam;
 
   @override
   Widget build(BuildContext context) => Container(

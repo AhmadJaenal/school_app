@@ -6,8 +6,8 @@ import 'package:school_app/commons/app_margin.dart';
 import 'package:school_app/commons/app_text_styles.dart';
 import 'package:school_app/core/di/injection.dart';
 import 'package:school_app/core/presentation/bloc/async_state.dart';
+import 'package:school_app/features/dailyTest/domain/entities/daily_test.dart';
 import 'package:school_app/features/dailyTest/presentation/bloc/daily_test_cubit.dart';
-import 'package:school_app/features/parents/data/models/school_api_models.dart';
 import 'package:school_app/models/pagination_model.dart';
 
 class DailyTestPage extends StatelessWidget {
@@ -29,7 +29,7 @@ class DailyTestPage extends StatelessWidget {
         body:
             BlocBuilder<
               DailyTestCubit,
-              AsyncState<PaginationResult<DailyTestModel>>
+              AsyncState<PaginationResult<DailyTestEntity>>
             >(
               builder: (context, state) {
                 if (state.status == AsyncStatus.loading) {
@@ -40,7 +40,7 @@ class DailyTestPage extends StatelessWidget {
                     child: Text(state.message ?? 'Gagal memuat ulangan'),
                   );
                 }
-                final tests = state.data?.data ?? const <DailyTestModel>[];
+                final tests = state.data?.data ?? const <DailyTestEntity>[];
                 if (tests.isEmpty) {
                   return const Center(child: Text('Belum ada ulangan harian'));
                 }

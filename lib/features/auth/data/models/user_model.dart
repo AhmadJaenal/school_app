@@ -19,4 +19,12 @@ class UserModel extends User {
         ? ProfileModel.fromJson(json['profile'] as Map<String, dynamic>)
         : null,
   );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'username': username,
+    'role': role,
+    'school_id': schoolId,
+    'profile': (profile as ProfileModel?)?.toJson(),
+  };
 }

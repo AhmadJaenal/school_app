@@ -12,3 +12,19 @@ class GetNotifications {
   Future<Either<Failure, PaginationResult<NotificationEntity>>> call() =>
       _repository.getNotifications();
 }
+
+class GetUnreadNotifications {
+  GetUnreadNotifications(this._repository);
+
+  final NotificationRepository _repository;
+  Future<Either<Failure, int>> call() => _repository.getUnreadCount();
+}
+
+class MarkAsReadNotifiation {
+  MarkAsReadNotifiation(this._repository);
+
+  final NotificationRepository _repository;
+
+  Future<Either<Failure, bool>> call(int notificationId) =>
+      _repository.markAsRead(notificationId);
+}

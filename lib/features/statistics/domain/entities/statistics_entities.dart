@@ -1,4 +1,6 @@
-class StudentGradeStatisticsEntity {
+import 'package:equatable/equatable.dart';
+
+class StudentGradeStatisticsEntity extends Equatable {
   const StudentGradeStatisticsEntity({
     this.studentId,
     this.studentName,
@@ -21,9 +23,23 @@ class StudentGradeStatisticsEntity {
   final double? minimum;
   final double? maximum;
   final int? gradeCount;
+
+  @override
+  List<Object?> get props => [
+    studentId,
+    studentName,
+    subjectId,
+    subjectName,
+    academicYearId,
+    gradeType,
+    average,
+    minimum,
+    maximum,
+    gradeCount,
+  ];
 }
 
-class StudentAttendanceSummaryEntity {
+class StudentAttendanceSummaryEntity extends Equatable {
   const StudentAttendanceSummaryEntity({
     this.studentId,
     this.studentName,
@@ -44,9 +60,22 @@ class StudentAttendanceSummaryEntity {
   final int? totalExcused;
   final int? totalAbsent;
   final int? totalRecordedDays;
+
+  @override
+  List<Object?> get props => [
+    studentId,
+    studentName,
+    year,
+    month,
+    totalPresent,
+    totalSick,
+    totalExcused,
+    totalAbsent,
+    totalRecordedDays,
+  ];
 }
 
-class ClassGradeStatisticsEntity {
+class ClassGradeStatisticsEntity extends Equatable {
   const ClassGradeStatisticsEntity({
     this.classId,
     this.className,
@@ -69,20 +98,40 @@ class ClassGradeStatisticsEntity {
   final double? lowest;
   final double? highest;
   final int? gradedStudentCount;
+
+  @override
+  List<Object?> get props => [
+    classId,
+    className,
+    subjectId,
+    subjectName,
+    gradeType,
+    academicYearId,
+    average,
+    lowest,
+    highest,
+    gradedStudentCount,
+  ];
 }
 
-class AttendanceStatusTotalEntity {
+class AttendanceStatusTotalEntity extends Equatable {
   const AttendanceStatusTotalEntity({this.status, this.total});
   final String? status;
   final int? total;
+
+  @override
+  List<Object?> get props => [status, total];
 }
 
-class ClassAttendanceSummaryEntity {
+class ClassAttendanceSummaryEntity extends Equatable {
   const ClassAttendanceSummaryEntity({this.items = const []});
   final List<AttendanceStatusTotalEntity> items;
+
+  @override
+  List<Object?> get props => [items];
 }
 
-class StudentReportSubjectEntity {
+class StudentReportSubjectEntity extends Equatable {
   const StudentReportSubjectEntity({
     this.subjectId,
     this.subjectName,
@@ -93,14 +142,20 @@ class StudentReportSubjectEntity {
   final String? subjectName;
   final String? gradeType;
   final double? grade;
+
+  @override
+  List<Object?> get props => [subjectId, subjectName, gradeType, grade];
 }
 
-class StudentReportEntity {
+class StudentReportEntity extends Equatable {
   const StudentReportEntity({this.subjects = const {}});
   final Map<String, List<StudentReportSubjectEntity>> subjects;
+
+  @override
+  List<Object?> get props => [subjects];
 }
 
-class SchoolOverviewEntity {
+class SchoolOverviewEntity extends Equatable {
   const SchoolOverviewEntity({
     this.totalStudents,
     this.attendance = const [],
@@ -109,4 +164,7 @@ class SchoolOverviewEntity {
   final int? totalStudents;
   final List<AttendanceStatusTotalEntity> attendance;
   final double? averageGrade;
+
+  @override
+  List<Object?> get props => [totalStudents, attendance, averageGrade];
 }

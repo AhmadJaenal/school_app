@@ -1,6 +1,7 @@
 import 'package:school_app/features/auth/domain/entities/profile.dart';
+import 'package:equatable/equatable.dart';
 
-class User {
+class User extends Equatable {
   const User({
     required this.id,
     required this.username,
@@ -14,4 +15,7 @@ class User {
   final String role;
   final int? schoolId;
   final Profile? profile;
+
+  @override
+  List<Object?> get props => [id, username, role, schoolId, profile];
 }

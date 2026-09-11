@@ -1,4 +1,9 @@
-class ClassEntity {
+import 'package:equatable/equatable.dart';
+import 'package:school_app/features/classes/domain/entities/student_entities.dart';
+import 'package:school_app/features/classes/domain/entities/teacher_entities.dart';
+import 'package:school_app/features/classes/domain/entities/year_academic_entities.dart';
+
+class ClassEntity extends Equatable {
   const ClassEntity({
     this.id,
     this.schoolId,
@@ -12,6 +17,9 @@ class ClassEntity {
   final String? name;
   final String? code;
   final int? capacity;
+
+  @override
+  List<Object?> get props => [id, schoolId, name, code, capacity];
 }
 
 class ClassDetailEntity extends ClassEntity {
@@ -35,44 +43,15 @@ class ClassDetailEntity extends ClassEntity {
   final AcademicYearEntity? academicYear;
   final TeacherEntity? homeroomTeacher;
   final List<StudentEntity> students;
-}
 
-class AcademicYearEntity {
-  const AcademicYearEntity({this.id, this.name, this.startDate, this.endDate});
-  final String? id;
-  final String? name;
-  final String? startDate;
-  final String? endDate;
-}
-
-class TeacherEntity {
-  const TeacherEntity({this.id, this.userId, this.fullName, this.phoneNumber});
-  final String? id;
-  final String? userId;
-  final String? fullName;
-  final String? phoneNumber;
-}
-
-class StudentEntity {
-  const StudentEntity({
-    this.id,
-    this.userId,
-    this.schoolId,
-    this.classId,
-    this.studentNumber,
-    this.nationalStudentNumber,
-    this.fullName,
-    this.gender,
-    this.status,
-  });
-
-  final String? id;
-  final String? userId;
-  final String? schoolId;
-  final String? classId;
-  final String? studentNumber;
-  final String? nationalStudentNumber;
-  final String? fullName;
-  final String? gender;
-  final String? status;
+  @override
+  List<Object?> get props => [
+    ...super.props,
+    academicYearId,
+    gradeLevel,
+    homeroomTeacherId,
+    academicYear,
+    homeroomTeacher,
+    students,
+  ];
 }

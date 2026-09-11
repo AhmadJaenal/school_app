@@ -3,6 +3,7 @@ import 'package:school_app/core/error/failure.dart';
 import 'package:school_app/features/classes/data/models/class_detail_model.dart';
 import 'package:school_app/features/classes/data/models/class_model.dart';
 import 'package:school_app/features/classes/data/models/response_create_class.dart';
+import 'package:school_app/features/classes/data/models/response_update_class.dart';
 import 'package:school_app/features/classes/data/models/student_model.dart';
 import 'package:school_app/helpers/repository_helper.dart';
 import 'package:school_app/models/pagination_model.dart';
@@ -12,7 +13,7 @@ abstract class ClassesRemoteDataSource {
   Future<Either<Failure, PaginationResult<ClassModel>>> getClass();
   Future<Either<Failure, ResponseCreateClass>> postClass(params);
   Future<Either<Failure, DetailClassModel>> getDetailClass(int id);
-  Future<Either<Failure, ResponseCreateClass>> updateClass(int id);
+  Future<Either<Failure, ResponseUpdateClass>> updateClass(int id);
   Future<Either<Failure, bool>> deleteClass(int id);
   Future<Either<Failure, PaginationResult<StudentModel>>> getStudentsInClass(
     int id,
@@ -118,12 +119,12 @@ class ClassesRemoteDataSourceImpl extends RepositoryHelper
   }
 
   @override
-  Future<Either<Failure, ResponseCreateClass>> updateClass(int id) {
+  Future<Either<Failure, ResponseUpdateClass>> updateClass(int id) {
     final dioCall = dioClient.putRequest(URLs.detailClass(id));
 
     return callApi(
       api: dioCall,
-      jsonCallback: (json) => ResponseCreateClass.fromJson(json),
+      jsonCallback: (json) => ResponseUpdateClass.fromJson(json),
     );
   }
 }

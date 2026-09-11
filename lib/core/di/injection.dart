@@ -29,9 +29,7 @@ import 'package:school_app/features/exam/domain/usecases/exam_usecases.dart';
 import 'package:school_app/features/notification/data/datasources/notification_remote_data_source.dart';
 import 'package:school_app/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:school_app/features/notification/domain/repositories/notification_repository.dart';
-import 'package:school_app/features/notification/domain/usecases/get_notifications.dart';
-import 'package:school_app/features/notification/domain/usecases/get_unread_count.dart';
-import 'package:school_app/features/notification/domain/usecases/mark_notification_as_read.dart';
+import 'package:school_app/features/notification/domain/usecases/notification_usecases.dart';
 import 'package:school_app/features/parents/data/datasources/parents_remote_data_source.dart';
 import 'package:school_app/features/parents/data/repositories/parents_repository_impl.dart';
 import 'package:school_app/features/parents/domain/repositories/parents_repository.dart';
@@ -39,7 +37,6 @@ import 'package:school_app/features/parents/domain/usecases/link_student_to_pare
 import 'package:school_app/features/school/data/datasources/school_remote_data_source.dart';
 import 'package:school_app/features/school/data/repositories/school_repository_impl.dart';
 import 'package:school_app/features/school/domain/repositories/school_repository.dart';
-import 'package:school_app/features/school/domain/usecases/get_schools.dart';
 import 'package:school_app/features/school/domain/usecases/school_usecases.dart';
 import 'package:school_app/features/statistics/data/datasources/statistics_remote_data_source.dart';
 import 'package:school_app/features/statistics/data/repositories/statistics_repository_impl.dart';
@@ -123,12 +120,6 @@ void configureDependencies() {
   sl.registerLazySingleton<ForgotPassword>(() => ForgotPassword(sl()));
   sl.registerLazySingleton<ResetPassword>(() => ResetPassword(sl()));
   sl.registerLazySingleton<GetNotifications>(() => GetNotifications(sl()));
-  sl.registerLazySingleton<GetUnreadNotificationCount>(
-    () => GetUnreadNotificationCount(sl()),
-  );
-  sl.registerLazySingleton<MarkNotificationAsRead>(
-    () => MarkNotificationAsRead(sl()),
-  );
   sl.registerLazySingleton<GetSchools>(() => GetSchools(sl()));
   sl.registerLazySingleton<GetSchoolDetail>(() => GetSchoolDetail(sl()));
   sl.registerLazySingleton<CreateSchool>(() => CreateSchool(sl()));

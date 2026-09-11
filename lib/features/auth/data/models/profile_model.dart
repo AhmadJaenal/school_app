@@ -12,4 +12,10 @@ class ProfileModel extends Profile {
     username: json['username'] as String? ?? '',
     address: json['address'] as String? ?? '',
   );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'username': username,
+    'address': address,
+  };
 }

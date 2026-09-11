@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:school_app/core/error/failure.dart';
-import 'package:school_app/features/parents/data/models/school_api_models.dart';
+import 'package:school_app/features/subjects/data/models/subject_model.dart';
 import 'package:school_app/helpers/repository_helper.dart';
 import 'package:school_app/models/pagination_model.dart';
 import 'package:school_app/network/urls.dart';

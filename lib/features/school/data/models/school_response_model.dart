@@ -1,33 +1,21 @@
-class SchoolResponseModel {
-  const SchoolResponseModel({
-    this.id,
-    this.groupId,
-    this.schoolName,
-    this.npsn,
-    this.educationLevel,
-    this.address,
-    this.phoneNumber,
-    this.email,
-    this.logoUrl,
-    this.isActive,
-    this.classesCount,
-    this.teachersCount,
-    this.studentsCount,
-  });
+import 'package:school_app/features/school/domain/entities/school.dart';
 
-  final String? id;
-  final int? groupId;
-  final String? schoolName;
-  final String? npsn;
-  final String? educationLevel;
-  final String? address;
-  final String? phoneNumber;
-  final String? email;
-  final String? logoUrl;
-  final bool? isActive;
-  final int? classesCount;
-  final int? teachersCount;
-  final int? studentsCount;
+class SchoolResponseModel extends SchoolEntity {
+  const SchoolResponseModel({
+    super.id,
+    super.groupId,
+    super.schoolName,
+    super.npsn,
+    super.educationLevel,
+    super.address,
+    super.phoneNumber,
+    super.email,
+    super.logoUrl,
+    super.isActive,
+    super.classesCount,
+    super.teachersCount,
+    super.studentsCount,
+  });
 
   factory SchoolResponseModel.fromJson(Map<String, dynamic> json) =>
       SchoolResponseModel(
@@ -45,4 +33,20 @@ class SchoolResponseModel {
         teachersCount: (json['teachers_count'] as num?)?.toInt(),
         studentsCount: (json['students_count'] as num?)?.toInt(),
       );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'group_id': groupId,
+    'school_name': schoolName,
+    'npsn': npsn,
+    'education_level': educationLevel,
+    'address': address,
+    'phone_number': phoneNumber,
+    'email': email,
+    'logo_url': logoUrl,
+    'is_active': isActive,
+    'classes_count': classesCount,
+    'teachers_count': teachersCount,
+    'students_count': studentsCount,
+  };
 }

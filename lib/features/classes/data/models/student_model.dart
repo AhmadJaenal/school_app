@@ -1,57 +1,41 @@
-import 'package:equatable/equatable.dart';
+import 'package:school_app/features/classes/domain/entities/student_entities.dart';
 
-class StudentModel extends Equatable {
-  final String id;
-  final String userId;
-  final String schoolId;
-  final String? classId;
-  final String studentNumber;
-  final String nationalStudentNumber;
-  final String fullName;
-  final String gender;
-  final String birthPlace;
-  final String birthDate;
-  final String address;
-  final String? phoneNumber;
-  final String? photoUrl;
-  final String status;
-  final String admissionDate;
-
+class StudentModel extends StudentEntity {
   const StudentModel({
-    required this.id,
-    required this.userId,
-    required this.schoolId,
-    required this.classId,
-    required this.studentNumber,
-    required this.nationalStudentNumber,
-    required this.fullName,
-    required this.gender,
-    required this.birthPlace,
-    required this.birthDate,
-    required this.address,
-    this.phoneNumber,
-    this.photoUrl,
-    required this.status,
-    required this.admissionDate,
+    super.id,
+    super.userId,
+    super.schoolId,
+    super.classId,
+    super.studentNumber,
+    super.nationalStudentNumber,
+    super.fullName,
+    super.gender,
+    super.birthPlace,
+    super.birthDate,
+    super.address,
+    super.phoneNumber,
+    super.photoUrl,
+    super.status,
+    super.admissionDate,
   });
 
   factory StudentModel.fromJson(Map<String, dynamic> json) {
     return StudentModel(
-      id: json['id'] as String,
-      userId: json['user_id'] as String,
-      schoolId: json['school_id'] as String,
+      id: json['id'] as String?,
+      userId: json['user_id'] as String?,
+      schoolId: json['school_id'] as String?,
       classId: json['class_id'] as String?,
-      studentNumber: json['student_number'] as String,
-      nationalStudentNumber: json['national_student_number'] as String,
-      fullName: json['full_name'] as String,
-      gender: json['gender'] as String,
-      birthPlace: json['birth_place'] as String,
-      birthDate: json['birth_date'] as String,
-      address: json['address'] as String,
-      phoneNumber: json['phone_number'],
-      photoUrl: json['photo_url'],
-      status: json['status'] as String,
-      admissionDate: json['admission_date'] as String,
+      studentNumber: json['student_number'] as String?,
+      nationalStudentNumber: json['national_student_number'] as String?,
+      fullName: json['full_name'] as String?,
+      gender: json['gender'] as String?,
+      birthPlace: json['birth_place'] as String?,
+      birthDate: json['birth_date'] as String?,
+      address: json['address'] as String?,
+      phoneNumber: json['phone_number'] as String?,
+      photoUrl: json['photo_url'] as String?,
+      status: json['status'] as String?,
+      admissionDate: json['admission_date'] as String?,
     );
   }
 
@@ -74,23 +58,4 @@ class StudentModel extends Equatable {
       'admission_date': admissionDate,
     };
   }
-
-  @override
-  List<Object?> get props => [
-    id,
-    userId,
-    schoolId,
-    classId,
-    studentNumber,
-    nationalStudentNumber,
-    fullName,
-    gender,
-    birthPlace,
-    birthDate,
-    address,
-    phoneNumber,
-    photoUrl,
-    status,
-    admissionDate,
-  ];
 }

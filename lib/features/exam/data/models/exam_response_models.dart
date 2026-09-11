@@ -1,49 +1,34 @@
-class ExamModel {
-  const ExamModel({
-    this.id,
-    this.schoolId,
-    this.classId,
-    this.subjectId,
-    this.academicYearId,
-    this.examName,
-    this.examType,
-    this.date,
-    this.startTime,
-    this.endTime,
-    this.durationMinutes,
-    this.isCancelled,
-    this.room,
-    this.supervisorId,
-    this.questions = const [],
-    this.participants = const [],
-  });
+import 'package:school_app/features/exam/domain/entities/exam_entities.dart';
 
-  final String? id;
-  final String? schoolId;
-  final String? classId;
-  final String? subjectId;
-  final String? academicYearId;
-  final String? examName;
-  final String? examType;
-  final String? date;
-  final String? startTime;
-  final String? endTime;
-  final int? durationMinutes;
-  final bool? isCancelled;
-  final String? room;
-  final String? supervisorId;
-  final List<ExamQuestionModel> questions;
-  final List<ExamParticipantModel> participants;
+class ExamModel extends ExamEntity {
+  const ExamModel({
+    super.id,
+    super.schoolId,
+    super.classId,
+    super.subjectId,
+    super.examName,
+    super.examType,
+    super.date,
+    super.academicYearId,
+    super.startTime,
+    super.endTime,
+    super.durationMinutes,
+    super.isCancelled,
+    super.room,
+    super.supervisorId,
+    super.questions,
+    super.participants,
+  });
 
   factory ExamModel.fromJson(Map<String, dynamic> json) => ExamModel(
     id: json['id']?.toString(),
     schoolId: json['school_id']?.toString(),
     classId: json['class_id']?.toString(),
     subjectId: json['subject_id']?.toString(),
-    academicYearId: json['academic_year_id']?.toString(),
     examName: json['exam_name'] as String?,
     examType: json['exam_type'] as String?,
     date: json['date'] as String?,
+    academicYearId: json['academic_year_id']?.toString(),
     startTime: json['start_time'] as String?,
     endTime: json['end_time'] as String?,
     durationMinutes: (json['duration_minutes'] as num?)?.toInt(),
@@ -56,26 +41,41 @@ class ExamModel {
       ExamParticipantModel.fromJson,
     ),
   );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'school_id': schoolId,
+    'class_id': classId,
+    'subject_id': subjectId,
+    'exam_name': examName,
+    'exam_type': examType,
+    'date': date,
+    'academic_year_id': academicYearId,
+    'start_time': startTime,
+    'end_time': endTime,
+    'duration_minutes': durationMinutes,
+    'is_cancelled': isCancelled,
+    'room': room,
+    'supervisor_id': supervisorId,
+    'questions': questions
+        .map((item) => (item as ExamQuestionModel).toJson())
+        .toList(),
+    'participants': participants
+        .map((item) => (item as ExamParticipantModel).toJson())
+        .toList(),
+  };
 }
 
-class ExamQuestionModel {
+class ExamQuestionModel extends ExamQuestionEntity {
   const ExamQuestionModel({
-    this.id,
-    this.examId,
-    this.questionType,
-    this.question,
-    this.order,
-    this.scoreWeight,
-    this.options = const [],
+    super.id,
+    super.examId,
+    super.questionType,
+    super.question,
+    super.order,
+    super.scoreWeight,
+    super.options,
   });
-
-  final String? id;
-  final String? examId;
-  final String? questionType;
-  final String? question;
-  final int? order;
-  final double? scoreWeight;
-  final List<ExamOptionModel> options;
 
   factory ExamQuestionModel.fromJson(Map<String, dynamic> json) =>
       ExamQuestionModel(
@@ -87,20 +87,27 @@ class ExamQuestionModel {
         scoreWeight: (json['score_weight'] as num?)?.toDouble(),
         options: _readList(json['options'], ExamOptionModel.fromJson),
       );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'exam_id': examId,
+    'question_type': questionType,
+    'question': question,
+    'order': order,
+    'score_weight': scoreWeight,
+    'options': options
+        .map((item) => (item as ExamOptionModel).toJson())
+        .toList(),
+  };
 }
 
-class ExamOptionModel {
+class ExamOptionModel extends ExamOptionEntity {
   const ExamOptionModel({
-    this.id,
-    this.questionId,
-    this.optionText,
-    this.isCorrect,
+    super.id,
+    super.questionId,
+    super.optionText,
+    super.isCorrect,
   });
-
-  final String? id;
-  final String? questionId;
-  final String? optionText;
-  final bool? isCorrect;
 
   factory ExamOptionModel.fromJson(Map<String, dynamic> json) =>
       ExamOptionModel(
@@ -109,30 +116,27 @@ class ExamOptionModel {
         optionText: json['option_text'] as String?,
         isCorrect: json['is_correct'] as bool?,
       );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'question_id': questionId,
+    'option_text': optionText,
+    'is_correct': isCorrect,
+  };
 }
 
-class ExamParticipantModel {
+class ExamParticipantModel extends ExamParticipantEntity {
   const ExamParticipantModel({
-    this.id,
-    this.examId,
-    this.studentId,
-    this.status,
-    this.startedAt,
-    this.submittedAt,
-    this.finalScore,
-    this.student,
-    this.answers = const [],
+    super.id,
+    super.examId,
+    super.studentId,
+    super.status,
+    super.startedAt,
+    super.submittedAt,
+    super.finalScore,
+    super.student,
+    super.answers,
   });
-
-  final String? id;
-  final String? examId;
-  final String? studentId;
-  final String? status;
-  final String? startedAt;
-  final String? submittedAt;
-  final double? finalScore;
-  final ExamStudentSummaryModel? student;
-  final List<ExamAnswerModel> answers;
 
   factory ExamParticipantModel.fromJson(Map<String, dynamic> json) =>
       ExamParticipantModel(
@@ -150,14 +154,28 @@ class ExamParticipantModel {
             : null,
         answers: _readList(json['answers'], ExamAnswerModel.fromJson),
       );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'exam_id': examId,
+    'student_id': studentId,
+    'status': status,
+    'started_at': startedAt,
+    'submitted_at': submittedAt,
+    'final_score': finalScore,
+    'student': (student as ExamStudentSummaryModel?)?.toJson(),
+    'answers': answers
+        .map((item) => (item as ExamAnswerModel).toJson())
+        .toList(),
+  };
 }
 
-class ExamStudentSummaryModel {
-  const ExamStudentSummaryModel({this.id, this.studentNumber, this.fullName});
-
-  final String? id;
-  final String? studentNumber;
-  final String? fullName;
+class ExamStudentSummaryModel extends ExamStudentEntity {
+  const ExamStudentSummaryModel({
+    super.id,
+    super.studentNumber,
+    super.fullName,
+  });
 
   factory ExamStudentSummaryModel.fromJson(Map<String, dynamic> json) =>
       ExamStudentSummaryModel(
@@ -165,24 +183,23 @@ class ExamStudentSummaryModel {
         studentNumber: json['student_number'] as String?,
         fullName: json['full_name'] as String?,
       );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'student_number': studentNumber,
+    'full_name': fullName,
+  };
 }
 
-class ExamAnswerModel {
+class ExamAnswerModel extends ExamAnswerEntity {
   const ExamAnswerModel({
-    this.id,
-    this.examParticipantId,
-    this.questionId,
-    this.selectedOptionId,
-    this.essayAnswer,
-    this.questionScore,
+    super.id,
+    super.examParticipantId,
+    super.questionId,
+    super.selectedOptionId,
+    super.essayAnswer,
+    super.questionScore,
   });
-
-  final String? id;
-  final String? examParticipantId;
-  final String? questionId;
-  final String? selectedOptionId;
-  final String? essayAnswer;
-  final double? questionScore;
 
   factory ExamAnswerModel.fromJson(Map<String, dynamic> json) =>
       ExamAnswerModel(
@@ -193,13 +210,19 @@ class ExamAnswerModel {
         essayAnswer: json['essay_answer'] as String?,
         questionScore: (json['question_score'] as num?)?.toDouble(),
       );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'exam_participant_id': examParticipantId,
+    'question_id': questionId,
+    'selected_option_id': selectedOptionId,
+    'essay_answer': essayAnswer,
+    'question_score': questionScore,
+  };
 }
 
-class ExamStartResponseModel {
-  const ExamStartResponseModel({this.participant, this.questions = const []});
-
-  final ExamParticipantModel? participant;
-  final List<ExamQuestionModel> questions;
+class ExamStartResponseModel extends ExamStartEntity {
+  const ExamStartResponseModel({super.participant, super.questions});
 
   factory ExamStartResponseModel.fromJson(Map<String, dynamic> json) =>
       ExamStartResponseModel(
@@ -210,6 +233,13 @@ class ExamStartResponseModel {
             : null,
         questions: _readList(json['questions'], ExamQuestionModel.fromJson),
       );
+
+  Map<String, dynamic> toJson() => {
+    'participant': (participant as ExamParticipantModel?)?.toJson(),
+    'questions': questions
+        .map((item) => (item as ExamQuestionModel).toJson())
+        .toList(),
+  };
 }
 
 List<T> _readList<T>(dynamic value, T Function(Map<String, dynamic>) fromJson) {

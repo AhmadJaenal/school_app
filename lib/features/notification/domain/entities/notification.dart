@@ -1,4 +1,6 @@
-class NotificationEntity {
+import 'package:equatable/equatable.dart';
+
+class NotificationEntity extends Equatable {
   const NotificationEntity({
     this.id,
     this.title,
@@ -11,4 +13,7 @@ class NotificationEntity {
   final String? message;
   final String? readAt;
   final String? createdAt;
+
+  @override
+  List<Object?> get props => [id, title, message, readAt, createdAt];
 }

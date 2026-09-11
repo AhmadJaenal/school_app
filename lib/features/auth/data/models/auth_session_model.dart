@@ -18,4 +18,10 @@ class AuthSessionModel extends AuthSession {
           : null,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'access_token': accessToken,
+    'refresh_token': refreshToken,
+    'user': (user as UserModel?)?.toJson(),
+  };
 }

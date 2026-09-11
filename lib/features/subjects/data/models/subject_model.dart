@@ -1,46 +1,31 @@
-import 'package:equatable/equatable.dart';
+import 'package:school_app/features/subjects/domain/entities/subject.dart';
 
-class SubjectModel extends Equatable {
-  final String subjectCode;
-  final String subjectName;
-  final String description;
-  final String schoolId;
-  final String id;
-
+class SubjectModel extends SubjectEntity {
   const SubjectModel({
-    required this.subjectCode,
-    required this.subjectName,
-    required this.description,
-    required this.schoolId,
-    required this.id,
+    super.id,
+    super.schoolId,
+    super.code,
+    super.name,
+    super.description,
   });
 
   factory SubjectModel.fromJson(Map<String, dynamic> json) {
     return SubjectModel(
-      subjectCode: json['subject_code'] as String,
-      subjectName: json['subject_name'] as String,
-      description: json['description'] as String,
-      schoolId: json['school_id'] as String,
-      id: json['id'] as String,
+      code: json['subject_code'] as String? ?? json['code'] as String?,
+      name: json['subject_name'] as String? ?? json['name'] as String?,
+      description: json['description'] as String?,
+      schoolId: json['school_id']?.toString(),
+      id: json['id']?.toString(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'subject_code': subjectCode,
-      'subject_name': subjectName,
+      'subject_code': code,
+      'subject_name': name,
       'description': description,
       'school_id': schoolId,
       'id': id,
     };
   }
-
-  @override
-  List<Object?> get props => [
-    subjectCode,
-    subjectName,
-    description,
-    schoolId,
-    id,
-  ];
 }

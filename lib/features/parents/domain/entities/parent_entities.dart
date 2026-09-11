@@ -1,4 +1,6 @@
-class ParentEntity {
+import 'package:equatable/equatable.dart';
+
+class ParentEntity extends Equatable {
   const ParentEntity({
     this.id,
     this.userId,
@@ -11,9 +13,12 @@ class ParentEntity {
   final String? fullName;
   final String? phoneNumber;
   final List<LinkedStudentEntity> students;
+
+  @override
+  List<Object?> get props => [id, userId, fullName, phoneNumber, students];
 }
 
-class LinkedStudentEntity {
+class LinkedStudentEntity extends Equatable {
   const LinkedStudentEntity({
     this.id,
     this.studentNumber,
@@ -28,4 +33,14 @@ class LinkedStudentEntity {
   final String? schoolId;
   final String? classId;
   final String? relationship;
+
+  @override
+  List<Object?> get props => [
+    id,
+    studentNumber,
+    fullName,
+    schoolId,
+    classId,
+    relationship,
+  ];
 }

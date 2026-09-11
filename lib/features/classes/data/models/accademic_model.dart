@@ -1,30 +1,20 @@
-import 'package:equatable/equatable.dart';
+import 'package:school_app/features/classes/domain/entities/year_academic_entities.dart';
 
-class AcademicYear extends Equatable {
-  final String id;
-  final String schoolId;
-  final String academicYearName;
-  final String semester;
-  final String startDate;
-  final String endDate;
-  final bool isActive;
-  final String createdAt;
-  final String updatedAt;
-
-  const AcademicYear({
-    required this.id,
-    required this.schoolId,
-    required this.academicYearName,
-    required this.semester,
-    required this.startDate,
-    required this.endDate,
-    required this.isActive,
-    required this.createdAt,
-    required this.updatedAt,
+class AcademicYearModel extends AcademicYearEntity {
+  const AcademicYearModel({
+    super.id,
+    super.schoolId,
+    super.academicYearName,
+    super.semester,
+    super.startDate,
+    super.endDate,
+    required super.isActive,
+    super.createdAt,
+    super.updatedAt,
   });
 
-  factory AcademicYear.fromJson(Map<String, dynamic> json) {
-    return AcademicYear(
+  factory AcademicYearModel.fromJson(Map<String, dynamic> json) {
+    return AcademicYearModel(
       id: json['id'] as String,
       schoolId: json['school_id'] as String,
       academicYearName: json['academic_year_name'] as String,
@@ -37,6 +27,7 @@ class AcademicYear extends Equatable {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -50,17 +41,4 @@ class AcademicYear extends Equatable {
       'updated_at': updatedAt,
     };
   }
-
-  @override
-  List<Object?> get props => [
-    id,
-    schoolId,
-    academicYearName,
-    semester,
-    startDate,
-    endDate,
-    isActive,
-    createdAt,
-    updatedAt,
-  ];
 }

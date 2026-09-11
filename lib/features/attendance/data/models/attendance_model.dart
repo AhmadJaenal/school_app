@@ -37,6 +37,22 @@ class AttendanceModel extends Attendance {
           : null,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'student_id': studentId,
+    'date': date,
+    'status': status,
+    'class_id': classId,
+    'check_in': checkIn,
+    'check_out': checkOut,
+    'check_in_latitude': checkInLatitude,
+    'check_in_longitude': checkInLongitude,
+    'check_out_latitude': checkOutLatitude,
+    'check_out_longitude': checkOutLongitude,
+    'note': note,
+    'student': (student as AttendanceStudentModel?)?.toJson(),
+  };
 }
 
 class AttendanceStudentModel extends AttendanceStudent {
@@ -49,4 +65,6 @@ class AttendanceStudentModel extends AttendanceStudent {
       nis: json['nis'] as String?,
     );
   }
+
+  Map<String, dynamic> toJson() => {'id': id, 'name': name, 'nis': nis};
 }

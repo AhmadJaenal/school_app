@@ -1,37 +1,37 @@
 import 'package:dartz/dartz.dart';
 import 'package:school_app/core/error/failure.dart';
-import 'package:school_app/features/classes/data/models/class_detail_model.dart';
-import 'package:school_app/features/classes/data/models/class_model.dart';
-import 'package:school_app/features/classes/data/models/response_create_class.dart';
-import 'package:school_app/features/classes/data/models/student_model.dart';
+import 'package:school_app/features/classes/domain/entities/class_entities.dart';
+import 'package:school_app/features/classes/domain/entities/reponse_update_class_entity.dart';
+import 'package:school_app/features/classes/domain/entities/response_create_class_entity.dart';
+import 'package:school_app/features/classes/domain/entities/student_entities.dart';
 import 'package:school_app/features/classes/domain/repositories/classes_repository.dart';
 import 'package:school_app/models/pagination_model.dart';
 
 class GetClasses {
   GetClasses(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, PaginationResult<ClassModel>>> call() =>
+  Future<Either<Failure, PaginationResult<ClassEntity>>> call() =>
       _repository.getClasses();
 }
 
 class CreateClass {
   CreateClass(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, ResponseCreateClass>> call(dynamic params) =>
+  Future<Either<Failure, ResponseCreateClassEntity>> call(dynamic params) =>
       _repository.createClass(params);
 }
 
 class GetClassDetail {
   GetClassDetail(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, DetailClassModel>> call(int id) =>
+  Future<Either<Failure, ClassDetailEntity>> call(int id) =>
       _repository.getClassDetail(id);
 }
 
 class UpdateClass {
   UpdateClass(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, ResponseCreateClass>> call(int id) =>
+  Future<Either<Failure, ResponseUpdateClassEntity>> call(int id) =>
       _repository.updateClass(id);
 }
 
@@ -44,7 +44,7 @@ class DeleteClass {
 class GetStudentsInClass {
   GetStudentsInClass(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, PaginationResult<StudentModel>>> call(int classId) =>
+  Future<Either<Failure, PaginationResult<StudentEntity>>> call(int classId) =>
       _repository.getStudentsInClass(classId);
 }
 
@@ -58,13 +58,13 @@ class AddStudentToClass {
 class MoveStudentToClass {
   MoveStudentToClass(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, StudentModel>> call(int classId, int studentId) =>
+  Future<Either<Failure, StudentEntity>> call(int classId, int studentId) =>
       _repository.moveStudentToClass(classId, studentId);
 }
 
 class RemoveStudentFromClass {
   RemoveStudentFromClass(this._repository);
   final ClassesRepository _repository;
-  Future<Either<Failure, StudentModel>> call(int classId, int studentId) =>
+  Future<Either<Failure, StudentEntity>> call(int classId, int studentId) =>
       _repository.removeStudentFromClass(classId, studentId);
 }

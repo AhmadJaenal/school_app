@@ -1,6 +1,9 @@
+import 'package:dartz/dartz.dart';
+import 'package:school_app/core/error/failure.dart';
 import 'package:school_app/features/notification/data/datasources/notification_remote_data_source.dart';
+import 'package:school_app/features/notification/domain/entities/notification.dart';
 import 'package:school_app/features/notification/domain/repositories/notification_repository.dart';
-import 'package:school_app/features/parents/data/models/school_api_models.dart';
+import 'package:school_app/models/pagination_model.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   NotificationRepositoryImpl(this._remoteDataSource);
@@ -8,26 +11,21 @@ class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationRemoteDataSource _remoteDataSource;
 
   @override
-  Future<List<NotificationModel>> getNotifications() async {
+  Future<Either<Failure, PaginationResult<NotificationEntity>>>
+  getNotifications() async {
     final result = await _remoteDataSource.getNotifications();
-    return result.fold(
-      (failure) => throw Exception(failure.message),
-      (page) => page.data,
-    );
+    return result.fold((failure) => Left(failure), (page) => Right(page));
   }
 
   @override
-  Future<int> getUnreadCount() async {
+  Future<Either<Failure, int>> getUnreadCount() async {
     final result = await _remoteDataSource.getUnreadCount();
-    return result.fold(
-      (failure) => throw Exception(failure.message),
-      (count) => count,
-    );
+    return result.fold((failure) => Left(failure), (count) => Right(count));
   }
 
   @override
-  Future<void> markAsRead(int id) async {
+  Future<Either<Failure, bool>> markAsRead(int id) async {
     final result = await _remoteDataSource.markAsRead(id);
-    result.fold((failure) => throw Exception(failure.message), (_) {});
+    return result.fold((failure) => Left(failure), (success) => Right(success));
   }
 }
