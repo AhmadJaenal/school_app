@@ -14,6 +14,8 @@ import 'package:school_app/features/auth/domain/usecases/login.dart';
 import 'package:school_app/features/auth/domain/usecases/logout.dart';
 import 'package:school_app/features/auth/domain/usecases/register.dart';
 import 'package:school_app/features/auth/domain/usecases/reset_password.dart';
+import 'package:school_app/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:school_app/features/auth/presentation/bloc/register_cubit.dart';
 import 'package:school_app/features/classes/data/datasources/classes_remote_datasource.dart';
 import 'package:school_app/features/classes/data/repositories/classes_repository_impl.dart';
 import 'package:school_app/features/classes/domain/repositories/classes_repository.dart';
@@ -115,6 +117,8 @@ void configureDependencies() {
   sl.registerLazySingleton<CheckIn>(() => CheckIn(sl()));
   sl.registerLazySingleton<CheckOut>(() => CheckOut(sl()));
   sl.registerLazySingleton<Login>(() => Login(sl()));
+  sl.registerFactory<AuthCubit>(() => AuthCubit(sl()));
+  sl.registerFactory<RegisterCubit>(() => RegisterCubit(sl()));
   sl.registerLazySingleton<Logout>(() => Logout(sl()));
   sl.registerLazySingleton<Register>(() => Register(sl()));
   sl.registerLazySingleton<ForgotPassword>(() => ForgotPassword(sl()));

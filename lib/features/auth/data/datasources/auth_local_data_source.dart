@@ -10,8 +10,8 @@ class UserPreferences {
         .map((permission) => permission.toString())
         .toList();
 
-    prefs.setInt('userId', student.id!);
-    prefs.setInt('schoolId', student.schoolId ?? 0);
+    await prefs.setString('userId', student.id!);
+    await prefs.setString('schoolId', student.schoolId ?? '');
     prefs.setString('fullName', student.fullName!);
     prefs.setString('email', student.email!);
     prefs.setString('token', student.token!);
@@ -24,8 +24,10 @@ class UserPreferences {
 
   Future<User> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? userId = prefs.getInt('userId');
-    int? schoolId = prefs.getInt('schoolId');
+    final Object? storedUserId = prefs.get('userId');
+    String? userId = storedUserId?.toString();
+    final Object? storedSchoolId = prefs.get('schoolId');
+    String? schoolId = storedSchoolId?.toString();
     String? name = prefs.getString('fullName');
     String? email = prefs.getString('email');
     String? token = prefs.getString('token');

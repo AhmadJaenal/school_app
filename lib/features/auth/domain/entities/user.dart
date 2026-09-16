@@ -1,5 +1,5 @@
-import 'package:school_app/features/auth/domain/entities/profile.dart';
 import 'package:equatable/equatable.dart';
+import 'package:school_app/features/profile/domain/entities/profile.dart';
 
 class User extends Equatable {
   const User({
@@ -10,10 +10,10 @@ class User extends Equatable {
     this.profile,
   });
 
-  final int id;
+  final String id;
   final String username;
   final String role;
-  final int? schoolId;
+  final String? schoolId;
   final Profile? profile;
 
   @override

@@ -1,6 +1,6 @@
 class User {
-  final int? id;
-  final int? schoolId;
+  final String? id;
+  final String? schoolId;
   final String? fullName;
   final String? email;
   final String? accessToken;
@@ -21,8 +21,8 @@ class User {
 
   factory User.fromJson(Map<dynamic, dynamic> json) {
     return User(
-      id: json['id'],
-      schoolId: json['school_id'] ?? 0,
+      id: json['id']?.toString(),
+      schoolId: json['school_id']?.toString(),
       fullName: json['name'] ?? json['full_name'],
       email: json['email'],
       accessToken: json['access_token']?.toString(),

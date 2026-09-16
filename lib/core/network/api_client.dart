@@ -4,9 +4,9 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:school_app/core/config/api_config.dart';
+import 'package:school_app/network/urls.dart';
 import 'package:school_app/session/session_key.dart';
 import 'package:school_app/session/session_manager.dart';
-import 'package:school_app/utils/util.dart';
 
 class DioClient {
   static final DioClient _instance = DioClient._internal();
@@ -23,11 +23,10 @@ class DioClient {
   }
 
   DioClient._internal() {
-    final baseUrlUtils = BaseUrlUtils();
     dio =
         Dio(
             BaseOptions(
-              baseUrl: baseUrlUtils.getUrlDevice(),
+              baseUrl: URLs.baseURL,
               connectTimeout: ApiConfig.connectionTimeout,
               receiveTimeout: ApiConfig.receiveTimeout,
               sendTimeout: ApiConfig.sendTimeout,

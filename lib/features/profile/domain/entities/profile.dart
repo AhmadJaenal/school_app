@@ -7,7 +7,7 @@ class Profile extends Equatable {
     required this.address,
   });
 
-  final int id;
+  final String id;
   final String username;
   final String address;
 

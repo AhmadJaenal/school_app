@@ -1,5 +1,5 @@
-import 'package:school_app/features/auth/data/models/profile_model.dart';
 import 'package:school_app/features/auth/domain/entities/user.dart';
+import 'package:school_app/features/profile/data/models/profile_model.dart';
 
 class UserModel extends User {
   const UserModel({
@@ -11,10 +11,10 @@ class UserModel extends User {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: (json['id'] as num).toInt(),
+    id: json['id']?.toString() ?? '',
     username: json['username'] as String? ?? '',
     role: json['role'] as String? ?? '',
-    schoolId: (json['school_id'] as num?)?.toInt(),
+    schoolId: json['school_id']?.toString(),
     profile: json['profile'] is Map<String, dynamic>
         ? ProfileModel.fromJson(json['profile'] as Map<String, dynamic>)
         : null,

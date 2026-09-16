@@ -1,4 +1,4 @@
-import 'package:school_app/features/auth/domain/entities/profile.dart';
+import 'package:school_app/features/profile/domain/entities/profile.dart';
 
 class ProfileModel extends Profile {
   const ProfileModel({
@@ -8,7 +8,7 @@ class ProfileModel extends Profile {
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
-    id: (json['id'] as num).toInt(),
+    id: json['id']?.toString() ?? '',
     username: json['username'] as String? ?? '',
     address: json['address'] as String? ?? '',
   );
